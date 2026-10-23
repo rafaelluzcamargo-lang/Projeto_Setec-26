@@ -1,2 +1,2 @@
-# Projeto_Setec-26
-Jogo Setec
+# Projeto_Setec
+Projeto Setec 2026

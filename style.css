@@ -1,0 +1,3735 @@
+* { /* Seleciona todos os elementos; poderia ser limitado a componentes específicos. */
+    box-sizing: border-box; /* Inclui bordas e preenchimento nas dimensões; pode usar content-box. */
+    margin: 0; /* Remove margens padrão do navegador; valores individuais podem ser definidos nos componentes. */
+    padding: 0; /* Remove preenchimentos padrão; cada controle pode receber espaçamento próprio. */
+} /* Encerra a regra de normalização global. */
+
+:root { /* Define variáveis globais reutilizáveis; novas cores e medidas de tema podem ser declaradas aqui. */
+    --background: #19324b; /* Cor de fundo padrão; pode receber outro valor de cor. */
+    --panel: #294763; /* Cor principal dos painéis; pode ser ajustada para outro tema. */
+    --panel2: #203c57; /* Cor secundária de painel; pode complementar a paleta. */
+    --border: #142b42; /* Cor padrão de bordas; pode ser substituída por uma cor de contraste. */
+    --text: #f5fbff; /* Cor principal de texto; escolha uma cor legível sobre o fundo. */
+    --muted: #bfd5e6; /* Cor de texto secundário; pode definir outros níveis de ênfase. */
+    --green: #a5edff; /* Cor de destaque usada pelo tema; pode ser trocada ou renomeada. */
+    --green-dark: #3b91b8; /* Variante escura da cor de destaque; pode completar estados e gradientes. */
+    --gold: #d7f3ff; /* Cor de destaque de pontuação e recompensa; pode ser outra cor temática. */
+    --blue: #70cfff; /* Cor auxiliar azul; outras cores reutilizáveis podem ser adicionadas. */
+    --red: #e75a5a; /* Cor de alerta; pode ser ajustada para estados de erro ou perigo. */
+} /* Fecha o conjunto de variáveis globais. */
+
+html, /* Seleciona a raiz do documento para compartilhar dimensões com o body. */
+body { /* Aplica dimensões de tela ao documento e ao corpo juntos. */
+    width: 100%; /* Usa toda a largura disponível; pode ser limitado por um contêiner. */
+    height: 100%; /* Usa toda a altura disponível; pode ser alterado para conteúdo expansível. */
+} /* Fecha as regras de dimensão da página. */
+
+body { /* Define apresentação e comportamento geral do corpo da página. */
+    overflow: hidden; /* Evita rolagem da página durante o jogo; pode mudar para auto em layouts roláveis. */
+
+    background: /* Inicia o fundo em gradiente radial; outra imagem ou cor pode ser definida aqui. */
+        radial-gradient( /* Inicia a função de gradiente circular do fundo. */
+            circle at 50% 20%, /* Define forma e posição central do gradiente; pode escolher outro ponto. */
+            #426b8d 0%, /* Cor no centro do gradiente; pode ser substituída. */
+            #294763 48%, /* Cor intermediária e posição da transição. */
+            #19324b 100% /* Cor da borda externa do gradiente. */
+        ); /* Finaliza a camada de fundo radial. */
+
+    color: var(--text); /* Usa a variável de cor padrão do texto; outro token global pode ser escolhido. */
+
+    font-family: /* Define fontes em ordem de preferência; outras famílias podem ser listadas. */
+        "Trebuchet MS", /* Fonte preferencial; pode ser substituída por outra fonte instalada. */
+        Arial, /* Fonte alternativa se a primeira não estiver disponível. */
+        sans-serif; /* Família genérica de reserva para o navegador. */
+} /* Fecha as regras gerais do corpo. */
+
+button { /* Padroniza todos os botões da página. */
+    font: inherit; /* Faz botões herdarem a fonte do elemento pai; propriedades tipográficas individuais podem ser definidas depois. */
+} /* Fecha a regra base dos botões. */
+
+/* =========================================================
+   SEÇÕES
+   ========================================================= */
+
+.screen { /* Define a base de posicionamento compartilhada por cada tela do jogo. */
+    position: absolute; /* Sobrepõe telas no mesmo espaço; pode usar fluxo normal em outra arquitetura. */
+
+    inset: 0; /* Encosta a tela nos quatro limites do contêiner posicionado. */
+
+    display: none; /* Mantém telas inativas ocultas; a classe active altera esta propriedade. */
+
+    justify-content: center; /* Centraliza o conteúdo no eixo principal flexível. */
+    align-items: center; /* Centraliza o conteúdo no eixo transversal. */
+
+    padding-bottom: 48px; /* Reserva espaço para o rodapé; outro valor pode adaptar a altura. */
+} /* Fecha o estilo comum das telas. */
+
+.screen.active { /* Seleciona somente a tela atualmente ativa. */
+    display: flex; /* Exibe o conteúdo usando layout flexível; grid também poderia ser usado. */
+} /* Fecha a regra de visibilidade da tela ativa. */
+
+/* =========================================================
+   RODAPÉ DE TODAS AS SEÇÕES
+   ========================================================= */
+
+.section-footer { /* Seleciona os rodapés comuns das telas; estilos mais específicos podem sobrescrever esta regra. */
+    position: absolute; /* Retira o rodapé do fluxo e permite fixá-lo dentro da tela. */
+
+    left: 0; /* Alinha a borda esquerda do rodapé ao contêiner. */
+    bottom: 0; /* Encosta o rodapé na borda inferior da tela. */
+
+    width: 100%; /* Faz o rodapé ocupar a largura disponível. */
+    height: 42px; /* Define a altura padrão; pode ser aumentada para mais conteúdo. */
+
+    display: flex; /* Ativa flexbox para alinhar o texto do rodapé. */
+
+    justify-content: center; /* Centraliza o conteúdo na horizontal. */
+    align-items: center; /* Centraliza o conteúdo na vertical. */
+
+    background: /* Inicia o fundo em gradiente; pode receber outra cor ou imagem. */
+        linear-gradient( /* Inicia as duas cores de fundo do rodapé. */
+            to bottom, /* Direciona a transição de cima para baixo. */
+            #1a293b, /* Cor no início do gradiente. */
+            #101a28 /* Cor no final do gradiente. */
+        ); /* Finaliza o fundo do rodapé. */
+
+    border-top: /* Define a borda superior como separador visual. */
+        3px solid #050a10; /* Espessura, estilo e cor da borda; esses valores podem ser ajustados. */
+
+    color: /* Define a cor do texto usando transparência. */
+        rgba( /* Inicia a cor RGBA translúcida do texto do rodapé. */
+            255, /* Componente vermelho da cor branca. */
+            255, /* Componente verde da cor branca. */
+            255, /* Componente azul da cor branca. */
+            0.78 /* Opacidade do texto; valores entre 0 e 1 controlam transparência. */
+        ); /* Fecha a declaração de cor. */
+
+    font-size: 11px; /* Define o tamanho da fonte em pixels; pode ser aumentado para legibilidade. */
+
+    font-weight: 600; /* Define peso seminegrito; outros pesos controlam a ênfase. */
+
+    letter-spacing: 0.5px; /* Espaça levemente as letras; pode ser zero ou outro valor. */
+
+    text-align: center; /* Centraliza texto em várias linhas. */
+
+    text-shadow: /* Cria sombra para destacar o texto sobre o fundo. */
+        1px 1px 2px #000; /* Deslocamento horizontal, vertical, desfoque e cor da sombra. */
+
+    z-index: 100; /* Coloca o rodapé acima de elementos com índice inferior. */
+
+    pointer-events: none; /* Impede que o rodapé bloqueie cliques; remova para torná-lo interativo. */
+} /* Fecha as propriedades compartilhadas do rodapé. */
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+#menuScreen { /* Seleciona a tela inicial pelo id definido no HTML. */
+    isolation: isolate; /* Cria contexto independente de empilhamento para o fundo e o conteúdo. */
+} /* Fecha a regra base do menu. */
+
+#menuScreen::before { /* Cria uma camada decorativa atrás do conteúdo do menu. */
+    content: ""; /* Necessário para renderizar o pseudo-elemento sem texto. */
+    position: absolute; /* Posiciona a camada sobre a tela sem alterar o fluxo do conteúdo. */
+    inset: -8px; /* Expande a camada um pouco além das bordas para evitar falhas de blur. */
+    z-index: 0; /* Mantém o fundo atrás dos elementos do menu. */
+
+    background: /* Combina uma camada escura e uma imagem; novas camadas podem ser adicionadas separadas por vírgula. */
+        linear-gradient(rgba(10, 20, 30, 0.28), rgba(10, 20, 30, 0.48)), /* Sobrepõe sombra para melhorar contraste. */
+        url("img setec/frente.jpg") center / cover no-repeat; /* Carrega a foto, centraliza e cobre a área sem repetição. */
+
+    filter: blur(5px); /* Desfoca a imagem de fundo; ajuste ou remova para alterar a nitidez. */
+    transform: scale(1.02); /* Amplia ligeiramente para esconder bordas vazias criadas pelo desfoque. */
+} /* Fecha a camada decorativa do menu. */
+
+.menu-box { /* Estiliza o painel central do menu. */
+    width: 430px; /* Define a largura base; media queries podem adaptá-la a telas menores. */
+
+    padding: /* Define espaçamento interno na ordem superior, horizontal e inferior. */
+        35px /* Espaço acima do conteúdo do painel. */
+        36px /* Espaço nas laterais do painel. */
+        30px; /* Espaço abaixo do conteúdo do painel. */
+
+    text-align: center; /* Centraliza texto e conteúdo inline dentro do painel. */
+
+    background: /* Cria fundo em gradiente para o painel; cores podem ser ajustadas aqui. */
+        linear-gradient( /* Inicia o gradiente do painel central. */
+            145deg, /* Inclina o gradiente para criar variação diagonal. */
+            rgba( /* Inicia os componentes da primeira cor do painel. */
+                48, /* Componente vermelho da primeira cor. */
+                66, /* Componente verde da primeira cor. */
+                88, /* Componente azul da primeira cor. */
+                0.98 /* Opacidade quase total da primeira cor. */
+            ), /* Fecha a cor inicial do gradiente. */
+            rgba( /* Inicia os componentes da segunda cor do painel. */
+                25, /* Componente vermelho da segunda cor. */
+                37, /* Componente verde da segunda cor. */
+                52, /* Componente azul da segunda cor. */
+                0.98 /* Opacidade quase total da segunda cor. */
+            ) /* Fecha os componentes da segunda cor do painel. */
+        ); /* Fecha o fundo em gradiente do painel. */
+
+    border: /* Cria contorno ao redor do painel. */
+        4px solid #08101a; /* Define espessura, estilo e cor da borda. */
+
+    box-shadow: /* Adiciona contorno externo e sombra projetada. */
+        0 0 0 3px #526b86, /* Primeira sombra forma uma moldura sem desfoque. */
+        0 25px 50px /* Segunda sombra desloca e desfoca a profundidade. */
+        rgba( /* Inicia os componentes da sombra preta do painel. */
+            0, /* Componente vermelho da sombra preta. */
+            0, /* Componente verde da sombra preta. */
+            0, /* Componente azul da sombra preta. */
+            0.4 /* Opacidade da sombra; pode ser reduzida ou aumentada. */
+        ); /* Fecha as sombras do painel. */
+
+    position: relative; /* Cria referência de posicionamento para elementos internos. */
+    z-index: 1; /* Coloca o painel acima do fundo decorativo. */
+} /* Fecha o painel do menu. */
+
+.menu-box::before, /* Seleciona a linha decorativa superior do painel. */
+.menu-box::after { /* Seleciona a linha decorativa inferior. */
+    content: ""; /* Cria as formas decorativas sem texto. */
+
+    position: absolute; /* Posiciona as linhas em relação ao painel. */
+
+    height: 4px; /* Define a espessura das linhas. */
+
+    left: 22px; /* Define recuo esquerdo das linhas. */
+    right: 22px; /* Define recuo direito das linhas. */
+
+    background: #6b86a3; /* Define a cor das linhas decorativas. */
+
+    opacity: 0.3; /* Mantém as linhas discretas; pode aumentar sua visibilidade. */
+} /* Fecha os pseudo-elementos do menu. */
+
+.menu-box::before { /* Posiciona o detalhe decorativo superior. */
+    top: 18px; /* Afasta a linha do topo do painel. */
+} /* Fecha a posição superior. */
+
+.menu-box::after { /* Posiciona o detalhe decorativo inferior. */
+    bottom: 18px; /* Afasta a linha da base do painel. */
+} /* Fecha a posição inferior. */
+
+.menu-header { /* Alinha a logo do colégio e o título do jogo no topo do painel. */
+    display: flex; /* Coloca a logo e o título lado a lado. */
+
+    align-items: center; /* Centraliza verticalmente os dois blocos. */
+
+    justify-content: space-between; /* Encosta a logo à esquerda e o título à direita. */
+
+    gap: 16px; /* Mantém um respiro entre a logo e o título. */
+
+    margin-bottom: 28px; /* Preserva o espaço entre a marca e o primeiro botão. */
+} /* Fecha o cabeçalho do menu. */
+
+.menu-logo { /* Define a logo do colégio no lado superior esquerdo. */
+    width: 92px; /* Define a largura da logo; pode ser ajustada conforme o espaço. */
+
+    height: 92px; /* Mantém a altura igual para preservar as proporções. */
+
+    flex-shrink: 0; /* Impede que a logo seja comprimida pelo título. */
+
+    border-radius: 50%; /* Recorta o fundo quadrado e mantém o selo circular. */
+
+    object-fit: contain; /* Preserva as proporções da imagem. */
+
+    filter: drop-shadow(0 4px 10px rgba(5, 18, 32, 0.45)); /* Cria sombra para destacar a logo. */
+} /* Fecha o estilo da logo do menu. */
+
+.menu-title { /* Agrupa o título e o subtítulo no lado direito do cabeçalho. */
+    text-align: right; /* Alinha o texto à direita. */
+
+    min-width: 0; /* Permite que o bloco encolha em telas menores. */
+} /* Fecha o agrupamento do título. */
+
+.logo { /* Organiza as partes do logotipo. */
+    display: flex; /* Ativa flexbox para agrupar linhas do nome. */
+
+    flex-direction: column; /* Empilha as linhas verticalmente. */
+
+    align-items: flex-end; /* Alinha as duas linhas à direita. */
+} /* Fecha o contêiner do logotipo. */
+
+.logo span { /* Estiliza a primeira parte do logotipo. */
+    color: #dff8ff; /* Define a cor clara do texto; pode usar outro token de cor. */
+
+    font-size: 38px; /* Define o tamanho do nome; pode ser ajustado para outras telas. */
+
+    letter-spacing: 5px; /* Aumenta o espaço entre letras; use outro valor conforme o estilo. */
+
+    font-weight: 900; /* Usa peso muito forte para destaque; pesos menores deixam o título mais leve. */
+
+    text-shadow: /* Cria dois brilhos sobre o texto; novas camadas podem ser separadas por vírgula. */
+        0 0 12px rgba(160, 232, 255, 0.72), /* Brilho interno claro com desfoque curto. */
+        0 0 30px rgba(77, 183, 255, 0.3); /* Brilho externo mais amplo e transparente. */
+} /* Fecha o estilo do primeiro trecho do logotipo. */
+
+.logo strong { /* Estiliza a parte destacada do nome do jogo. */
+    margin-top: -4px; /* Aproxima o texto da linha anterior; ajuste para controlar o espaçamento. */
+
+    color: white; /* Define o texto em branco; pode usar a variável global de texto. */
+
+    letter-spacing: 3px; /* Ajusta o espaçamento entre letras do título. */
+
+    font-size: 27px; /* Define o tamanho da segunda linha do logotipo. */
+} /* Fecha a regra da segunda parte do logotipo. */
+
+.logo-sub { /* Estiliza o texto complementar abaixo da marca. */
+    margin: /* Define margens superior, laterais e inferior em sequência. */
+        4px /* Aproxima o subtítulo do título. */
+        0 /* Remove margens laterais. */
+        0; /* O espaço até os botões agora pertence ao cabeçalho. */
+
+    color: #a9c0d8; /* Usa tom secundário claro; pode ser substituído por outra cor legível. */
+
+    letter-spacing: 3px; /* Abre o espaçamento das letras do subtítulo. */
+
+    font-size: 10px; /* Define o tamanho compacto do texto complementar. */
+} /* Fecha o estilo do subtítulo. */
+
+.menu-btn { /* Define a aparência comum dos botões do menu. */
+    width: 100%; /* Faz cada botão ocupar a largura do painel. */
+
+    min-height: 52px; /* Garante altura mínima confortável; pode ser ampliada. */
+
+    margin: 9px 0; /* Separa verticalmente os botões e remove margem lateral. */
+
+    border: /* Define o contorno padrão do botão. */
+        3px solid #07101a; /* Espessura, estilo contínuo e cor da borda. */
+
+    background: /* Cria gradiente vertical para o fundo do botão. */
+        linear-gradient( /* Inicia a função que mistura as cores do botão. */
+            to bottom, /* Direção da cor, do topo para a base. */
+            #526d8e, /* Cor superior do botão. */
+            #3b5270 /* Cor inferior do botão. */
+        ); /* Fecha o fundo do botão. */
+
+    color: white; /* Define a cor do rótulo; pode ser alterada para manter contraste. */
+
+    font-size: 16px; /* Define o tamanho do texto nos comandos. */
+
+    font-weight: 800; /* Deixa o rótulo em negrito; pode ser reduzido para menor ênfase. */
+
+    letter-spacing: 1px; /* Espaça as letras do rótulo. */
+
+    box-shadow: /* Combina sombra interna e sombra externa para efeito de profundidade. */
+        inset 0 -5px /* Posiciona a sombra interna na parte inferior. */
+        rgba( /* Inicia os quatro componentes da sombra translúcida. */
+            0, /* Componente vermelho da sombra preta. */
+            0, /* Componente verde da sombra preta. */
+            0, /* Componente azul da sombra preta. */
+            0.16 /* Transparência da sombra interna. */
+        ), /* Separa a sombra interna da externa. */
+        0 3px 0 #0c1520; /* Cria pequena borda sombreada abaixo do botão. */
+
+    transition: /* Define animação curta para propriedades interativas. */
+        transform 0.1s, /* Suaviza o deslocamento ao pressionar ou passar o mouse. */
+        filter 0.1s; /* Suaviza mudanças de brilho. */
+} /* Fecha as regras comuns dos botões do menu. */
+
+.menu-btn span { /* Seleciona o ícone dentro dos botões do menu. */
+    margin-right: 7px; /* Separa o símbolo do texto; ajuste para aproximá-los ou afastá-los. */
+
+    color: #d9e7f4; /* Aplica cor própria ao ícone; pode ser igual ao rótulo ou destacar o símbolo. */
+} /* Fecha o estilo dos ícones dos botões. */
+
+.menu-btn:hover { /* Define o estado visual quando o cursor passa sobre o botão. */
+    filter: brightness(1.16); /* Clareia o botão; outro filtro pode alterar contraste ou saturação. */
+
+    transform: /* Inicia a transformação de hover. */
+        translateY(-2px); /* Move levemente o botão para cima. */
+} /* Fecha o estado hover. */
+
+.menu-btn:active { /* Aplica resposta visual enquanto o botão está pressionado. */
+    transform: /* Inicia o deslocamento do estado pressionado. */
+        translateY(2px); /* Move o botão para baixo para simular clique físico. */
+
+    box-shadow: /* Reduz a sombra interna durante o pressionamento. */
+        inset 0 -2px /* Define deslocamento e tamanho da sombra interna. */
+        rgba( /* Inicia os componentes da sombra do botão pressionado. */
+            0, /* Componente vermelho da cor preta. */
+            0, /* Componente verde da cor preta. */
+            0, /* Componente azul da cor preta. */
+            0.2 /* Opacidade da sombra pressionada. */
+        ); /* Fecha a sombra do botão ativo. */
+} /* Fecha o estado active. */
+
+.menu-btn.primary { /* Destaca o comando principal do menu. */
+    background: /* Define gradiente próprio para a ação principal. */
+        linear-gradient( /* Inicia a mistura das cores do botão principal. */
+            to bottom, /* Direciona o gradiente do topo para a base. */
+            #76d9ff, /* Cor clara na parte superior. */
+            #3c91bd /* Cor mais escura na parte inferior. */
+        ); /* Fecha o gradiente principal. */
+} /* Fecha o destaque do botão principal. */
+
+.small-info { /* Formata as dicas de teclado abaixo dos botões. */
+    margin-top: 20px; /* Separa as instruções do último botão. */
+
+    color: #91a8c0; /* Usa cor secundária para as dicas; pode ser ajustada para melhorar o contraste. */
+
+    font-size: 11px; /* Mantém as instruções em tamanho compacto. */
+
+    line-height: 1.7; /* Aumenta o espaço entre linhas para facilitar leitura. */
+} /* Fecha o estilo das instruções rápidas. */
+
+@media (max-width: 480px) { /* Compacta o cabeçalho da marca em telas estreitas. */
+
+    .menu-header { /* Ajusta o cabeçalho do menu ao espaço reduzido. */
+        gap: 10px; /* Aproxima a logo do título. */
+    } /* Fecha o ajuste do cabeçalho. */
+
+    .menu-logo { /* Reduz a logo para caber ao lado do título. */
+        width: 64px; /* Diminui a largura preservando o selo circular. */
+        height: 64px; /* Mantém a altura proporcional. */
+    } /* Fecha a logo compacta. */
+
+    .logo span { /* Reduz a primeira linha do nome do jogo. */
+        font-size: 26px; /* Diminui o tamanho para manter tudo em uma linha. */
+        letter-spacing: 2px; /* Reduz o espaçamento entre letras. */
+    } /* Fecha o ajuste da marca compacta. */
+
+    .logo strong { /* Reduz a segunda linha do nome do jogo. */
+        font-size: 20px; /* Diminui o tamanho destacado. */
+        letter-spacing: 2px; /* Reduz o espaçamento entre letras. */
+    } /* Fecha o ajuste do nome compacto. */
+
+    .logo-sub { /* Ajusta o subtítulo ao cabeçalho compacto. */
+        font-size: 9px; /* Reduz o texto complementar. */
+        letter-spacing: 2px; /* Aproxima as letras para caber. */
+    } /* Fecha o subtítulo compacto. */
+} /* Fecha a media query do cabeçalho compacto. */
+
+/* =========================================================
+   PAINÉIS
+   ========================================================= */
+
+.panel { /* Estiliza os painéis usados pelas telas secundárias. */
+    width: 560px; /* Define largura padrão; regras responsivas podem redimensioná-la. */
+
+    max-height: calc( /* Limita a altura do painel em relação à janela. */
+        100vh - 95px /* Reserva espaço para margens e rodapé. */
+    ); /* Fecha o cálculo da altura máxima. */
+
+    padding: 30px; /* Define espaço interno uniforme; pode ser separado por lado. */
+
+    text-align: center; /* Centraliza textos e conteúdo inline do painel. */
+
+    background: /* Cria o fundo gradiente do painel. */
+        linear-gradient( /* Inicia o gradiente que colore o painel. */
+            145deg, /* Define a inclinação diagonal do gradiente. */
+            rgba( /* Inicia os componentes da primeira cor do painel. */
+                44, /* Componente vermelho da cor inicial. */
+                60, /* Componente verde da cor inicial. */
+                80, /* Componente azul da cor inicial. */
+                0.98 /* Opacidade quase total da cor inicial. */
+            ), /* Separa a primeira cor da segunda. */
+            rgba( /* Inicia os componentes da segunda cor do painel. */
+                24, /* Componente vermelho da cor final. */
+                35, /* Componente verde da cor final. */
+                49, /* Componente azul da cor final. */
+                0.98 /* Opacidade quase total da cor final. */
+            ) /* Fecha a função de cor da segunda camada. */
+        ); /* Fecha o gradiente do painel. */
+
+    border: /* Adiciona contorno ao redor do painel. */
+        4px solid #07101a; /* Define espessura, estilo e cor da borda. */
+
+    box-shadow: /* Cria moldura e sombra de profundidade. */
+        0 0 0 3px #526b86, /* Primeira camada forma uma moldura externa. */
+        0 25px 60px /* Segunda camada desloca e desfoca a sombra. */
+        rgba( /* Inicia os componentes da sombra do painel. */
+            0, /* Componente vermelho da sombra preta. */
+            0, /* Componente verde da sombra preta. */
+            0, /* Componente azul da sombra preta. */
+            0.45 /* Opacidade da sombra projetada. */
+        ); /* Fecha as camadas de sombra. */
+
+    overflow-y: auto; /* Permite rolagem vertical se o conteúdo exceder a altura. */
+} /* Fecha as propriedades do painel. */
+
+.panel-title { /* Define a apresentação dos títulos internos dos painéis. */
+    margin-bottom: 24px; /* Separa o título do conteúdo seguinte. */
+
+    font-size: 26px; /* Define o tamanho do título; pode ser ajustado por acessibilidade. */
+
+    font-weight: 900; /* Usa peso forte para destacar o título. */
+
+    letter-spacing: 2px; /* Aumenta o espaço entre letras do cabeçalho. */
+} /* Fecha o estilo do título do painel. */
+
+.creator-copy { /* Formata o texto explicativo da tela sobre o criador. */
+    max-width: 390px; /* Limita o comprimento das linhas; pode ser aumentado para telas largas. */
+    margin: 0 auto; /* Centraliza o parágrafo sem margens verticais. */
+    color: #c2d9eb; /* Define uma cor clara para leitura sobre o painel. */
+    font-size: 14px; /* Define tamanho de texto informativo. */
+    line-height: 1.7; /* Controla o espaçamento vertical entre linhas. */
+} /* Fecha a regra do texto sobre o criador. */
+
+.back-btn { /* Formata os botões de retorno das telas. */
+    width: 100%; /* Faz o comando ocupar toda a largura interna disponível. */
+
+    margin-top: 22px; /* Separa o botão do conteúdo acima. */
+
+    padding: 13px; /* Aumenta a área interna e a altura clicável. */
+
+    border: /* Define o contorno do botão de retorno. */
+        3px solid #07101a; /* Define espessura, estilo e cor da borda. */
+
+    color: white; /* Define a cor do texto do botão. */
+
+    background: /* Cria gradiente vertical para o botão. */
+        linear-gradient( /* Inicia a mistura vertical das cores do botão. */
+            to bottom, /* Direciona a transição de cima para baixo. */
+            #4d5f73, /* Cor superior do botão. */
+            #394a5d /* Cor inferior do botão. */
+        ); /* Fecha o fundo em gradiente. */
+
+    font-weight: 800; /* Destaca o rótulo em negrito. */
+} /* Fecha a regra do botão de retorno. */
+
+/* =========================================================
+   DIFICULDADES
+   ========================================================= */
+
+.difficulty-btn { /* Formata cada opção de dificuldade. */
+    width: 100%; /* Faz a opção preencher o painel. */
+
+    display: flex; /* Alinha ícone e texto em uma linha flexível. */
+
+    align-items: center; /* Centraliza verticalmente os itens. */
+
+    gap: 17px; /* Espaça ícone e descrição; o valor pode ser ajustado. */
+
+    padding: 15px; /* Define respiro interno ao redor da opção. */
+
+    margin: 13px 0; /* Separa as opções verticalmente sem margem lateral. */
+
+    text-align: left; /* Alinha o texto descritivo à esquerda. */
+
+    border: /* Desenha o contorno da opção. */
+        3px solid #07101a; /* Define largura, tipo e cor da borda. */
+
+    color: white; /* Define a cor padrão do texto interno. */
+
+    box-shadow: /* Cria sombra interna na borda inferior. */
+        inset 0 -5px /* Define posição e espessura da sombra interna. */
+        rgba( /* Inicia os canais de cor da sombra translúcida. */
+            0, /* Componente vermelho da sombra preta. */
+            0, /* Componente verde da sombra preta. */
+            0, /* Componente azul da sombra preta. */
+            0.15 /* Opacidade da sombra. */
+        ); /* Fecha a sombra da opção. */
+
+    transition: /* Anima suavemente as mudanças de estado. */
+        transform 0.1s, /* Duração da animação de deslocamento. */
+        filter 0.1s; /* Duração da animação de brilho. */
+} /* Fecha a regra-base das dificuldades. */
+
+.difficulty-btn:hover { /* Seleciona a opção sob o cursor. */
+    filter: brightness(1.13); /* Realça a opção; outro filtro pode ser usado como feedback. */
+
+    transform: /* Inicia a transformação no estado hover. */
+        translateY(-2px); /* Move o botão para cima ao receber foco do cursor. */
+} /* Fecha o estado hover da dificuldade. */
+
+.difficulty-btn strong { /* Formata o nome da dificuldade dentro do botão. */
+    display: block; /* Faz o rótulo ocupar uma linha própria. */
+
+    font-size: 19px; /* Define tamanho de destaque para o nome do nível. */
+} /* Fecha a regra do nome da dificuldade. */
+
+.difficulty-btn span { /* Formata o texto explicativo da opção. */
+    display: block; /* Coloca a descrição abaixo do nome do nível. */
+
+    margin-top: 5px; /* Separa o resumo do rótulo principal. */
+
+    color: /* Define a cor da descrição com transparência. */
+        rgba( /* Inicia os componentes da cor branca translúcida. */
+            255, /* Componente vermelho do branco. */
+            255, /* Componente verde do branco. */
+            255, /* Componente azul do branco. */
+            0.83 /* Opacidade do texto explicativo. */
+        ); /* Fecha o valor de cor. */
+
+    font-size: 11px; /* Mantém a descrição menor que o título do nível. */
+} /* Fecha a regra da descrição da dificuldade. */
+
+.difficulty-btn.easy { /* Personaliza visualmente a opção fácil. */
+    background: /* Define fundo em gradiente para distinguir o nível. */
+        linear-gradient( /* Inicia a mistura diagonal das cores fáceis. */
+            135deg, /* Inclina a transição entre as cores. */
+            #315b78, /* Cor inicial do gradiente fácil. */
+            #244663 /* Cor final do gradiente fácil. */
+        ); /* Fecha o gradiente do nível fácil. */
+} /* Fecha o estilo da opção fácil. */
+
+.difficulty-btn.medium { /* Personaliza a opção de dificuldade média. */
+    background: /* Aplica um gradiente próprio ao nível médio. */
+        linear-gradient( /* Inicia a mistura diagonal das cores médias. */
+            135deg, /* Define a direção diagonal do fundo. */
+            #3e7398, /* Cor inicial da dificuldade média. */
+            #2c587b /* Cor final da dificuldade média. */
+        ); /* Fecha o gradiente médio. */
+} /* Fecha o estilo da opção média. */
+
+.difficulty-btn.hard { /* Personaliza visualmente a dificuldade difícil. */
+    background: /* Usa gradiente próprio para identificar o nível. */
+        linear-gradient( /* Inicia a mistura diagonal das cores difíceis. */
+            135deg, /* Define o ângulo do gradiente. */
+            #58a1c5, /* Cor inicial do nível difícil. */
+            #34769e /* Cor final do nível difícil. */
+        ); /* Fecha o gradiente difícil. */
+} /* Fecha o estilo da opção difícil. */
+
+.diff-icon { /* Define o espaço e o alinhamento dos símbolos de dificuldade. */
+    width: 45px; /* Define a largura fixa do ícone; pode ser ampliada. */
+    height: 45px; /* Mantém a altura igual à largura para formar um quadrado. */
+
+    display: grid; /* Ativa grid para centralizar facilmente o símbolo. */
+
+    place-items: center; /* Centraliza o conteúdo horizontal e verticalmente. */
+
+    flex-shrink: 0; /* Impede que o ícone encolha quando o texto é longo. */
+
+    border-radius: 7px; /* Arredonda os cantos do fundo do ícone. */
+
+    background: /* Cria fundo branco translúcido sob o símbolo. */
+        rgba( /* Inicia os componentes da cor branca semitransparente. */
+            255, /* Componente vermelho do branco. */
+            255, /* Componente verde do branco. */
+            255, /* Componente azul do branco. */
+            0.14 /* Opacidade do fundo translúcido. */
+        ); /* Fecha a cor do fundo do ícone. */
+
+    font-size: 22px; /* Define o tamanho do símbolo interno. */
+} /* Fecha as regras dos ícones de dificuldade. */
+
+/* =========================================================
+   SKINS
+   ========================================================= */
+
+.skin-panel { /* Ajusta a largura do painel da loja de personagens. */
+    width: 960px; /* Reserva mais espaço para cartões maiores. */
+
+    max-width: 94vw; /* Impede que o painel estoure a largura da janela. */
+} /* Fecha o ajuste do painel de skins. */
+
+.skin-heading { /* Organiza título e saldo na mesma linha do cabeçalho. */
+    display: flex; /* Alinha os dois blocos lado a lado. */
+
+    align-items: center; /* Centraliza verticalmente título e saldo. */
+
+    justify-content: space-between; /* Coloca o título à esquerda e o saldo à direita. */
+
+    gap: 16px; /* Mantém um respiro entre os blocos. */
+
+    flex-wrap: wrap; /* Permite quebrar a linha em telas muito estreitas. */
+
+    margin-bottom: 6px; /* Aproxima o cabeçalho da frase de apoio. */
+} /* Fecha o cabeçalho da loja. */
+
+.skin-heading .panel-title { /* Ajusta apenas o título dentro da loja de skins. */
+    margin-bottom: 0; /* Remove o espaçamento grande usado nos demais painéis. */
+
+    text-align: left; /* Alinha o título com a borda esquerda do conteúdo. */
+} /* Fecha o título da loja. */
+
+.skin-subtitle { /* Apresenta a frase de apoio abaixo do cabeçalho. */
+    margin: 0 0 16px; /* Separa a frase da grade de personagens. */
+
+    color: #a9c2d8; /* Usa um tom secundário claro. */
+
+    font-size: 10.5px; /* Mantém a frase discreta. */
+
+    letter-spacing: 0.5px; /* Dá um leve acabamento tipográfico. */
+
+    text-align: left; /* Mantém a leitura alinhada ao título. */
+} /* Fecha a frase de apoio. */
+
+.points-display { /* Formata o saldo de moedas como uma cápsula de destaque. */
+    display: inline-flex; /* Mantém rótulo e valor na mesma linha. */
+
+    align-items: center; /* Centraliza verticalmente os elementos. */
+
+    gap: 9px; /* Separa a moeda, o rótulo e o número. */
+
+    margin-bottom: 0; /* Remove a margem usada na versão anterior. */
+
+    padding: 8px 16px; /* Cria o formato compacto de cápsula. */
+
+    border: 1px solid rgba(181, 232, 255, 0.35); /* Adiciona um contorno claro sutil. */
+
+    border-radius: 999px; /* Arredonda totalmente as extremidades. */
+
+    background: rgba(10, 25, 40, 0.5); /* Cria uma superfície escura translúcida. */
+
+    box-shadow: /* Combina brilho interno e externo. */
+        inset 0 1px 0 rgba(255, 255, 255, 0.08), /* Destaca a borda superior. */
+        0 0 18px rgba(80, 190, 245, 0.12); /* Espalha um brilho azulado discreto. */
+
+    color: #bbcadb; /* Define a cor secundária do rótulo de saldo. */
+
+    font-size: 10px; /* Define o tamanho compacto do rótulo. */
+
+    font-weight: 800; /* Destaca o rótulo em negrito. */
+
+    letter-spacing: 1px; /* Espaça as letras do rótulo. */
+} /* Fecha a apresentação do saldo. */
+
+.points-display::before { /* Desenha uma moeda antes do rótulo de saldo. */
+    content: ""; /* Cria o elemento decorativo sem texto. */
+
+    width: 13px; /* Define a largura da moeda. */
+
+    height: 13px; /* Mantém a moeda circular. */
+
+    border-radius: 50%; /* Arredonda completamente a moeda. */
+
+    background: radial-gradient(circle at 35% 30%, #fff4bd, #f2c14e 58%, #b97b22); /* Cria o volume dourado. */
+
+    box-shadow: 0 0 10px rgba(242, 193, 78, 0.55); /* Adiciona brilho à moeda. */
+} /* Fecha a moeda decorativa. */
+
+.points-display strong { /* Destaca o número de moedas do texto ao redor. */
+    color: var(--gold); /* Usa a cor global de destaque; pode ser alterada no seletor :root. */
+
+    font-size: 16px; /* Aumenta o tamanho do saldo numérico. */
+
+    letter-spacing: 0; /* Mantém os algarismos compactos. */
+} /* Fecha o destaque do saldo. */
+
+.skins-container { /* Organiza os cartões de personagens em grade. */
+    display: grid; /* Ativa layout bidimensional para os cartões. */
+
+    grid-template-columns: /* Define quatro colunas com larguras iguais. */
+        repeat(4, minmax(0, 1fr)); /* Repete quatro frações iguais; pode trocar o número de colunas. */
+
+    gap: 16px; /* Espaça os cartões nos dois eixos da grade. */
+} /* Fecha a grade de personagens. */
+
+.skin-card { /* Define a base visual e o layout de cada cartão de personagem. */
+    min-height: 284px; /* Garante espaço para o enquadramento e as informações. */
+
+    padding: 10px; /* Cria uma moldura interna ao redor da arte. */
+
+    background: /* Cria fundo escuro em gradiente para o cartão. */
+        linear-gradient( /* Inicia o gradiente diagonal do cartão. */
+            160deg, /* Inclina a transição para dar profundidade. */
+            rgba(43, 70, 96, 0.96), /* Cor inicial do cartão. */
+            rgba(17, 31, 46, 0.98) /* Cor final do cartão. */
+        ); /* Fecha o gradiente do cartão. */
+
+    border: /* Define contorno padrão do cartão. */
+        2px solid rgba(177, 231, 255, 0.34); /* Usa um contorno claro semitransparente. */
+
+    border-radius: 12px; /* Arredonda os cantos para um acabamento mais moderno. */
+
+    display: flex; /* Organiza as partes internas usando flexbox. */
+
+    flex-direction: column; /* Empilha palco, nome e botão verticalmente. */
+
+    justify-content: flex-start; /* Mantém o conteúdo ancorado no topo. */
+
+    align-items: stretch; /* Faz o palco ocupar toda a largura interna. */
+
+    position: relative; /* Cria referência para detalhes decorativos posicionados. */
+
+    overflow: hidden; /* Recorta elementos que ultrapassem os limites do cartão. */
+
+    box-shadow: /* Adiciona relevo interno e sombra de profundidade. */
+        inset 0 1px 0 rgba(255, 255, 255, 0.08), /* Destaca a borda superior. */
+        0 10px 22px rgba(4, 14, 24, 0.22); /* Projeta uma sombra suave abaixo. */
+
+    transition: /* Suaviza as mudanças visuais de interação. */
+        transform 0.16s ease, /* Anima a elevação do cartão. */
+        border-color 0.16s ease, /* Anima a cor do contorno. */
+        box-shadow 0.16s ease; /* Anima o brilho externo. */
+} /* Fecha o estilo base do cartão. */
+
+.skin-card:hover { /* Destaca o cartão sob o cursor. */
+    transform: translateY(-3px); /* Eleva levemente o cartão. */
+
+    border-color: var(--skin-accent); /* Aplica a cor temática da skin. */
+
+    box-shadow: /* Combina relevo, profundidade e brilho colorido. */
+        inset 0 1px 0 rgba(255, 255, 255, 0.1), /* Mantém o realce superior. */
+        0 14px 26px rgba(4, 14, 24, 0.32), /* Aumenta a sombra projetada. */
+        0 0 20px var(--skin-glow); /* Espalha o brilho da skin. */
+} /* Fecha o estado hover. */
+
+.skin-card::before { /* Adiciona uma linha luminosa decorativa no topo do cartão. */
+    content: ""; /* Gera o pseudo-elemento sem conteúdo textual. */
+    position: absolute; /* Posiciona a linha em relação ao cartão. */
+    top: 0; /* Encosta a linha à parte superior. */
+    left: 12px; /* Recuo esquerdo da linha. */
+    right: 12px; /* Recuo direito da linha. */
+    height: 2px; /* Define a espessura da linha luminosa. */
+    background: linear-gradient(90deg, transparent, var(--skin-accent), transparent); /* Faz a cor de destaque desaparecer nas extremidades. */
+    box-shadow: 0 0 12px var(--skin-accent); /* Cria brilho com a cor da skin atual. */
+} /* Fecha o detalhe superior do cartão. */
+
+.skin-card.model-school { /* Seleciona o cartão do uniforme escolar. */ --skin-accent: #9fe8ff; /* Define o destaque visual da skin. */ --skin-glow: rgba(38,134,201,0.18); /* Define a cor translúcida de brilho. */ } /* Fecha as cores do modelo escolar. */
+.skin-card.model-runner { /* Seleciona o cartão do atleta. */ --skin-accent: #ffd166; /* Define a cor de destaque do atleta. */ --skin-glow: rgba(230,95,62,0.2); /* Define o brilho translúcido do atleta. */ } /* Fecha as cores do atleta. */
+.skin-card.model-pilot { /* Seleciona o cartão do professor. */ --skin-accent: #58cbb3; /* Define o destaque do modelo professor. */ --skin-glow: rgba(36,131,150,0.2); /* Define o brilho desse modelo. */ } /* Fecha as cores do professor. */
+.skin-card.model-ninja { /* Seleciona o cartão do músico/ninja. */ --skin-accent: #f29ac5; /* Define a cor de destaque do modelo. */ --skin-glow: rgba(154,72,118,0.2); /* Define o brilho translúcido correspondente. */ } /* Fecha as cores do modelo ninja. */
+.skin-card.model-guardian { /* Seleciona o cartão do representante de turma. */ --skin-accent: #f7ce5e; /* Define o destaque dourado do modelo. */ --skin-glow: rgba(171,112,42,0.2); /* Define seu brilho translúcido. */ } /* Fecha as cores do representante. */
+.skin-card.model-android { /* Seleciona o cartão do aluno inteligente. */ --skin-accent: #5bd6b1; /* Define a cor de destaque do modelo. */ --skin-glow: rgba(58,145,117,0.2); /* Define o brilho translúcido correspondente. */ } /* Fecha as cores do modelo android. */
+.skin-card.model-mechanic { /* Seleciona o cartão do artista. */ --skin-accent: #f2c14e; /* Define a cor de destaque do modelo. */ --skin-glow: rgba(189,99,61,0.2); /* Define o brilho translúcido correspondente. */ } /* Fecha as cores do artista. */
+.skin-card.model-shadow { /* Seleciona o cartão do aluno leitor. */ --skin-accent: #e9bd72; /* Define a cor de destaque do modelo. */ --skin-glow: rgba(157,117,55,0.2); /* Define o brilho translúcido correspondente. */ } /* Fecha as cores do leitor. */
+
+.skin-model-tag { /* Estiliza a etiqueta curta de categoria do personagem. */
+    display: block; /* Faz a etiqueta ocupar uma linha própria. */
+    min-height: 15px; /* Reserva altura para manter cartões alinhados. */
+    color: var(--skin-accent, #a5edff); /* Usa a cor temática da skin ou uma cor reserva. */
+    font-size: 9px; /* Define tamanho compacto para a categoria. */
+    font-weight: 800; /* Destaca a etiqueta com peso forte. */
+    text-align: center; /* Centraliza o texto da etiqueta. */
+    text-transform: uppercase; /* Exibe o texto em letras maiúsculas. */
+} /* Fecha o estilo da etiqueta da skin. */
+
+.skin-stage { /* Cria o palco de enquadramento do personagem. */
+    position: relative; /* Permite posicionar brilhos e selos sobre a arte. */
+
+    width: 100%; /* Ocupa toda a largura interna do cartão. */
+
+    height: 164px; /* Reserva altura suficiente para o corpo inteiro. */
+
+    overflow: hidden; /* Mantém a arte dentro do enquadramento arredondado. */
+
+    border: 1px solid rgba(160, 224, 255, 0.22); /* Adiciona um contorno interno sutil. */
+
+    border-radius: 9px; /* Acompanha o arredondamento do cartão. */
+
+    background: /* Combina luz temática e profundidade vertical. */
+        radial-gradient(ellipse at 50% 84%, var(--skin-glow, rgba(91, 178, 213, 0.16)), transparent 68%), /* Ilumina a base com a cor da skin. */
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(2, 10, 18, 0.18)); /* Escurece suavemente a parte inferior. */
+
+    isolation: isolate; /* Mantém as camadas decorativas separadas. */
+} /* Fecha o palco do personagem. */
+
+.skin-stage::before { /* Cria uma grade tecnológica discreta no fundo. */
+    content: ""; /* Gera o padrão sem conteúdo textual. */
+
+    position: absolute; /* Cobre toda a área do palco. */
+
+    inset: 0; /* Encosta nas quatro bordas. */
+
+    z-index: 0; /* Mantém a grade atrás do personagem. */
+
+    background-image: /* Desenha linhas horizontais e verticais. */
+        linear-gradient(rgba(160, 224, 255, 0.07) 1px, transparent 1px), /* Cria as linhas horizontais. */
+        linear-gradient(90deg, rgba(160, 224, 255, 0.07) 1px, transparent 1px); /* Cria as linhas verticais. */
+
+    background-size: 22px 22px; /* Define o tamanho das células da grade. */
+
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%); /* Esvanece a grade no navegador WebKit. */
+
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%); /* Esvanece a grade em direção à base. */
+} /* Fecha a grade decorativa. */
+
+.skin-stage::after { /* Desenha uma linha luminosa de chão sob os pés. */
+    content: ""; /* Cria a linha sem texto. */
+
+    position: absolute; /* Posiciona a linha dentro do palco. */
+
+    left: 12%; /* Recua a linha da borda esquerda. */
+
+    right: 12%; /* Recua a linha da borda direita. */
+
+    bottom: 12px; /* Aproxima a linha da base do palco. */
+
+    height: 1px; /* Define uma linha fina e elegante. */
+
+    z-index: 1; /* Coloca a linha atrás do personagem. */
+
+    border-radius: 2px; /* Arredonda as pontas da linha. */
+
+    background: linear-gradient(90deg, transparent, var(--skin-accent), transparent); /* Faz a cor desaparecer nas extremidades. */
+
+    box-shadow: 0 0 14px var(--skin-accent); /* Adiciona brilho à linha. */
+
+    opacity: 0.55; /* Mantém o efeito discreto. */
+} /* Fecha a linha de chão. */
+
+.skin-avatar { /* Exibe o personagem real do jogo dentro do palco. */
+    position: relative; /* Fica acima das camadas decorativas. */
+
+    z-index: 2; /* Sobrepõe grade e linha de chão. */
+
+    display: block; /* Remove o espaço residual de elementos inline. */
+
+    width: 100%; /* Ocupa a largura do palco. */
+
+    height: 100%; /* Ocupa a altura do palco. */
+
+    object-fit: contain; /* Preserva as proporções do desenho em qualquer cartão. */
+} /* Fecha o enquadramento do personagem. */
+
+.skin-flag { /* Identifica o estado do personagem sobre a arte. */
+    position: absolute; /* Fixa o selo no canto do palco. */
+
+    top: 8px; /* Afasta o selo do topo. */
+
+    right: 8px; /* Encosta o selo ao lado direito. */
+
+    z-index: 3; /* Mantém o selo acima do personagem. */
+
+    padding: 3px 7px; /* Cria uma etiqueta compacta. */
+
+    border: 1px solid var(--skin-accent); /* Usa a cor temática como contorno. */
+
+    border-radius: 999px; /* Arredonda totalmente a etiqueta. */
+
+    background: rgba(6, 19, 32, 0.86); /* Escurece o fundo para garantir leitura. */
+
+    color: var(--skin-accent); /* Colore o texto com o destaque da skin. */
+
+    font-size: 7px; /* Mantém o selo pequeno e discreto. */
+
+    font-weight: 900; /* Destaca o texto do selo. */
+
+    letter-spacing: 0.8px; /* Espaça as letras do estado. */
+
+    box-shadow: 0 0 10px var(--skin-glow); /* Adiciona um brilho temático. */
+} /* Fecha o selo de estado. */
+
+.skin-flag.locked { /* Suaviza o selo de personagem bloqueado. */
+    border-color: rgba(196, 220, 238, 0.35); /* Usa um contorno neutro. */
+
+    color: #c8d8e6; /* Mantém o texto legível em tom claro. */
+
+    box-shadow: none; /* Remove o brilho colorido. */
+} /* Fecha o selo de bloqueio. */
+
+.skin-info { /* Agrupa as informações textuais sob o palco. */
+    display: flex; /* Organiza os textos em coluna. */
+
+    flex-direction: column; /* Empilha etiqueta, nome, preço e botão. */
+
+    align-items: center; /* Centraliza o conteúdo horizontalmente. */
+
+    width: 100%; /* Ocupa a largura total do cartão. */
+
+    padding: 8px 4px 2px; /* Cria um respiro interno compacto. */
+} /* Fecha o bloco de informações. */
+
+.skin-price { /* Apresenta o custo ou o estado de desbloqueio. */
+    display: inline-flex; /* Mantém o símbolo e o texto alinhados. */
+
+    align-items: center; /* Centraliza verticalmente os elementos. */
+
+    justify-content: center; /* Centraliza o conjunto na horizontal. */
+
+    gap: 5px; /* Separa o símbolo do texto. */
+
+    min-height: 18px; /* Reserva altura fixa para alinhar os botões. */
+
+    margin: 3px 0 6px; /* Separa o preço do nome e do botão. */
+
+    color: #c3d6e6; /* Usa um tom claro para o texto. */
+
+    font-size: 9.5px; /* Mantém o preço compacto. */
+
+    font-weight: 700; /* Dá ênfase moderada ao valor. */
+
+    letter-spacing: 0.3px; /* Ajusta o espaçamento das letras. */
+} /* Fecha a linha de preço. */
+
+.skin-price.is-locked::before { /* Adiciona o símbolo de moeda apenas em skins bloqueadas. */
+    content: "◆"; /* Usa o losango já presente na identidade do jogo. */
+
+    color: var(--skin-accent); /* Colore o símbolo com o destaque da skin. */
+
+    font-size: 7px; /* Mantém o símbolo discreto. */
+} /* Fecha o símbolo de moeda. */
+
+.skin-price.is-owned { /* Destaca o estado de uma skin já disponível. */
+    color: var(--skin-accent); /* Usa a cor temática do personagem. */
+} /* Fecha o estado de skin disponível. */
+
+.skins-container .skin-card.selected { /* Destaca o cartão da skin atualmente selecionada. */
+    border-color: var(--skin-accent); /* Usa a cor de destaque definida pelo modelo. */
+
+    box-shadow: /* Combina contorno, brilho e profundidade. */
+        0 0 0 1px var(--skin-accent), /* Cria uma linha externa nítida. */
+        0 0 24px var(--skin-glow), /* Espalha brilho com a cor da skin. */
+        0 12px 24px rgba(3, 12, 22, 0.3); /* Mantém a sombra de profundidade. */
+} /* Fecha o estado selecionado. */
+
+.skin-preview { /* Define a área de montagem do personagem desenhado em CSS. */
+    position: relative; /* Serve de referência para cabeça, tronco e acessórios posicionados. */
+    isolation: isolate; /* Mantém as camadas internas em contexto de empilhamento separado. */
+
+    width: 100px; /* Define a largura fixa da prévia. */
+    height: 140px; /* Define a altura fixa da prévia. */
+
+    margin: /* Define margem superior, horizontal e inferior. */
+        6px /* Pequeno espaço acima do personagem. */
+        auto /* Centraliza horizontalmente a prévia. */
+        9px; /* Espaço inferior antes da etiqueta ou nome. */
+
+    transform: scale(1.08); /* Amplia o desenho sem mudar o espaço reservado. */
+    transform-origin: center; /* Faz a ampliação partir do centro do personagem. */
+
+    background: /* Combina brilho colorido com uma camada de fundo sutil. */
+        radial-gradient(ellipse at 50% 78%, var(--skin-glow, rgba(91,178,213,0.16)), transparent 68%), /* Ilumina a parte inferior com a cor do modelo. */
+        linear-gradient(180deg, rgba(255,255,255,0.055), rgba(0,0,0,0.025)); /* Adiciona leve variação vertical de luz e sombra. */
+
+    border-radius: /* Arredonda cada canto da área de prévia. */
+        10px /* Raio do canto superior esquerdo. */
+        10px /* Raio do canto superior direito. */
+        4px /* Raio do canto inferior direito. */
+        4px; /* Raio do canto inferior esquerdo. */
+
+    box-shadow: /* Adiciona sombra sob a área da prévia. */
+        0 8px 15px /* Define deslocamento e desfoque da sombra. */
+        rgba( /* Inicia os componentes da sombra preta translúcida. */
+            0, /* Componente vermelho da sombra preta. */
+            0, /* Componente verde da sombra preta. */
+            0, /* Componente azul da sombra preta. */
+            0.25 /* Opacidade da sombra. */
+        ); /* Fecha a sombra da prévia. */
+} /* Fecha a área de pré-visualização. */
+
+.skin-preview::after { /* Desenha uma base luminosa sob os pés do personagem. */
+    content: ""; /* Cria o pseudo-elemento decorativo sem texto. */
+    position: absolute; /* Posiciona a base em relação à prévia. */
+    z-index: 0; /* Mantém a linha atrás das partes do personagem. */
+    left: 25px; /* Define o recuo esquerdo da linha. */
+    right: 25px; /* Define o recuo direito da linha. */
+    bottom: 7px; /* Posiciona a linha perto da base. */
+    height: 2px; /* Define a espessura da linha. */
+    border-radius: 2px; /* Arredonda as pontas da linha. */
+    background: var(--skin-accent); /* Usa a cor temática da skin. */
+    opacity: 0.58; /* Controla a transparência do brilho. */
+} /* Fecha o detalhe de base da prévia. */
+
+.skin-cape, /* Seleciona a camada de capa do personagem. */
+.skin-pack, /* Seleciona mochila ou equipamento traseiro. */
+.skin-visor, /* Seleciona visor e acessórios de cabeça. */
+.skin-chest-detail, /* Seleciona emblemas e detalhes do peito. */
+.skin-emblem { /* Agrupa acessórios inicialmente ocultos e posicionáveis. */
+    display: none; /* Esconde o acessório até que uma classe de modelo o habilite. */
+    position: absolute; /* Permite posicionar cada acessório sobre o personagem. */
+} /* Fecha a configuração compartilhada dos acessórios. */
+
+.skin-head { /* Controla a camada visual da cabeça do personagem. */
+    z-index: 4; /* Coloca a cabeça sobre partes com índice menor. */
+} /* Fecha a prioridade da cabeça. */
+
+.skin-hair { /* Controla a sobreposição do cabelo. */
+    z-index: 5; /* Posiciona o cabelo à frente da cabeça. */
+} /* Fecha a prioridade do cabelo. */
+
+.skin-body { /* Controla a camada principal do tronco. */
+    z-index: 2; /* Coloca o corpo atrás dos braços e da cabeça. */
+} /* Fecha a prioridade do tronco. */
+
+.skin-neck { /* Controla a camada visual do pescoço. */
+    z-index: 1; /* Mantém o pescoço atrás do tronco e da cabeça. */
+} /* Fecha a prioridade do pescoço. */
+
+.skin-arm, /* Seleciona ambos os braços do modelo. */
+.skin-leg { /* Seleciona ambas as pernas com a mesma regra. */
+    z-index: 3; /* Coloca membros à frente do corpo, mas atrás da cabeça e cabelo. */
+} /* Fecha a prioridade dos membros. */
+
+.skin-head { /* Define tamanho e aparência da cabeça base. */
+    position: absolute; /* Permite posicioná-la dentro da área de prévia. */
+
+    width: 34px; /* Define a largura da cabeça. */
+    height: 36px; /* Define a altura da cabeça. */
+
+    left: 33px; /* Posiciona a cabeça horizontalmente. */
+    top: 7px; /* Posiciona a cabeça perto do topo da prévia. */
+
+    background: linear-gradient(108deg, #f5d2ad 0 34%, #dfaa80 67%, #ad765b 100%); /* Cria tons de pele com iluminação diagonal; cores podem ser ajustadas. */
+
+    border-radius: /* Define o arredondamento de cada canto da cabeça. */
+        10px /* Canto superior esquerdo. */
+        10px /* Canto superior direito. */
+        8px /* Canto inferior direito. */
+        8px; /* Canto inferior esquerdo. */
+
+    border: /* Contorna a cabeça para separá-la do restante da ilustração. */
+        2px solid /* Define a espessura e o estilo do contorno. */
+        rgba( /* Inicia os componentes da borda preta translúcida. */
+            0, /* Componente vermelho do contorno preto. */
+            0, /* Componente verde do contorno preto. */
+            0, /* Componente azul do contorno preto. */
+            0.35 /* Transparência do contorno. */
+        ); /* Fecha o contorno da cabeça. */
+
+    box-shadow: /* Combina reflexo interno e sombra externa. */
+        inset 3px 2px 0 rgba(255,255,255,0.32), /* Adiciona brilho interno no canto superior. */
+        2px 3px 0 rgba(18,25,31,0.24); /* Cria sombra deslocada para dar profundidade. */
+} /* Fecha o desenho base da cabeça. */
+
+.skin-head::after { /* Desenha um detalhe pequeno do rosto usando pseudo-elemento. */
+    content: ""; /* Cria o elemento decorativo sem texto. */
+    position: absolute; /* Posiciona o detalhe em relação à cabeça. */
+    left: 16px; /* Define a posição horizontal do detalhe facial. */
+    top: 26px; /* Define a posição vertical do detalhe. */
+    width: 4px; /* Define sua largura. */
+    height: 3px; /* Define sua altura. */
+    border-radius: 0 1px 1px 0; /* Arredonda parcialmente os cantos. */
+    background: #b97859; /* Define a cor do detalhe; pode ser adaptada ao modelo. */
+    z-index: 3; /* Posiciona o detalhe acima da camada da cabeça. */
+} /* Fecha o detalhe facial. */
+
+.skin-hair { /* Define o cabelo base de cada personagem. */
+    position: absolute; /* Permite posicionar o cabelo dentro da cabeça. */
+
+    width: 40px; /* Define a largura do cabelo. */
+    height: 17px; /* Define a altura do cabelo. */
+
+    left: -3px; /* Centraliza o cabelo passando um pouco da borda esquerda. */
+    top: -3px; /* Posiciona o cabelo acima do topo da cabeça. */
+
+    background: linear-gradient(115deg, rgba(255,255,255,0.2), var(--hair) 42%, rgba(0,0,0,0.42)); /* Usa reflexo, cor individual do cabelo e sombra. */
+
+    border-radius: /* Arredonda os cantos do cabelo. */
+    12px /* Canto superior esquerdo. */
+    12px /* Canto superior direito. */
+    3px /* Canto inferior direito. */
+    3px; /* Canto inferior esquerdo. */
+} /* Fecha o cabelo base. */
+
+.skin-eye { /* Desenha cada olho do personagem. */
+    position: absolute; /* Posiciona os olhos dentro da cabeça. */
+
+    width: 5px; /* Define a largura do olho. */
+    height: 7px; /* Define a altura do olho. */
+
+    background: #f8fbff; /* Preenche o olho com tom claro. */
+    border: 1px solid rgba(23,32,42,0.72); /* Contorna o olho para destacá-lo. */
+    border-radius: 2px 2px 3px 3px; /* Arredonda os cantos do olho. */
+
+    top: 19px; /* Alinha verticalmente o olho na face. */
+    z-index: 2; /* Mantém o olho sobre o fundo do rosto. */
+} /* Fecha o estilo base dos olhos. */
+
+.skin-eye::after { /* Adiciona a pupila dentro de cada olho. */
+    content: ""; /* Cria a forma da pupila sem conteúdo textual. */
+    position: absolute; /* Posiciona a pupila relativamente ao olho. */
+    left: 1px; /* Alinha a pupila a partir da borda esquerda. */
+    bottom: 1px; /* Mantém uma pequena margem inferior. */
+    width: 2px; /* Define a largura da pupila. */
+    height: 4px; /* Define sua altura. */
+    border-radius: 2px; /* Arredonda a pupila. */
+    background: #17202a; /* Usa cor escura para a pupila. */
+} /* Fecha o detalhe interno dos olhos. */
+
+.skin-eye.one { /* Posiciona o olho identificado como primeiro. */
+    left: 9px; /* Define seu deslocamento horizontal na cabeça. */
+} /* Fecha a posição do primeiro olho. */
+
+.skin-eye.two { /* Posiciona o segundo olho do lado oposto. */
+    right: 9px; /* Define seu afastamento da borda direita da cabeça. */
+} /* Fecha a posição do segundo olho. */
+
+.skin-mouth { /* Desenha a boca como uma forma pequena sobre o rosto. */
+    position: absolute; /* Posiciona a boca relativamente ao personagem. */
+    left: 13px; /* Define deslocamento horizontal da boca. */
+    top: 30px; /* Define posição vertical abaixo dos olhos. */
+    width: 8px; /* Define largura da boca. */
+    height: 2px; /* Define espessura da boca. */
+    border-radius: 0 0 4px 4px; /* Arredonda a borda inferior. */
+    background: #874c46; /* Define sua cor; pode ser ajustada por modelo. */
+    z-index: 2; /* Mantém a boca na camada visível do rosto. */
+} /* Fecha o desenho da boca. */
+
+.skin-neck { /* Desenha o pescoço entre cabeça e tronco. */
+    position: absolute; /* Posiciona o pescoço na prévia do personagem. */
+    left: 44px; /* Define a posição horizontal do pescoço. */
+    top: 36px; /* Coloca o pescoço logo abaixo da cabeça. */
+    width: 12px; /* Define a largura do pescoço. */
+    height: 10px; /* Define sua altura. */
+    border-radius: 3px; /* Suaviza os cantos do pescoço. */
+    background: linear-gradient(90deg, #b97859, #edc19d 42%, #c58c69); /* Aplica tons de pele com variação horizontal. */
+} /* Fecha o pescoço padrão. */
+
+.skin-preview.model-pilot .skin-neck { /* Personaliza o pescoço no modelo de professor/piloto. */
+    background: linear-gradient(90deg, #29475b, #4d7180, #29475b); /* Usa tons do uniforme para representar a gola. */
+} /* Fecha a variação do pescoço de piloto. */
+
+.skin-preview.model-android .skin-neck { /* Personaliza o pescoço do modelo android. */
+    background: linear-gradient(90deg, #b97859, #edc19d 42%, #c58c69); /* Mantém tons de pele neste modelo. */
+} /* Fecha a variação do pescoço android. */
+
+.skin-preview.model-ninja .skin-neck, /* Seleciona o pescoço do modelo ninja. */
+.skin-preview.model-shadow .skin-neck { /* Aplica a mesma regra ao modelo leitor/sombra. */
+    background: linear-gradient(90deg, var(--pants), var(--shirt), var(--pants)); /* Simula uma gola com cores das roupas. */
+} /* Fecha as variações de gola dos dois modelos. */
+
+.skin-body { /* Define forma e aparência do tronco da skin. */
+    position: absolute; /* Posiciona o corpo em relação à área de prévia. */
+
+    width: 46px; /* Define a largura do tronco. */
+    height: 48px; /* Define a altura do tronco. */
+
+    left: 27px; /* Alinha o tronco horizontalmente. */
+    top: 43px; /* Posiciona o tronco abaixo do pescoço. */
+
+    background: linear-gradient(105deg, rgba(255,255,255,0.48), var(--shirt) 27% 72%, rgba(12,23,32,0.5)); /* Combina luz, cor configurada da camisa e sombra. */
+
+    border-radius: /* Arredonda os cantos do tronco. */
+        10px /* Canto superior esquerdo. */
+        10px /* Canto superior direito. */
+        6px /* Canto inferior direito. */
+        6px; /* Canto inferior esquerdo. */
+
+    border: /* Contorna o corpo para destacá-lo do fundo. */
+        2px solid /* Define largura e estilo do contorno. */
+        rgba( /* Inicia os componentes da borda escura translúcida. */
+            0, /* Componente vermelho da cor preta. */
+            0, /* Componente verde da cor preta. */
+            0, /* Componente azul da cor preta. */
+            0.3 /* Transparência do contorno. */
+        ); /* Fecha a borda do tronco. */
+
+    transform: none; /* Mantém o tronco sem transformação na aparência padrão. */
+    box-shadow: /* Adiciona reflexo interno e sombra externa ao corpo. */
+        inset 3px 0 0 rgba(255,255,255,0.24), /* Cria uma faixa clara interna. */
+        2px 3px 0 rgba(7,16,24,0.28); /* Desloca a sombra para dar volume. */
+} /* Fecha o estilo do tronco. */
+
+.skin-arm { /* Define a aparência base dos braços. */
+    position: absolute; /* Posiciona braços relativamente à prévia. */
+
+    width: 14px; /* Define a largura de cada braço. */
+    height: 37px; /* Define a altura dos braços. */
+
+    top: 50px; /* Alinha os braços ao tronco. */
+
+    background: linear-gradient(90deg, rgba(255,255,255,0.24), var(--shirt) 38%, rgba(10,20,28,0.34)); /* Usa reflexo, cor da camisa e sombreamento. */
+
+    border-radius: 8px; /* Arredonda as extremidades dos braços. */
+    box-shadow: inset 1px 0 0 rgba(255,255,255,0.18), 1px 2px 0 rgba(8,18,26,0.24); /* Adiciona reflexo e sombra para dar volume. */
+} /* Fecha o estilo dos braços. */
+
+.skin-arm.left { /* Posiciona o braço do lado esquerdo. */
+    left: 16px; /* Define o recuo esquerdo do braço. */
+} /* Fecha a posição do braço esquerdo. */
+
+.skin-arm.right { /* Posiciona o braço do lado direito. */
+    right: 16px; /* Define o recuo direito do braço. */
+} /* Fecha a posição do braço direito. */
+
+.skin-leg { /* Define a aparência base das pernas. */
+    position: absolute; /* Permite posicionar cada perna dentro da prévia. */
+
+    width: 15px; /* Define a largura da perna. */
+    height: 37px; /* Define a altura da perna. */
+
+    top: 87px; /* Alinha as pernas abaixo do tronco. */
+
+    background: linear-gradient(100deg, rgba(255,255,255,0.2), var(--pants) 38%, rgba(8,16,25,0.48)); /* Combina luz, cor da calça e sombra. */
+
+    border-radius: 4px; /* Arredonda os cantos da perna. */
+    box-shadow: inset 1px 0 0 rgba(255,255,255,0.16), 1px 2px 0 rgba(8,16,25,0.26); /* Combina reflexo lateral e sombra externa. */
+} /* Fecha o estilo base das pernas. */
+
+.skin-leg::after { /* Acrescenta um calçado na extremidade de cada perna. */
+    content: ""; /* Cria o elemento decorativo sem texto. */
+    position: absolute; /* Posiciona o calçado em relação à perna. */
+    left: -4px; /* Estende o calçado um pouco para a esquerda. */
+    bottom: -5px; /* Coloca o calçado abaixo da perna. */
+    width: 22px; /* Define a largura do calçado. */
+    height: 9px; /* Define a altura do calçado. */
+    border-radius: 4px 7px 3px 3px; /* Arredonda os cantos do calçado. */
+    background: linear-gradient(105deg, #697775, #273746 72%); /* Cria tons claros e escuros para sugerir volume. */
+    box-shadow: inset 0 2px rgba(255,255,255,0.2), 0 2px 0 #17212b; /* Adiciona brilho superior e sombra inferior. */
+} /* Fecha o detalhe do calçado. */
+
+.skin-leg.left { /* Posiciona a perna esquerda. */
+    left: 33px; /* Define sua distância da borda esquerda da prévia. */
+} /* Fecha a posição da perna esquerda. */
+
+.skin-leg.right { /* Posiciona a perna direita. */
+    right: 33px; /* Define sua distância da borda direita da prévia. */
+} /* Fecha a posição da perna direita. */
+
+.skin-preview.model-runner .skin-body { /* Recorta o tronco do atleta em uma silhueta inclinada. */
+    clip-path: polygon(15% 0, 86% 0, 100% 100%, 0 100%); /* Define os vértices da forma em percentuais; eles podem ser reposicionados. */
+} /* Fecha o recorte do tronco do atleta. */
+
+.skin-preview.model-runner .skin-leg { /* Ajusta as pernas para o modelo atleta. */
+    width: 12px; /* Deixa as pernas mais estreitas; o valor pode ser alterado. */
+} /* Fecha o ajuste das pernas do atleta. */
+
+.skin-preview.model-guardian .skin-body { /* Define silhueta e volume próprios do representante. */
+    clip-path: polygon(5% 0, 95% 0, 100% 26%, 88% 100%, 12% 100%, 0 26%); /* Cria ombros e base por pontos percentuais ajustáveis. */
+    box-shadow: /* Adiciona iluminação e sombra ao tronco. */
+    inset 3px 0 0 rgba(255,255,255,0.24), /* Reflexo interno na lateral esquerda. */
+    2px 3px 0 rgba(7,16,24,0.28); /* Sombra externa deslocada. */
+} /* Fecha a silhueta do representante. */
+
+.skin-preview.model-guardian .skin-arm { /* Aumenta os braços do modelo representante. */
+    width: 17px; /* Define braços mais largos. */
+    height: 32px; /* Reduz um pouco a altura dos braços. */
+    border-radius: 8px 10px 5px 5px; /* Define arredondamentos próprios para os braços. */
+} /* Fecha a personalização dos braços. */
+
+.skin-preview.model-android .skin-head { /* Recorta a cabeça do modelo android em formato geométrico. */
+    clip-path: polygon(15% 0, 85% 0, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0 82%, 0 18%); /* Os pontos percentuais definem os cantos da cabeça. */
+} /* Fecha o recorte geométrico da cabeça. */
+
+.skin-preview.model-android .skin-body { /* Dá forma angular ao tronco android. */
+    clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%); /* Define o contorno trapezoidal pelos pontos do polígono. */
+} /* Fecha o recorte do tronco android. */
+
+.skin-preview.model-mechanic .skin-body { /* Desenha o tronco angular do modelo artista. */
+    clip-path: polygon(12% 0, 88% 0, 100% 18%, 91% 100%, 9% 100%, 0 18%); /* Ajuste os vértices percentuais para mudar a silhueta. */
+} /* Fecha o recorte do tronco artista. */
+
+.skin-preview.model-shadow .skin-body, /* Seleciona o tronco do aluno leitor. */
+.skin-preview.model-ninja .skin-body { /* Reutiliza a regra para o personagem músico/ninja. */
+    clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%); /* Forma levemente trapezoidal; coordenadas definem sua largura. */
+} /* Fecha o recorte compartilhado. */
+
+.skin-preview.model-school .skin-emblem { /* Configura o emblema no uniforme escolar. */
+    display: grid; /* Exibe o emblema e permite centralizar sua letra. */
+    place-items: center; /* Centraliza o conteúdo do emblema. */
+    top: 61px; /* Posiciona o detalhe sobre o tronco. */
+    left: 47px; /* Alinha o detalhe no centro horizontal do uniforme. */
+    width: 9px; /* Define a largura do distintivo. */
+    height: 11px; /* Define a altura do distintivo. */
+    border: 1px solid #dff8ff; /* Contorna o emblema em cor clara. */
+    border-radius: 2px 2px 4px 4px; /* Dá formato de distintivo ao contorno. */
+    background: #315c7b; /* Define a cor de fundo do emblema. */
+    color: #fff; /* Define a cor do símbolo interno. */
+    font-size: 5px; /* Mantém pequena a letra do distintivo. */
+    font-weight: 900; /* Destaca a letra em negrito. */
+} /* Fecha o estilo do emblema escolar. */
+
+.skin-preview.model-school .skin-emblem::after { content: "B"; } /* Insere a letra B no emblema; outro caractere pode ser usado. */
+
+.skin-preview.model-school .skin-body::before, /* Cria o primeiro detalhe decorativo da camisa. */
+.skin-preview.model-school .skin-body::after { /* Cria o segundo detalhe simétrico. */
+    content: ""; /* Habilita pseudo-elementos sem conteúdo textual. */
+    position: absolute; /* Posiciona cada detalhe sobre o tronco. */
+    top: -1px; /* Alinha os detalhes com a parte superior da camisa. */
+    width: 19px; /* Define a largura de cada detalhe. */
+    height: 22px; /* Define a altura de cada detalhe. */
+    background: linear-gradient(135deg, #347fbd, #1765aa 68%); /* Aplica gradiente azul que lembra as lapelas do uniforme. */
+} /* Fecha a base dos detalhes do uniforme. */
+
+.skin-preview.model-school .skin-body::before { /* Posiciona e recorta o detalhe esquerdo da camisa. */
+    left: -1px; /* Encosta a forma na lateral esquerda do tronco. */
+    clip-path: polygon(0 0, 100% 0, 58% 48%, 0 82%); /* Define o contorno por pontos percentuais ajustáveis. */
+} /* Fecha o detalhe esquerdo. */
+
+.skin-preview.model-school .skin-body::after { /* Posiciona e recorta o detalhe direito da camisa. */
+    right: -1px; /* Encosta a forma na lateral direita do tronco. */
+    clip-path: polygon(0 0, 100% 0, 100% 82%, 42% 48%); /* Espelha a forma com vértices próprios. */
+} /* Fecha o detalhe direito. */
+
+.skin-preview.model-school .skin-arm { /* Aplica mangas azuis ao uniforme escolar. */
+    background: linear-gradient(90deg, #14518a, #2877b6 48%, #164f86); /* Combina três tons para simular luz e sombra. */
+} /* Fecha a cor das mangas. */
+
+.skin-preview.model-school .skin-leg { /* Adiciona listra clara às calças do uniforme. */
+    background: /* Sobrepõe a listra ao gradiente base da calça. */
+        linear-gradient(90deg, #f5f8fb 0 2px, transparent 2px 100%), /* Desenha uma linha estreita na lateral. */
+        linear-gradient(100deg, rgba(255,255,255,0.2), var(--pants) 38%, rgba(8,16,25,0.48)); /* Mantém o sombreamento normal da calça. */
+} /* Fecha o estilo da calça escolar. */
+
+.skin-preview.model-runner .skin-hair { /* Transforma o cabelo do atleta em uma faixa esportiva. */
+    top: 8px; /* Reposiciona o detalhe sobre a cabeça. */
+    height: 7px; /* Reduz sua altura. */
+    border-radius: 2px; /* Deixa a forma mais retangular. */
+    background: var(--accent); /* Usa a cor de destaque configurada para o modelo. */
+} /* Fecha o detalhe de cabelo do atleta. */
+
+.skin-preview.model-runner .skin-chest-detail { /* Desenha faixas esportivas sobre a camisa do atleta. */
+    display: block; /* Torna visível o detalhe normalmente oculto. */
+    top: 47px; /* Posiciona o detalhe sobre o peito. */
+    left: 39px; /* Define seu alinhamento horizontal. */
+    width: 24px; /* Reserva largura para as faixas. */
+    height: 45px; /* Reserva altura ao longo do tronco. */
+    background: linear-gradient(105deg, transparent 0 25%, var(--accent) 27% 34%, transparent 36% 56%, rgba(255,255,255,0.8) 58% 64%, transparent 66%); /* Alterna transparência e cores para criar faixas diagonais. */
+} /* Fecha as faixas do uniforme esportivo. */
+
+.skin-preview.model-pilot .skin-head, /* Seleciona a cabeça do professor/piloto. */
+.skin-preview.model-android .skin-head { /* Aplica a mesma base à cabeça do modelo android. */
+    border: 3px solid var(--accent); /* Usa o destaque do modelo no contorno. */
+    border-radius: 11px 11px 8px 8px; /* Define cantos arredondados próprios. */
+    background: linear-gradient(135deg, #eaf5fa, #7697aa); /* Aplica fundo em tons metálicos claros. */
+} /* Fecha o estilo compartilhado das cabeças. */
+
+.skin-preview.model-pilot .skin-hair, /* Seleciona o cabelo do piloto. */
+.skin-preview.model-android .skin-hair { /* Seleciona também o cabelo do android. */
+    display: none; /* Oculta cabelo para que os modelos usem capacete ou cabeça tecnológica. */
+} /* Fecha a regra de cabelo oculto. */
+
+.skin-preview.model-pilot .skin-visor, /* Seleciona o visor do piloto. */
+.skin-preview.model-android .skin-visor, /* Seleciona o visor do android. */
+.skin-preview.model-ninja .skin-visor, /* Seleciona o visor do modelo ninja. */
+.skin-preview.model-shadow .skin-visor { /* Seleciona o visor do modelo leitor. */
+    display: block; /* Torna visível o acessório para estes modelos. */
+    z-index: 6; /* Posiciona o visor sobre as camadas do rosto. */
+    top: 22px; /* Define sua posição vertical. */
+    left: 34px; /* Define seu alinhamento horizontal. */
+    width: 34px; /* Define a largura do visor. */
+    height: 10px; /* Define sua altura. */
+    border: 1px solid rgba(219,248,255,0.8); /* Cria um contorno claro semitransparente. */
+    border-radius: 5px; /* Arredonda as extremidades do visor. */
+    background: linear-gradient(90deg, #16334b, var(--accent), #16334b); /* Destaca o centro com a cor temática. */
+    box-shadow: 0 0 10px var(--accent); /* Cria brilho ao redor do visor. */
+} /* Fecha o estilo compartilhado dos visores. */
+
+.skin-preview.model-pilot .skin-pack, /* Seleciona a mochila do modelo piloto. */
+.skin-preview.model-mechanic .skin-pack { /* Aplica mochila também ao artista. */
+    display: block; /* Exibe o acessório que fica oculto por padrão. */
+    top: 50px; /* Posiciona a mochila atrás do tronco. */
+    left: 17px; /* Define o recuo lateral. */
+    width: 66px; /* Define a largura da mochila. */
+    height: 47px; /* Define a altura da mochila. */
+    border: 2px solid var(--accent); /* Contorna o acessório com a cor de destaque. */
+    border-radius: 7px; /* Arredonda os cantos da mochila. */
+    background: linear-gradient(135deg, var(--accent), #304b60 42%); /* Cria gradiente com a cor temática e sombra. */
+} /* Fecha o acessório compartilhado. */
+
+.skin-preview.model-ninja .skin-cape, /* Seleciona a capa do modelo ninja. */
+.skin-preview.model-guardian .skin-cape, /* Seleciona a capa do representante. */
+.skin-preview.model-shadow .skin-cape { /* Seleciona a capa do aluno leitor. */
+    display: block; /* Mostra o acessório nesses modelos. */
+    z-index: 1; /* Mantém a capa atrás do corpo. */
+    top: 35px; /* Posiciona a capa abaixo da cabeça. */
+    left: 20px; /* Define a posição horizontal da capa. */
+    width: 60px; /* Define a largura da capa. */
+    height: 90px; /* Define seu comprimento. */
+    clip-path: polygon(16% 0, 84% 0, 100% 100%, 0 100%); /* Recorta a forma usando pontos percentuais ajustáveis. */
+    background: linear-gradient(115deg, var(--shirt), #111d2c 72%); /* Combina cor da roupa e sombra escura. */
+} /* Fecha a capa compartilhada. */
+
+.skin-preview.model-ninja .skin-hair, /* Ajusta o cabelo do modelo ninja. */
+.skin-preview.model-shadow .skin-hair { /* Reutiliza o estilo no aluno leitor. */
+    top: 1px; /* Move o cabelo para dentro da cabeça. */
+    left: -4px; /* Centraliza o cabelo mais largo. */
+    width: 44px; /* Amplia a largura do cabelo. */
+    height: 35px; /* Aumenta a altura para cobrir parte do rosto. */
+    border-radius: 15px 15px 4px 4px; /* Define cantos superiores bem arredondados. */
+    background: linear-gradient(135deg, var(--shirt), #17283b); /* Usa a cor da roupa em gradiente escuro. */
+} /* Fecha o cabelo dos dois modelos. */
+
+.skin-preview.model-ninja .skin-visor, /* Ajusta o visor ninja. */
+.skin-preview.model-shadow .skin-visor { /* Aplica o mesmo ajuste ao leitor. */
+    top: 24px; /* Posiciona o visor sobre a região dos olhos. */
+    height: 7px; /* Reduz a altura do visor. */
+    border-radius: 2px; /* Deixa o formato mais retangular. */
+} /* Fecha o ajuste compartilhado dos visores. */
+
+.skin-preview.model-guardian .skin-chest-detail, /* Ativa o detalhe de peito do representante. */
+.skin-preview.model-mechanic .skin-chest-detail, /* Ativa o detalhe do artista. */
+.skin-preview.model-android .skin-chest-detail, /* Ativa o detalhe do android. */
+.skin-preview.model-shadow .skin-chest-detail { /* Ativa o detalhe do leitor. */
+    display: block; /* Torna visível o acessório oculto por padrão. */
+    z-index: 5; /* Coloca o detalhe à frente do tronco. */
+    top: 49px; /* Posiciona-o na região do peito. */
+    left: 34px; /* Define seu alinhamento horizontal. */
+    width: 32px; /* Define largura do detalhe. */
+    height: 40px; /* Define altura do detalhe. */
+    border: 2px solid var(--accent); /* Usa a cor de destaque no contorno. */
+    border-radius: 4px; /* Arredonda os cantos. */
+    background: linear-gradient(160deg, rgba(255,255,255,0.18), transparent 50%); /* Acrescenta reflexo leve na superfície. */
+} /* Fecha a base compartilhada dos detalhes peitorais. */
+
+.skin-preview.model-guardian .skin-body { /* Alarga o corpo do representante. */
+    width: 54px; /* Define a largura maior do tronco. */
+    left: 23px; /* Reposiciona o tronco alargado para mantê-lo centralizado. */
+    border-radius: 14px 14px 5px 5px; /* Arredonda mais os ombros. */
+} /* Fecha o ajuste do tronco do representante. */
+
+.skin-preview.model-guardian .skin-head { /* Personaliza a cabeça do representante. */
+    border: 3px solid var(--accent); /* Aplica contorno de destaque mais espesso. */
+    border-radius: 10px 10px 5px 5px; /* Ajusta os cantos para o modelo. */
+} /* Fecha a cabeça do representante. */
+
+.skin-preview.model-guardian .skin-hair { /* Seleciona o cabelo do representante. */
+    display: none; /* Oculta o cabelo para revelar o design alternativo da cabeça. */
+} /* Fecha a regra de cabelo oculto. */
+
+.skin-preview.model-guardian .skin-emblem { /* Forma o emblema circular do representante. */
+    display: block; /* Torna o emblema visível. */
+    z-index: 6; /* Coloca o emblema acima das demais partes. */
+    top: 61px; /* Posiciona o emblema sobre o peito. */
+    left: 47px; /* Centraliza o emblema horizontalmente. */
+    width: 8px; /* Define a largura do círculo. */
+    height: 8px; /* Define a altura do círculo. */
+    border-radius: 50%; /* Transforma o quadrado em círculo. */
+    background: var(--accent); /* Preenche com a cor temática do modelo. */
+    box-shadow: 0 0 10px var(--accent); /* Cria brilho ao redor do emblema. */
+} /* Fecha o emblema do representante. */
+
+.skin-preview.model-android .skin-head { /* Ajusta o formato da cabeça android. */
+    border-radius: 7px; /* Usa arredondamento uniforme nos cantos. */
+} /* Fecha o formato da cabeça android. */
+
+.skin-preview.model-android .skin-body { /* Ajusta os cantos do tronco android. */
+    border-radius: 5px; /* Deixa o tronco mais geométrico. */
+} /* Fecha o formato do tronco android. */
+
+.skin-preview.model-mechanic .skin-chest-detail { /* Desenha faixas no acessório de peito do artista. */
+    background: linear-gradient(90deg, transparent 0 15%, var(--accent) 16% 23%, transparent 24% 75%, var(--accent) 76% 83%, transparent 84%); /* Alterna faixas transparentes e coloridas. */
+} /* Fecha o padrão do artista. */
+
+.skin-preview.model-shadow .skin-chest-detail { /* Define o símbolo diagonal do aluno leitor. */
+    background: linear-gradient(120deg, transparent 35%, var(--accent) 38% 45%, transparent 48%); /* Coloca uma faixa de destaque inclinada. */
+} /* Fecha o detalhe do leitor. */
+
+.skin-preview.model-pilot .skin-head, /* Define a cabeça do professor/piloto. */
+.skin-preview.model-guardian .skin-head, /* Aplica a base ao representante. */
+.skin-preview.model-android .skin-head { /* Aplica também ao modelo android. */
+    background: linear-gradient(108deg, #f5d2ad 0 34%, #dfaa80 67%, #ad765b 100%); /* Usa tons de pele na cabeça. */
+    border: 2px solid rgba(0,0,0,0.35); /* Contorna a cabeça com linha escura translúcida. */
+    border-radius: 10px 10px 12px 12px; /* Define cantos próprios para estes modelos. */
+    clip-path: none; /* Remove recortes geométricos herdados. */
+} /* Fecha a base compartilhada dessas cabeças. */
+
+.skin-preview.model-pilot .skin-hair, /* Reconfigura o cabelo do piloto. */
+.skin-preview.model-guardian .skin-hair, /* Reconfigura o cabelo do representante. */
+.skin-preview.model-ninja .skin-hair, /* Reconfigura o cabelo ninja. */
+.skin-preview.model-shadow .skin-hair, /* Reconfigura o cabelo do leitor. */
+.skin-preview.model-android .skin-hair { /* Aplica a base ao cabelo android. */
+    display: block; /* Exibe cabelo nesses modelos. */
+    width: 38px; /* Define a largura da mecha base. */
+    height: 16px; /* Define a altura da mecha base. */
+    left: -2px; /* Centraliza o cabelo sobre a cabeça. */
+    top: -3px; /* Posiciona a mecha acima da cabeça. */
+    border-radius: 12px 12px 3px 3px; /* Arredonda o topo e reduz os cantos inferiores. */
+    background: linear-gradient(115deg, rgba(255,255,255,0.16), var(--hair) 42%, rgba(0,0,0,0.38)); /* Combina reflexo, cor do cabelo e sombra. */
+} /* Fecha o estilo compartilhado do cabelo. */
+
+.skin-preview.model-pilot .skin-visor, /* Ajusta o visor do piloto. */
+.skin-preview.model-shadow .skin-visor, /* Aplica visor ao modelo leitor. */
+.skin-preview.model-android .skin-visor { /* Aplica visor também ao android. */
+    display: block; /* Exibe o elemento do visor. */
+    z-index: 6; /* Posiciona o visor à frente do cabelo e da cabeça. */
+    top: 17px; /* Alinha o acessório com os olhos. */
+    left: -1px; /* Centraliza o visor sobre o rosto. */
+    width: 36px; /* Define largura do visor. */
+    height: 12px; /* Define altura do visor. */
+    border: 0; /* Remove a borda geral para desenhar lentes separadas. */
+    border-radius: 0; /* Remove arredondamento da base do visor. */
+    background: linear-gradient(transparent 4px, var(--accent) 4px 6px, transparent 6px); /* Desenha uma linha horizontal colorida. */
+    box-shadow: none; /* Remove brilho externo da base. */
+} /* Fecha o formato base desse visor. */
+
+.skin-preview.model-pilot .skin-visor::before, /* Desenha uma lente do visor do piloto. */
+.skin-preview.model-pilot .skin-visor::after, /* Desenha a outra lente do piloto. */
+.skin-preview.model-shadow .skin-visor::before, /* Desenha a lente esquerda do leitor. */
+.skin-preview.model-shadow .skin-visor::after, /* Desenha a lente direita do leitor. */
+.skin-preview.model-android .skin-visor::before, /* Desenha a lente esquerda do android. */
+.skin-preview.model-android .skin-visor::after { /* Desenha a lente direita do android. */
+    content: ""; /* Cria cada lente sem texto. */
+    position: absolute; /* Posiciona lentes dentro da base do visor. */
+    top: 1px; /* Alinha cada lente próximo ao topo. */
+    width: 13px; /* Define a largura de cada lente. */
+    height: 9px; /* Define a altura de cada lente. */
+    border: 2px solid var(--accent); /* Contorna as lentes com a cor temática. */
+    border-radius: 5px 5px 4px 4px; /* Arredonda os cantos das lentes. */
+    background: rgba(25,40,52,0.28); /* Dá transparência escura ao interior. */
+} /* Fecha as lentes do visor. */
+
+.skin-preview.model-pilot .skin-visor::before, /* Seleciona lente esquerda do piloto. */
+.skin-preview.model-shadow .skin-visor::before, /* Seleciona lente esquerda do leitor. */
+.skin-preview.model-android .skin-visor::before { /* Seleciona lente esquerda do android. */
+    left: 0; /* Encosta a lente à borda esquerda do visor. */
+} /* Fecha a posição das lentes esquerdas. */
+
+.skin-preview.model-pilot .skin-visor::after, /* Seleciona lente direita do piloto. */
+.skin-preview.model-shadow .skin-visor::after, /* Seleciona lente direita do leitor. */
+.skin-preview.model-android .skin-visor::after { /* Seleciona lente direita do android. */
+    right: 0; /* Encosta a lente à borda direita do visor. */
+} /* Fecha a posição das lentes direitas. */
+
+.skin-preview.model-ninja .skin-visor { /* Cria uma base transparente para a bandana do ninja. */
+    display: block; /* Exibe o pseudo-elemento usado para desenhar a bandana. */
+    z-index: 6; /* Coloca a bandana acima das demais partes da cabeça. */
+    top: -8px; /* Posiciona o acessório acima do limite da cabeça. */
+    left: -5px; /* Centraliza o acessório mais largo. */
+    width: 44px; /* Define a largura da base. */
+    height: 22px; /* Define a altura da base. */
+    border: 0; /* Remove contorno da base transparente. */
+    border-radius: 0; /* Remove arredondamento da base. */
+    background: transparent; /* Mantém o fundo transparente. */
+    box-shadow: none; /* Evita sombra na base sem desenho. */
+} /* Fecha a base do acessório ninja. */
+
+.skin-preview.model-ninja .skin-visor::before { /* Desenha o arco superior da bandana ninja. */
+    content: ""; /* Cria a forma decorativa vazia. */
+    position: absolute; /* Posiciona o arco dentro da base do visor. */
+    left: 9px; /* Define recuo horizontal do arco. */
+    top: 0; /* Alinha o arco ao topo. */
+    width: 26px; /* Define largura da forma. */
+    height: 16px; /* Define altura da forma. */
+    border: 2px solid var(--accent); /* Contorna o arco com a cor temática. */
+    border-bottom: 0; /* Remove a borda inferior para formar um arco aberto. */
+    border-radius: 16px 16px 0 0; /* Arredonda a parte superior. */
+} /* Fecha o arco da bandana. */
+
+.skin-preview.model-ninja .skin-visor::after { /* Desenha as pontas laterais da bandana. */
+    content: ""; /* Cria o elemento decorativo. */
+    position: absolute; /* Posiciona pontas em relação à base. */
+    left: 0; /* Encosta a primeira ponta à esquerda. */
+    top: 8px; /* Alinha as pontas verticalmente. */
+    width: 6px; /* Define a largura de cada ponta. */
+    height: 10px; /* Define a altura das pontas. */
+    border-radius: 2px; /* Arredonda discretamente os cantos. */
+    background: var(--accent); /* Usa a cor de destaque do personagem. */
+    box-shadow: 38px 0 var(--accent); /* Desenha a segunda ponta deslocada para a direita. */
+} /* Fecha as pontas da bandana. */
+
+.skin-preview.model-guardian .skin-visor { /* Desenha a faixa frontal do representante. */
+    display: block; /* Torna a faixa visível. */
+    z-index: 6; /* Coloca a faixa à frente da cabeça. */
+    top: 4px; /* Posiciona a faixa perto do topo da cabeça. */
+    left: 0; /* Alinha a faixa ao início da cabeça. */
+    width: 34px; /* Define a largura da faixa. */
+    height: 4px; /* Define a espessura da faixa. */
+    border: 0; /* Remove contorno adicional. */
+    border-radius: 2px; /* Arredonda as extremidades. */
+    background: var(--accent); /* Usa cor temática sólida. */
+    box-shadow: none; /* Remove brilho para manter o detalhe simples. */
+} /* Fecha a faixa do representante. */
+
+.skin-preview.model-mechanic .skin-visor { /* Desenha o acessório de cabeça do artista. */
+    display: block; /* Mostra o elemento de visor. */
+    z-index: 6; /* Coloca o acessório acima do cabelo. */
+    top: -5px; /* Posiciona-o sobre a cabeça. */
+    left: 2px; /* Centraliza o acessório. */
+    width: 30px; /* Define largura do detalhe. */
+    height: 9px; /* Define altura do detalhe. */
+    border: 2px solid var(--accent); /* Contorna com a cor de destaque. */
+    border-radius: 12px 12px 5px 5px; /* Dá formato curvo na parte superior. */
+    background: var(--shirt); /* Usa a cor da camisa como preenchimento. */
+    box-shadow: none; /* Não adiciona brilho externo. */
+} /* Fecha o acessório do artista. */
+
+.skin-preview.model-ninja .skin-cape, /* Seleciona a capa do modelo ninja. */
+.skin-preview.model-guardian .skin-cape, /* Seleciona a capa do representante. */
+.skin-preview.model-shadow .skin-cape { /* Seleciona a capa do leitor. */
+    display: none; /* Oculta a capa para evitar sobreposição indesejada após o ajuste do modelo. */
+} /* Fecha a regra de capas ocultas. */
+
+.skin-preview.model-ninja .skin-body, /* Seleciona o tronco ninja. */
+.skin-preview.model-guardian .skin-body, /* Seleciona o tronco do representante. */
+.skin-preview.model-mechanic .skin-body, /* Seleciona o tronco do artista. */
+.skin-preview.model-shadow .skin-body, /* Seleciona o tronco do leitor. */
+.skin-preview.model-android .skin-body { /* Seleciona o tronco android. */
+    width: 46px; /* Restaura a largura base do tronco. */
+    left: 27px; /* Centraliza o tronco na prévia. */
+    clip-path: none; /* Remove recortes aplicados por regras anteriores. */
+    border-radius: 12px 12px 8px 8px; /* Define formato comum com cantos arredondados. */
+} /* Fecha os ajustes compartilhados do tronco. */
+
+.skin-preview.model-guardian .skin-arm { /* Restaura dimensões base dos braços do representante. */
+    width: 14px; /* Define largura normal do braço. */
+    height: 37px; /* Define altura normal do braço. */
+    border-radius: 8px; /* Arredonda uniformemente os cantos. */
+} /* Fecha o ajuste final dos braços. */
+
+.skin-preview.model-pilot .skin-pack, /* Seleciona a mochila do piloto. */
+.skin-preview.model-mechanic .skin-pack, /* Seleciona a mochila do artista. */
+.skin-preview.model-shadow .skin-pack { /* Seleciona a mochila do aluno leitor. */
+    z-index: 1; /* Mantém a mochila atrás do tronco. */
+    top: 48px; /* Posiciona o acessório na parte superior das costas. */
+    left: 22px; /* Define seu alinhamento horizontal. */
+    width: 56px; /* Define a largura da mochila. */
+    height: 40px; /* Define a altura da mochila. */
+    border: 2px solid var(--accent); /* Contorna a mochila com a cor de destaque. */
+    border-radius: 7px; /* Arredonda os cantos. */
+    background: linear-gradient(135deg, var(--pants), #203347); /* Combina a cor da calça com uma sombra escura. */
+} /* Fecha a mochila compartilhada. */
+
+.skin-preview.model-guardian .skin-chest-detail { /* Transforma o detalhe peitoral em faixa de destaque. */
+    border: 0; /* Remove a borda retangular herdada. */
+    border-radius: 0; /* Remove arredondamentos herdados. */
+    background: linear-gradient(55deg, transparent 0 43%, var(--accent) 44% 54%, transparent 55%); /* Desenha uma faixa diagonal na armadura. */
+} /* Fecha o detalhe do representante. */
+
+.skin-preview.model-mechanic .skin-chest-detail { /* Define o painel frontal do artista. */
+    border: 2px solid var(--accent); /* Contorna o painel com a cor da skin. */
+    border-radius: 4px 4px 8px 8px; /* Arredonda mais os cantos inferiores. */
+    background: linear-gradient(90deg, transparent 0 45%, var(--accent) 46% 50%, transparent 51%); /* Cria uma faixa vertical no centro. */
+} /* Fecha o detalhe do artista. */
+
+.skin-preview.model-shadow .skin-chest-detail { /* Personaliza o detalhe da roupa do leitor. */
+    border-color: var(--accent); /* Aplica a cor temática ao contorno herdado. */
+    border-radius: 2px; /* Mantém cantos quase retos. */
+    background: linear-gradient(90deg, transparent 0 46%, var(--accent) 47% 50%, transparent 51%); /* Cria uma faixa central estreita. */
+} /* Fecha o detalhe do leitor. */
+
+.skin-preview.model-guardian .skin-emblem { /* Ajusta o brilho do emblema do representante. */
+    box-shadow: none; /* Remove a sombra da base para evitar brilho redundante. */
+} /* Fecha o ajuste do emblema. */
+
+.skin-preview.model-runner .skin-chest-detail::after { /* Escreve o número da camisa do atleta. */
+    content: "07"; /* Texto inserido pelo pseudo-elemento; pode ser substituído. */
+    position: absolute; /* Posiciona o número dentro do detalhe peitoral. */
+    left: 8px; /* Define o recuo horizontal do número. */
+    top: 7px; /* Define seu recuo vertical. */
+    color: #fff; /* Exibe o número em branco. */
+    font-size: 7px; /* Mantém o número compacto. */
+    font-weight: 900; /* Destaca os algarismos em negrito. */
+} /* Fecha o número da camisa. */
+
+.skin-preview.model-pilot .skin-chest-detail { /* Desenha um pequeno emblema no uniforme do piloto. */
+    display: block; /* Exibe o detalhe oculto por padrão. */
+    z-index: 5; /* Sobrepõe o tronco. */
+    top: 60px; /* Posiciona o emblema no peito. */
+    left: 43px; /* Define sua posição horizontal. */
+    width: 14px; /* Define a largura do emblema. */
+    height: 13px; /* Define sua altura. */
+    border: 1px solid var(--accent); /* Contorna com a cor de destaque. */
+    border-radius: 2px 2px 4px 4px; /* Dá formato compacto ao emblema. */
+    background: linear-gradient(90deg, transparent 0 35%, var(--accent) 36% 46%, transparent 47% 57%, var(--accent) 58% 68%, transparent 69%); /* Forma detalhes verticais usando faixas de cor. */
+} /* Fecha o emblema do piloto. */
+
+.skin-preview.model-ninja .skin-chest-detail { /* Exibe o símbolo musical do modelo ninja. */
+    display: block; /* Torna visível o elemento de detalhe. */
+    z-index: 5; /* Coloca o símbolo sobre o tronco. */
+    top: 60px; /* Define a posição vertical no peito. */
+    left: 44px; /* Define a posição horizontal. */
+    color: var(--accent); /* Usa a cor de destaque do modelo. */
+    font-size: 15px; /* Define o tamanho do símbolo musical. */
+} /* Fecha o detalhe musical. */
+
+.skin-preview.model-ninja .skin-chest-detail::after { content: "♪"; } /* Insere uma nota musical; outro símbolo pode substituir o caractere. */
+
+.skin-preview.model-guardian .skin-emblem::after { /* Insere a letra no emblema do representante. */
+    content: "G"; /* Define o caractere mostrado no centro do emblema. */
+    color: #233b31; /* Usa tom escuro para contraste sobre o fundo claro. */
+    font-size: 6px; /* Define o tamanho da letra. */
+    font-weight: 900; /* Deixa a letra bem destacada. */
+} /* Fecha o conteúdo do emblema. */
+
+.skin-preview.model-android .skin-chest-detail::after { /* Exibe a classificação A+ no modelo android. */
+    content: "A+"; /* Texto inserido no detalhe; pode ser substituído por outro rótulo. */
+    display: grid; /* Ativa grid para centralizar o texto. */
+    height: 100%; /* Ocupa toda a altura do detalhe peitoral. */
+    place-items: center; /* Centraliza o texto nos dois eixos. */
+    color: var(--accent); /* Usa a cor temática do modelo. */
+    font-size: 20px; /* Destaca o símbolo. */
+    font-weight: 900; /* Exibe o símbolo em peso forte. */
+} /* Fecha a classificação do android. */
+
+.skin-preview.model-mechanic .skin-chest-detail::after { /* Insere a palavra ART no uniforme do artista. */
+    content: "ART"; /* Texto do detalhe; pode receber outra sigla. */
+    display: block; /* Faz o conteúdo ocupar uma linha própria. */
+    padding-top: 5px; /* Desloca o texto para dentro do painel. */
+    color: var(--accent); /* Aplica a cor de destaque do modelo. */
+    font-size: 6px; /* Mantém a palavra pequena para caber no detalhe. */
+    font-weight: 900; /* Destaca as letras. */
+} /* Fecha o texto do artista. */
+
+.skin-preview.model-shadow .skin-chest-detail::after { /* Insere a sigla ABC no detalhe do leitor. */
+    content: "ABC"; /* Texto mostrado no pseudo-elemento; pode ser trocado. */
+    display: block; /* Cria uma linha para a sigla. */
+    padding-top: 14px; /* Ajusta sua posição vertical. */
+    color: var(--accent); /* Usa a cor temática definida para a skin. */
+    font-size: 6px; /* Define tamanho compacto para a sigla. */
+    font-weight: 900; /* Aplica peso forte. */
+    text-align: center; /* Centraliza o texto dentro do detalhe. */
+} /* Fecha a sigla do leitor. */
+
+.skin-card h3 { /* Formata o nome do personagem no cartão. */
+    display: flex; /* Permite alinhar nomes de uma ou duas linhas. */
+
+    align-items: center; /* Centraliza verticalmente o texto. */
+
+    justify-content: center; /* Centraliza o nome na horizontal. */
+
+    min-height: 31px; /* Reserva altura para manter os cartões alinhados. */
+
+    margin-top: 3px; /* Separa o nome da etiqueta. */
+
+    font-size: 13px; /* Define o tamanho compacto do nome. */
+
+    line-height: 1.16; /* Aproxima as linhas de nomes longos. */
+
+    text-align: center; /* Centraliza nomes com duas linhas. */
+} /* Fecha o nome do cartão. */
+
+.skin-card p { /* Formata o custo ou estado de desbloqueio da skin. */
+    color: #a4b4c7; /* Usa cor secundária para o texto informativo. */
+
+    font-size: 9px; /* Mantém o texto de custo pequeno. */
+
+    min-height: 23px; /* Reserva altura para manter os botões alinhados. */
+
+    margin: /* Define margens vertical e horizontal do parágrafo. */
+        5px 0; /* Adiciona espaço acima/abaixo e remove margem lateral. */
+} /* Fecha o texto de custo e estado. */
+
+.skin-card button { /* Formata o comando de comprar ou equipar. */
+    width: 100%; /* Faz o botão preencher a largura do cartão. */
+
+    padding: 8px; /* Define área interna de clique. */
+
+    border: /* Desenha o contorno do botão da skin. */
+        2px solid #07101a; /* Define espessura, estilo e cor do contorno. */
+
+    color: white; /* Define a cor do rótulo do botão. */
+
+    background: #4b729c; /* Define fundo base; estados e tema podem sobrescrevê-lo. */
+
+    font-size: 10px; /* Define o tamanho do texto do comando. */
+
+    font-weight: 900; /* Destaca o comando em negrito. */
+} /* Fecha o botão do cartão. */
+
+.skin-card .skin-cta { /* Refina o botão de compra/equipar. */
+    width: 100%; /* Ocupa toda a largura disponível. */
+
+    padding: 9px 8px; /* Aumenta levemente a área de clique. */
+
+    border: 2px solid rgba(184, 233, 255, 0.62); /* Usa um contorno claro semitransparente. */
+
+    border-radius: 7px; /* Acompanha o arredondamento do cartão. */
+
+    background: linear-gradient(145deg, #527fa3, #315572); /* Aplica gradiente azul ao comando. */
+
+    color: #f5fbff; /* Define o rótulo quase branco. */
+
+    font-size: 9.5px; /* Mantém o texto compacto. */
+
+    font-weight: 900; /* Destaca o comando. */
+
+    letter-spacing: 0.9px; /* Espaça as letras do rótulo. */
+
+    box-shadow: /* Combina relevo e brilho discreto. */
+        inset 0 -3px rgba(12, 37, 58, 0.25), /* Cria profundidade na base. */
+        0 0 14px rgba(77, 183, 255, 0.16); /* Espalha um brilho azulado. */
+
+    cursor: pointer; /* Indica que o elemento é acionável. */
+
+    transition: /* Suaviza os estados interativos. */
+        filter 0.15s ease, /* Anima o brilho do botão. */
+        transform 0.1s ease; /* Anima o toque do botão. */
+} /* Fecha o botão refinado. */
+
+.skin-card .skin-cta:hover:not(:disabled) { /* Clareia o botão sob o cursor. */
+    filter: brightness(1.18); /* Aumenta o brilho sem trocar as cores. */
+} /* Fecha o hover do botão. */
+
+.skin-card .skin-cta:active:not(:disabled) { /* Responde ao pressionamento. */
+    transform: translateY(1px); /* Move levemente o botão para baixo. */
+} /* Fecha o estado pressionado. */
+
+.skin-card .skin-cta:disabled { /* Comunica que a compra ainda não está disponível. */
+    opacity: 0.5; /* Reduz a presença visual do comando. */
+
+    cursor: not-allowed; /* Indica que o botão está inativo. */
+
+    filter: grayscale(0.25); /* Remove parte da saturação. */
+} /* Fecha o botão desabilitado. */
+
+.skins-container .skin-card.selected .skin-cta { /* Destaca o comando da skin em uso. */
+    background: var(--skin-accent); /* Usa a cor temática como fundo sólido. */
+
+    border-color: #e1f8ff; /* Clareia o contorno do botão ativo. */
+
+    color: #062337; /* Usa texto escuro para contraste sobre o destaque. */
+
+    box-shadow: /* Combina relevo e brilho temático. */
+        inset 0 -3px rgba(15, 45, 66, 0.2), /* Cria profundidade na base. */
+        0 0 16px var(--skin-glow); /* Espalha o brilho da skin. */
+} /* Fecha o botão da skin equipada. */
+
+/* =========================================================
+   RECORDES
+   ========================================================= */
+
+.record-row { /* Organiza uma linha de resultado na tela de recordes. */
+    display: flex; /* Alinha categoria e pontuação em uma linha. */
+
+    justify-content: /* Define a distribuição horizontal dos elementos. */
+        space-between; /* Mantém rótulo e resultado em extremidades opostas. */
+
+    align-items: center; /* Centraliza verticalmente os itens da linha. */
+
+    padding: /* Define preenchimento vertical e horizontal. */
+        18px 20px; /* Cria espaço interno acima/abaixo e nas laterais. */
+
+    margin: 11px 0; /* Separa as linhas entre si. */
+
+    background: #172332; /* Define fundo escuro para o registro. */
+
+    border: /* Desenha contorno do registro. */
+        3px solid #07101a; /* Define espessura, estilo e cor. */
+} /* Fecha a linha de recorde. */
+
+.record-row strong { /* Destaca o número do recorde dentro da linha. */
+    color: var(--gold); /* Usa a cor global de pontuação. */
+} /* Fecha o destaque do valor. */
+
+.record-icon { /* Define o espaço reservado aos símbolos de dificuldade. */
+    display: inline-block; /* Permite dimensões e alinhamento em linha. */
+
+    width: 24px; /* Reserva largura uniforme para alinhar os rótulos. */
+
+    margin-right: 7px; /* Separa o símbolo do nome da categoria. */
+} /* Fecha o ícone do recorde. */
+
+.easy-color { /* Define a cor associada à dificuldade fácil. */
+    color: #a5edff; /* Usa tom claro para identificar esse nível. */
+} /* Fecha a cor fácil. */
+
+.medium-color { /* Define a cor associada à dificuldade média. */
+    color: #70cfff; /* Usa azul claro para diferenciar o nível. */
+} /* Fecha a cor média. */
+
+.hard-color { /* Define a cor associada à dificuldade difícil. */
+    color: #e4f7ff; /* Usa tom quase branco para identificar esse nível. */
+} /* Fecha a cor difícil. */
+
+/* =========================================================
+   CONQUISTAS
+   ========================================================= */
+
+.achievement-panel { /* Define a largura do painel de conquistas. */
+    width: 760px; /* Reserva espaço para exibir itens em colunas. */
+} /* Fecha o painel de conquistas. */
+
+.achievement-container { /* Organiza os itens de conquista em grade. */
+    display: grid; /* Ativa layout em linhas e colunas. */
+
+    grid-template-columns: /* Define duas colunas do mesmo tamanho. */
+        repeat(2, 1fr); /* Pode alterar a contagem de colunas conforme o espaço disponível. */
+
+    gap: 13px; /* Espaça cartões nos dois eixos da grade. */
+} /* Fecha a grade de conquistas. */
+
+.achievement { /* Define a aparência base de cada conquista. */
+    min-height: 94px; /* Mantém altura mínima para cartões alinhados. */
+
+    padding: 14px; /* Cria espaço interno para título e descrição. */
+
+    text-align: left; /* Alinha as informações à esquerda. */
+
+    border: /* Define a borda padrão do item. */
+        3px solid #07101a; /* Configura espessura, estilo e cor. */
+
+    background: #172332; /* Define o fundo base do cartão. */
+} /* Fecha o cartão de conquista. */
+
+.achievement.unlocked { /* Identifica visualmente uma conquista desbloqueada. */
+    border-color: #a5edff; /* Clareia a borda para destacar o estado concluído. */
+
+    background: /* Aplica um gradiente ao estado desbloqueado. */
+        linear-gradient( /* Inicia a mistura diagonal do cartão concluído. */
+            145deg, /* Define a direção diagonal do gradiente. */
+            #315b78, /* Cor inicial do cartão desbloqueado. */
+            #203c57 /* Cor final do cartão desbloqueado. */
+        ); /* Fecha o fundo de estado concluído. */
+} /* Fecha o estado desbloqueado. */
+
+.achievement.locked { /* Identifica visualmente uma conquista ainda bloqueada. */
+    opacity: 0.43; /* Reduz a opacidade para indicar indisponibilidade. */
+} /* Fecha o estado bloqueado. */
+
+.achievement h3 { /* Formata o título de cada conquista. */
+    font-size: 13px; /* Define o tamanho do nome da conquista. */
+
+    margin-bottom: 8px; /* Separa título e descrição. */
+} /* Fecha o título da conquista. */
+
+.achievement p { /* Formata a descrição de cada conquista. */
+    color: #a9b8c8; /* Usa cor secundária para a explicação. */
+
+    font-size: 10px; /* Mantém a descrição compacta. */
+
+    line-height: 1.5; /* Define o espaçamento entre linhas da descrição. */
+} /* Fecha a descrição da conquista. */
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
+
+.option { /* Formata uma linha de preferência acessível. */
+    display: flex; /* Alinha controle e rótulo horizontalmente. */
+
+    align-items: center; /* Centraliza controle e texto verticalmente. */
+
+    gap: 13px; /* Espaça a caixa de seleção e sua descrição. */
+
+    width: 100%; /* Faz a opção ocupar a largura do painel. */
+
+    padding: 15px; /* Amplia área clicável e espaço interno. */
+
+    margin: 10px 0; /* Separa as opções verticalmente. */
+
+    background: #172332; /* Define fundo para destacar cada opção. */
+
+    border: /* Cria contorno da linha acessível. */
+        3px solid #07101a; /* Define largura, estilo e cor da borda. */
+
+    cursor: pointer; /* Indica que a opção pode ser clicada. */
+} /* Fecha a regra de opção acessível. */
+
+.option input { /* Define tamanho e cor das caixas de seleção. */
+    width: 20px; /* Define a largura do controle. */
+    height: 20px; /* Define a altura do controle. */
+
+    accent-color: #70cfff; /* Aplica cor de destaque aos controles nativos. */
+} /* Fecha o estilo das caixas de seleção. */
+
+.accessibility-help { /* Formata o texto auxiliar das opções. */
+    margin-top: 17px; /* Separa a ajuda do controle acima. */
+
+    color: #aab9ca; /* Define cor secundária para o texto de apoio. */
+
+    font-size: 11px; /* Mantém a orientação em tamanho compacto. */
+
+    line-height: 1.6; /* Melhora o espaçamento das linhas. */
+} /* Fecha o texto de ajuda. */
+
+/* =========================================================
+   JOGO
+   ========================================================= */
+
+.game-screen { /* Configura a tela da partida em relação às demais telas. */
+    flex-direction: column; /* Empilha HUD, área de jogo e controles verticalmente. */
+
+    justify-content: /* Controla a distribuição vertical do conteúdo. */
+        flex-start; /* Alinha o conteúdo a partir do topo. */
+
+    align-items: center; /* Centraliza horizontalmente os elementos. */
+
+    background: #0b111a; /* Define cor de fundo atrás da área de jogo. */
+
+    padding: 0; /* Remove o espaço reservado por telas comuns. */
+
+    overflow: hidden; /* Evita rolagem fora da área de jogo. */
+} /* Fecha a regra da tela de jogo. */
+
+.game-screen.active { /* Seleciona a tela de jogo quando está ativa. */
+    display: flex; /* Garante a exibição como contêiner flexível. */
+} /* Fecha a tela ativa do jogo. */
+
+.hud { /* Formata a barra superior com os dados da partida. */
+    position: relative; /* Permite posicionar a linha luminosa decorativa. */
+
+    width: 100%; /* Faz o HUD ocupar toda a largura da janela. */
+
+    height: 67px; /* Define a altura fixa da barra superior. */
+
+    flex-shrink: 0; /* Impede que o HUD seja comprimido pelo restante do layout. */
+
+    display: grid; /* Mantém estatísticas, centro e ações em colunas equilibradas. */
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); /* Reserva os lados e centraliza mapa e tempo. */
+
+    align-items: center; /* Centraliza os elementos verticalmente. */
+
+    gap: 12px; /* Separa os três blocos do cabeçalho. */
+
+    padding: 0 16px; /* Reserva espaço nas laterais do HUD. */
+
+    background: /* Cria um gradiente azul profundo para o HUD. */
+        linear-gradient(180deg, #2b4e6c 0%, #183049 58%, #122538 100%);
+
+    border-bottom: 3px solid #07131f; /* Separa o HUD da área de jogo. */
+
+    box-shadow: /* Combina brilho interno e sombra sobre o cenário. */
+        inset 0 1px 0 rgba(216, 246, 255, 0.13),
+        0 6px 20px rgba(3, 10, 18, 0.35);
+
+    z-index: 10; /* Mantém a barra acima do cenário quando há sobreposição. */
+} /* Fecha o estilo do HUD. */
+
+.hud::after { /* Desenha uma linha luminosa fina na base do cabeçalho. */
+    content: ""; /* Cria o elemento decorativo. */
+    position: absolute; /* Posiciona a linha em relação ao HUD. */
+    left: 0; /* Encosta à borda esquerda. */
+    right: 0; /* Encosta à borda direita. */
+    bottom: 0; /* Mantém a linha na base visível. */
+    height: 1px; /* Define espessura mínima. */
+    background: linear-gradient(90deg, transparent, rgba(126, 224, 255, 0.7), transparent); /* Cria um brilho centralizado. */
+    pointer-events: none; /* Evita interferência nos controles. */
+} /* Fecha a linha decorativa do HUD. */
+
+.hud-group { /* Agrupa indicadores que ficam juntos no HUD. */
+    display: flex; /* Alinha os indicadores em uma linha. */
+    align-items: center; /* Centraliza os indicadores verticalmente. */
+    gap: 9px; /* Define espaço entre os indicadores do grupo. */
+    min-width: 0; /* Permite que o grupo se ajuste em telas menores. */
+} /* Fecha o grupo de HUD. */
+
+.hud-group-left { /* Posiciona as estatísticas no início da barra. */
+    justify-self: start; /* Encosta o grupo à esquerda. */
+} /* Fecha o alinhamento do grupo esquerdo. */
+
+.hud-group-right { /* Posiciona vidas e menu no fim da barra. */
+    justify-self: end; /* Encosta o grupo à direita. */
+} /* Fecha o alinhamento do grupo direito. */
+
+.hud-item { /* Transforma cada estatística em uma cápsula legível. */
+    display: flex; /* Coloca ícone, rótulo e valor na mesma linha. */
+    align-items: center; /* Centraliza os três elementos verticalmente. */
+    gap: 6px; /* Separa ícone, rótulo e valor. */
+
+    min-height: 38px; /* Define altura confortável para leitura. */
+    padding: 0 11px; /* Reserva espaço interno nas laterais. */
+
+    border: 1px solid rgba(161, 226, 255, 0.2); /* Cria um contorno azul discreto. */
+    border-radius: 9px; /* Suaviza os cantos da cápsula. */
+
+    background: linear-gradient(180deg, rgba(10, 32, 50, 0.58), rgba(6, 22, 36, 0.4)); /* Dá profundidade ao indicador. */
+    box-shadow: inset 0 1px 0 rgba(224, 248, 255, 0.06); /* Adiciona um brilho superior sutil. */
+
+    color: #c3dcec; /* Define a cor-base do indicador. */
+    font-size: 10px; /* Mantém o conjunto compacto. */
+    font-weight: 800; /* Reforça a leitura do rótulo. */
+    white-space: nowrap; /* Impede quebra de linha dentro da cápsula. */
+} /* Fecha o indicador do HUD. */
+
+.hud-icon { /* Estiliza os símbolos que identificam cada informação. */
+    color: #84e6ff; /* Usa azul luminoso nos ícones. */
+    font-family: "Segoe UI Symbol", "Arial Unicode MS", sans-serif; /* Prioriza símbolos monocromáticos. */
+    font-size: 13px; /* Mantém os ícones proporcionais ao texto. */
+    line-height: 1; /* Remove espaço vertical extra. */
+    text-shadow: 0 0 10px rgba(86, 206, 255, 0.42); /* Cria um brilho suave ao redor. */
+} /* Fecha os ícones do HUD. */
+
+.hud-coin { /* Desenha a moeda do contador sem depender de emoji. */
+    width: 12px; /* Define a largura da moeda. */
+    height: 12px; /* Mantém a forma circular. */
+    flex-shrink: 0; /* Impede que a moeda seja comprimida. */
+    border: 1px solid #ffe5a3; /* Cria o contorno dourado. */
+    border-radius: 50%; /* Arredonda completamente o elemento. */
+    background: radial-gradient(circle at 34% 28%, #fff5c8, #f5c64f 48%, #b87b16); /* Simula o brilho metálico. */
+    box-shadow: 0 0 8px rgba(255, 205, 90, 0.42); /* Adiciona um brilho dourado. */
+} /* Fecha o ícone de moeda. */
+
+.hud-label { /* Formata o nome de cada informação. */
+    color: #9fc6db; /* Usa tom azul-acinzentado para o rótulo. */
+    font-size: 9px; /* Mantém o rótulo compacto. */
+    font-weight: 900; /* Destaca o nome da estatística. */
+    letter-spacing: 0.8px; /* Facilita a leitura em maiúsculas. */
+    text-transform: uppercase; /* Uniformiza os rótulos. */
+} /* Fecha o rótulo do HUD. */
+
+.hud-item b { /* Formata o valor numérico dentro de cada indicador. */
+    display: inline; /* Mantém o valor ao lado do rótulo. */
+    margin: 0; /* Remove o afastamento vertical usado no layout antigo. */
+    color: #f7fdff; /* Destaca os valores em branco. */
+    font-size: 15px; /* Amplia os números em relação aos rótulos. */
+    font-variant-numeric: tabular-nums; /* Mantém a largura estável dos números. */
+    line-height: 1; /* Alinha o valor ao centro da cápsula. */
+} /* Fecha o valor do HUD. */
+
+.hud-center { /* Agrupa mapa e cronômetro no centro do cabeçalho. */
+    display: flex; /* Coloca os dois indicadores lado a lado. */
+    align-items: center; /* Centraliza os indicadores verticalmente. */
+    gap: 8px; /* Separa mapa e tempo. */
+} /* Fecha o centro do HUD. */
+
+.hud-map, /* Seleciona a cápsula do mapa. */
+.hud-timer { /* Seleciona a cápsula do cronômetro. */
+    display: flex; /* Alinha ícone, rótulo e valor em uma linha. */
+    align-items: center; /* Centraliza os elementos verticalmente. */
+    gap: 6px; /* Separa os elementos internos. */
+
+    min-height: 38px; /* Mantém a mesma altura das demais cápsulas. */
+    padding: 0 12px; /* Reserva espaço interno nas laterais. */
+
+    border: 1px solid rgba(161, 226, 255, 0.22); /* Contorna as cápsulas centrais. */
+    border-radius: 9px; /* Suaviza os cantos. */
+
+    background: linear-gradient(180deg, rgba(16, 47, 69, 0.72), rgba(9, 28, 44, 0.54)); /* Destaca o centro do HUD. */
+    box-shadow: inset 0 1px 0 rgba(224, 248, 255, 0.07); /* Cria um brilho superior discreto. */
+    white-space: nowrap; /* Mantém os valores em uma só linha. */
+} /* Fecha as cápsulas centrais. */
+
+.hud-timer { /* Reforça a importância do cronômetro. */
+    border-color: rgba(142, 230, 255, 0.34); /* Clareia a borda do tempo. */
+    box-shadow: /* Adiciona brilho interno e externo. */
+        inset 0 1px 0 rgba(224, 248, 255, 0.09),
+        0 0 16px rgba(80, 200, 255, 0.12);
+} /* Fecha o destaque do cronômetro. */
+
+.hud-map-name { /* Formata o nome do cenário. */
+    color: #e9fbff; /* Usa branco azulado para o nome. */
+    font-size: 10px; /* Mantém o nome compacto. */
+    font-weight: 900; /* Destaca o cenário. */
+    letter-spacing: 1px; /* Espaça as letras do nome. */
+} /* Fecha o nome do cenário. */
+
+.hud-timer strong { /* Formata o valor do cronômetro. */
+    color: #fff; /* Destaca o tempo em branco. */
+    font-size: 20px; /* Amplia o cronômetro para facilitar a leitura. */
+    font-variant-numeric: tabular-nums; /* Mantém os dígitos alinhados. */
+    line-height: 1; /* Remove espaço vertical extra. */
+    text-shadow: 0 0 12px rgba(120, 220, 255, 0.32); /* Cria um brilho suave. */
+} /* Fecha o valor do cronômetro. */
+
+.pause-btn { /* Define o botão de menu como uma ação clara e rotulada. */
+    display: inline-flex; /* Alinha símbolo e texto na horizontal. */
+    align-items: center; /* Centraliza os elementos verticalmente. */
+    justify-content: center; /* Centraliza o conteúdo do botão. */
+    gap: 7px; /* Separa o símbolo do rótulo. */
+
+    width: auto; /* Permite que o texto defina a largura. */
+    min-width: 92px; /* Garante uma área de clique confortável. */
+    height: 38px; /* Mantém a altura alinhada às cápsulas. */
+    padding: 0 12px; /* Reserva espaço interno nas laterais. */
+
+    border: 1px solid rgba(184, 233, 255, 0.48); /* Contorna o botão com azul claro. */
+    border-radius: 9px; /* Suaviza os cantos. */
+
+    background: linear-gradient(180deg, #467493, #2b4e6b); /* Cria um botão azul com profundidade. */
+    color: #f7fdff; /* Define a cor do conteúdo. */
+
+    font-size: 10px; /* Mantém o rótulo legível e compacto. */
+    font-weight: 900; /* Reforça o texto do botão. */
+    letter-spacing: 0.8px; /* Espaça as letras de MENU. */
+
+    box-shadow: /* Combina relevo e brilho externo. */
+        inset 0 1px 0 rgba(232, 250, 255, 0.18),
+        0 0 14px rgba(70, 180, 235, 0.16);
+
+    cursor: pointer; /* Indica que o elemento é clicável. */
+    transition: background 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease; /* Suaviza a resposta visual. */
+} /* Fecha o botão de pausa. */
+
+.pause-btn:hover { /* Destaca o botão ao passar o mouse. */
+    background: linear-gradient(180deg, #5688aa, #355d7d); /* Clareia o gradiente do botão. */
+    box-shadow: /* Aumenta o brilho externo no estado hover. */
+        inset 0 1px 0 rgba(232, 250, 255, 0.22),
+        0 0 18px rgba(94, 207, 255, 0.28);
+} /* Fecha o estado hover do menu. */
+
+.pause-btn:active { /* Dá resposta física ao pressionar o botão. */
+    transform: translateY(1px); /* Move levemente o botão para baixo. */
+} /* Fecha o estado pressionado do menu. */
+
+.pause-symbol { /* Ajusta o ícone de pausa dentro do botão. */
+    font-size: 15px; /* Destaca o símbolo em relação ao rótulo. */
+    line-height: 1; /* Remove espaço vertical adicional. */
+} /* Fecha o símbolo de pausa. */
+
+.pause-label { /* Formata o texto que identifica o botão. */
+    line-height: 1; /* Alinha o texto ao centro do botão. */
+} /* Fecha o rótulo do botão de pausa. */
+
+/* =========================================================
+   ÁREA DO JOGO
+   ========================================================= */
+
+.game-area { /* Define o espaço ocupado pelo canvas e pelo rodapé do jogo. */
+    width: min( /* Limita a largura ao menor valor entre os parâmetros. */
+        1100px, /* Largura máxima lógica da área. */
+        100vw /* Largura total da janela do navegador. */
+    ); /* Fecha o cálculo responsivo da largura. */
+
+    height: calc( /* Calcula a altura restante da janela. */
+        100vh - 109px /* Subtrai HUD e espaço reservado aos controles/rodapé. */
+    ); /* Fecha o cálculo responsivo da altura. */
+
+    display: flex; /* Organiza canvas, rodapé e tutorial com flexbox. */
+
+    flex-direction: column; /* Coloca o rodapé e o tutorial abaixo do canvas. */
+
+    align-items: center; /* Centraliza os filhos horizontalmente. */
+
+    justify-content: /* Define a posição dos filhos no eixo vertical. */
+        flex-start; /* Começa a distribuição no topo. */
+
+    background: #0b111a; /* Preenche o espaço atrás da área de desenho. */
+
+    overflow: hidden; /* Recorta conteúdo que ultrapasse a área do jogo. */
+
+    flex-shrink: 1; /* Permite reduzir a área quando a janela fica baixa. */
+} /* Fecha a área de jogo. */
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+#gameCanvas { /* Ajusta o elemento de canvas que recebe os desenhos do jogo. */
+    display: block; /* Remove o espaço de linha que elementos inline criariam. */
+
+    width: min( /* Limita a largura exibida do canvas. */
+        1100px, /* Define a largura máxima em telas grandes. */
+        100vw /* Evita ultrapassar a largura da janela. */
+    ); /* Fecha o cálculo da largura. */
+
+    max-width: 100%; /* Impede que o canvas ultrapasse o contêiner pai. */
+
+    height: auto; /* Mantém proporção da altura conforme a largura exibida. */
+
+    max-height: calc( /* Limita altura considerando os demais elementos. */
+        100vh - 283px /* Reserva HUD, rodapé, tutorial e faixa dos controles. */
+    ); /* Fecha o cálculo de altura máxima. */
+
+    aspect-ratio: /* Define a proporção original do espaço de desenho. */
+        1100 / 600; /* Mantém proporção largura/altura definida pelo canvas. */
+
+    object-fit: contain; /* Exibe todo o conteúdo sem cortar a área proporcional. */
+
+    flex-shrink: 1; /* Permite reduzir o canvas quando faltar espaço vertical. */
+
+    image-rendering: auto; /* Deixa o navegador escolher o método de escala da imagem. */
+
+    border-left: /* Desenha a borda esquerda do canvas. */
+        3px solid #050a10; /* Define espessura, estilo e cor. */
+
+    border-right: /* Desenha a borda direita do canvas. */
+        3px solid #050a10; /* Usa o mesmo contorno do lado oposto. */
+
+    background: #7bbde5; /* Define cor de reserva antes do desenho do cenário. */
+} /* Fecha o estilo do canvas. */
+
+/* =========================================================
+   RODAPÉ DO JOGO
+   ========================================================= */
+
+.game-footer { /* Estiliza os créditos dentro da tela de jogo. */
+    width: 100%; /* Ocupa toda a largura da área de jogo. */
+
+    height: 40px; /* Define altura padrão do rodapé. */
+
+    min-height: 40px; /* Evita que o flexbox comprima o rodapé abaixo desse tamanho. */
+
+    flex-shrink: 0; /* Mantém a altura do crédito estável. */
+
+    display: flex; /* Ativa flexbox para centralizar o crédito. */
+
+    justify-content: center; /* Centraliza o texto horizontalmente. */
+
+    align-items: center; /* Centraliza o texto verticalmente. */
+
+    padding: /* Define preenchimento vertical e horizontal. */
+        6px 15px; /* Reserva seis pixels na vertical e quinze nas laterais. */
+
+    background: /* Cria um fundo vertical em gradiente. */
+        linear-gradient( /* Inicia o gradiente que colore o rodapé da partida. */
+            to bottom, /* Direção da transição de cima para baixo. */
+            #1a293b, /* Cor superior do rodapé. */
+            #101a28 /* Cor inferior do rodapé. */
+        ); /* Fecha o gradiente do rodapé. */
+
+    border-top: /* Separa o crédito da área de jogo. */
+        3px solid #050a10; /* Define espessura, estilo e cor do contorno. */
+
+    color: /* Define cor clara com opacidade parcial. */
+        rgba( /* Inicia os componentes da cor branca semitransparente. */
+            255, /* Componente vermelho do branco. */
+            255, /* Componente verde do branco. */
+            255, /* Componente azul do branco. */
+            0.78 /* Transparência do texto. */
+        ); /* Fecha o valor da cor. */
+
+    text-align: center; /* Centraliza também quando o crédito quebra em várias linhas. */
+
+    font-size: 11px; /* Define o tamanho do crédito. */
+
+    font-weight: 600; /* Usa peso seminegrito. */
+
+    letter-spacing: 0.5px; /* Espaça levemente as letras. */
+
+    text-shadow: /* Adiciona sombra para melhorar contraste. */
+        1px 1px 2px #000; /* Define deslocamento, desfoque e cor da sombra. */
+} /* Fecha o rodapé da partida. */
+
+/* =========================================================
+   TUTORIAL DO JOGO
+   ========================================================= */
+
+.game-tutorial { /* Cria a faixa de instruções abaixo da área desenhada. */
+    width: 100%; /* Acompanha a largura do canvas e do rodapé. */
+
+    height: 70px; /* Mantém o tutorial compacto dentro da tela. */
+    min-height: 70px; /* Impede a compressão da faixa pelo flexbox. */
+    flex-shrink: 0; /* Preserva a altura reservada ao tutorial. */
+
+    display: flex; /* Organiza o único controle no centro da faixa. */
+    align-items: center; /* Centraliza o conteúdo verticalmente. */
+    justify-content: center; /* Centraliza o cartão de acessibilidade na largura disponível. */
+    gap: 0; /* Remove a separação usada pela antiga introdução. */
+
+    margin-bottom: 64px; /* Reserva a faixa dos controles acessíveis abaixo do tutorial. */
+
+    padding: 8px 18px; /* Cria espaço interno sem aumentar a altura total. */
+
+    background: linear-gradient(180deg, #1c3852 0%, #11283d 100%); /* Usa um azul profundo alinhado ao HUD. */
+    border-top: 1px solid rgba(158, 230, 255, 0.32); /* Separa o tutorial do rodapé do jogo. */
+    border-bottom: 1px solid rgba(5, 15, 25, 0.7); /* Fecha visualmente a faixa. */
+    box-shadow: inset 0 1px 0 rgba(224, 248, 255, 0.08); /* Adiciona um brilho superior sutil. */
+
+    color: #d8eef9; /* Define a cor-base do texto. */
+    position: relative; /* Mantém a faixa acima do fundo da área de jogo. */
+    z-index: 5; /* Evita sobreposição indevida do cenário. */
+} /* Fecha a faixa de tutorial. */
+
+.tutorial-intro { /* Agrupa o título e o objetivo da corrida. */
+    flex: 0 0 176px; /* Reserva uma coluna estável para a introdução. */
+    align-self: stretch; /* Ocupa a altura disponível da faixa. */
+
+    display: flex; /* Empilha os textos da introdução. */
+    flex-direction: column; /* Coloca o objetivo abaixo do título. */
+    justify-content: center; /* Centraliza o conjunto verticalmente. */
+    gap: 2px; /* Aproxima as linhas da introdução. */
+
+    padding-right: 16px; /* Afasta o texto da linha divisória. */
+    border-right: 1px solid rgba(158, 230, 255, 0.2); /* Separa a introdução dos comandos. */
+} /* Fecha a introdução do tutorial. */
+
+.tutorial-kicker { /* Rotula a faixa como tutorial. */
+    color: #7fe3ff; /* Usa azul luminoso para o selo. */
+    font-size: 8px; /* Mantém o selo discreto. */
+    font-weight: 900; /* Reforça a leitura. */
+    letter-spacing: 2.2px; /* Espaça as letras do selo. */
+    line-height: 1; /* Remove espaço vertical extra. */
+} /* Fecha o selo do tutorial. */
+
+.tutorial-intro strong { /* Destaca o título COMO JOGAR. */
+    color: #fff; /* Usa branco para o título. */
+    font-size: 14px; /* Dá hierarquia ao título da faixa. */
+    font-weight: 900; /* Aplica peso forte. */
+    letter-spacing: 1.4px; /* Espaça as letras do título. */
+    line-height: 1; /* Mantém o título compacto. */
+} /* Fecha o título do tutorial. */
+
+.tutorial-goal { /* Explica o objetivo principal da fase. */
+    color: #9fc4d8; /* Usa tom secundário para a orientação. */
+    font-size: 9px; /* Mantém o texto compacto. */
+    line-height: 1.2; /* Evita linhas muito apertadas. */
+} /* Fecha o objetivo do tutorial. */
+
+.tutorial-controls { /* Distribui os comandos pelo espaço restante. */
+    flex: 1; /* Ocupa toda a largura disponível após a introdução. */
+
+    display: flex; /* Alinha os comandos em uma única linha. */
+    align-items: center; /* Centraliza os comandos verticalmente. */
+    justify-content: space-between; /* Distribui os itens uniformemente. */
+    gap: 10px; /* Define uma separação mínima entre os comandos. */
+
+    min-width: 0; /* Permite que o conjunto encolha em telas menores. */
+} /* Fecha a linha de comandos do tutorial. */
+
+.tutorial-item { /* Agrupa teclas e explicação de um comando. */
+    display: flex; /* Coloca as teclas ao lado do texto. */
+    align-items: center; /* Centraliza os elementos verticalmente. */
+    gap: 6px; /* Separa teclas e descrição. */
+    min-width: 0; /* Permite ajuste em larguras menores. */
+} /* Fecha um comando do tutorial. */
+
+.tutorial-key { /* Desenha uma tecla física do teclado. */
+    display: inline-flex; /* Centraliza o rótulo dentro da tecla. */
+    align-items: center; /* Centraliza verticalmente. */
+    justify-content: center; /* Centraliza horizontalmente. */
+
+    min-width: 26px; /* Reserva largura mínima para teclas curtas. */
+    height: 25px; /* Define a altura da tecla. */
+    padding: 0 6px; /* Cria espaço interno para rótulos maiores. */
+
+    border: 1px solid rgba(190, 238, 255, 0.34); /* Contorna a tecla em azul claro. */
+    border-radius: 5px; /* Suaviza os cantos. */
+
+    background: linear-gradient(180deg, #2f5573, #18334b); /* Dá relevo à tecla. */
+    color: #f7fdff; /* Destaca o rótulo. */
+
+    font-size: 8px; /* Mantém as teclas compactas. */
+    font-weight: 900; /* Reforça o texto. */
+    letter-spacing: 0.4px; /* Facilita a leitura. */
+    white-space: nowrap; /* Impede quebra de linha dentro da tecla. */
+
+    box-shadow: /* Combina brilho interno e profundidade inferior. */
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 2px 0 rgba(4, 13, 23, 0.55);
+} /* Fecha a tecla do tutorial. */
+
+.tutorial-key.wide { /* Ajusta a tecla larga ESPAÇO. */
+    font-size: 7px; /* Reduz o texto para caber na tecla. */
+    letter-spacing: 0.3px; /* Mantém o rótulo compacto. */
+} /* Fecha a tecla larga. */
+
+.tutorial-menu-icon { /* Reproduz visualmente o botão de menu. */
+    width: 25px; /* Define a largura do ícone. */
+    height: 25px; /* Mantém o formato quadrado. */
+    flex-shrink: 0; /* Evita compressão em telas menores. */
+
+    display: grid; /* Centraliza o símbolo no espaço. */
+    place-items: center; /* Alinha o conteúdo ao centro. */
+
+    border: 1px solid rgba(190, 238, 255, 0.34); /* Contorna o botão ilustrado. */
+    border-radius: 6px; /* Suaviza os cantos. */
+
+    background: linear-gradient(180deg, #2f5573, #18334b); /* Usa o mesmo relevo das teclas. */
+    color: #b9f0ff; /* Destaca o símbolo de pausa. */
+
+    font-size: 12px; /* Mantém o símbolo visível. */
+    box-shadow: /* Combina brilho interno e profundidade. */
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 2px 0 rgba(4, 13, 23, 0.55);
+} /* Fecha o ícone de menu do tutorial. */
+
+.tutorial-icon { /* Cria um ícone compacto para identificar os controles na tela. */
+    width: 38px; /* Reserva um quadrado bem visível. */
+    height: 38px; /* Mantém a proporção do ícone. */
+    flex-shrink: 0; /* Impede a compressão em telas estreitas. */
+
+    display: grid; /* Centraliza o símbolo no quadro. */
+    place-items: center; /* Alinha o conteúdo nos dois eixos. */
+
+    border: 1px solid rgba(151, 232, 255, 0.4); /* Contorna o ícone em azul claro. */
+    border-radius: 10px; /* Suaviza os cantos. */
+
+    background: linear-gradient(180deg, rgba(60, 132, 167, 0.55), rgba(20, 62, 88, 0.6)); /* Cria relevo azul premium. */
+    color: #c8f5ff; /* Destaca as setas do ícone. */
+
+    font-size: 11px; /* Mantém o símbolo legível sem dominar o cartão. */
+    font-weight: 900; /* Reforça o desenho das setas. */
+    letter-spacing: -1px; /* Aproxima as setas em um único símbolo. */
+    box-shadow: inset 0 1px 0 rgba(232, 251, 255, 0.16); /* Adiciona brilho interno. */
+} /* Fecha o ícone da opção. */
+
+.tutorial-copy { /* Organiza nome e explicação da opção. */
+    flex: 1 1 auto; /* Ocupa o espaço central do cartão. */
+
+    display: flex; /* Empilha nome e descrição. */
+    flex-direction: column; /* Coloca a explicação abaixo do nome. */
+    gap: 3px; /* Aproxima as duas linhas. */
+    min-width: 0; /* Permite ajuste em larguras menores. */
+} /* Fecha o texto da opção. */
+
+.tutorial-copy b { /* Formata o nome da opção. */
+    color: #f4fcff; /* Usa branco para o nome. */
+    font-size: 14px; /* Dá destaque ao comando. */
+    font-weight: 900; /* Aplica peso forte. */
+    letter-spacing: 1px; /* Espaça as letras do nome. */
+    line-height: 1; /* Mantém o nome compacto. */
+    white-space: nowrap; /* Impede quebra de linha. */
+} /* Fecha o nome da opção. */
+
+.tutorial-copy small { /* Formata a explicação da opção. */
+    color: #b4d5e4; /* Usa tom secundário para a descrição. */
+    font-size: 10.5px; /* Mantém a explicação legível. */
+    line-height: 1.2; /* Evita linhas muito apertadas. */
+    white-space: nowrap; /* Mantém a explicação em uma linha. */
+} /* Fecha a descrição da opção. */
+
+.tutorial-a11y-mobile { /* Mantém a mensagem móvel oculta no desktop. */
+    display: none; /* Exibe apenas a referência à tela de acessibilidade em telas maiores. */
+} /* Fecha a mensagem móvel oculta. */
+
+.tutorial-toggle { /* Transforma a opção de acessibilidade em um cartão central. */
+    display: flex; /* Alinha ícone, texto e interruptor. */
+    align-items: center; /* Centraliza os elementos verticalmente. */
+    justify-content: space-between; /* Distribui o conteúdo com o interruptor à direita. */
+    gap: 14px; /* Separa ícone, texto e interruptor. */
+    flex-shrink: 0; /* Evita compressão em telas menores. */
+
+    width: min(460px, 100%); /* Dá presença ao controle sem ocupar a faixa inteira. */
+    min-height: 54px; /* Garante uma área clicável confortável. */
+    padding: 8px 16px; /* Cria espaço interno equilibrado. */
+
+    border: 1px solid rgba(255, 214, 122, 0.42); /* Destaca a opção com tom dourado. */
+    border-radius: 12px; /* Suaviza os cantos do cartão. */
+
+    background: linear-gradient(135deg, rgba(255, 204, 92, 0.15), rgba(255, 190, 60, 0.05) 55%, rgba(46, 104, 136, 0.28)); /* Cria profundidade alinhada ao tema premium. */
+    box-shadow: /* Combina brilho interno e sombra curta. */
+        inset 0 1px 0 rgba(255, 248, 222, 0.14),
+        0 6px 18px rgba(2, 12, 22, 0.22);
+    cursor: pointer; /* Indica que a área inteira é clicável. */
+    transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease; /* Suaviza a resposta visual. */
+} /* Fecha a área da opção de controles. */
+
+.tutorial-toggle:hover { /* Destaca a opção ao passar o mouse. */
+    border-color: rgba(255, 224, 150, 0.72); /* Clareia a borda. */
+    background: rgba(255, 204, 92, 0.14); /* Intensifica levemente o fundo. */
+    transform: translateY(-1px); /* Cria uma resposta sutil de elevação. */
+} /* Fecha o estado hover da opção. */
+
+.tutorial-toggle input { /* Esconde a caixa nativa sem removê-la da acessibilidade. */
+    position: absolute; /* Retira a caixa do fluxo visual. */
+    width: 1px; /* Mantém uma área mínima. */
+    height: 1px; /* Mantém uma área mínima. */
+    overflow: hidden; /* Evita vazamento visual. */
+    opacity: 0; /* Torna a caixa invisível. */
+    pointer-events: none; /* Deixa o clique com o rótulo. */
+} /* Fecha a caixa nativa oculta. */
+
+.toggle-track { /* Desenha o interruptor da opção. */
+    position: relative; /* Permite posicionar o botão interno. */
+    width: 48px; /* Define uma largura confortável para o trilho. */
+    height: 26px; /* Acompanha a altura maior do cartão. */
+    flex-shrink: 0; /* Impede que o trilho encolha. */
+
+    border: 1px solid rgba(160, 226, 255, 0.34); /* Contorna o trilho. */
+    border-radius: 999px; /* Deixa o trilho arredondado. */
+
+    background: #0d2233; /* Usa fundo escuro no estado desligado. */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5); /* Cria profundidade interna. */
+
+    transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease; /* Suaviza a mudança de estado. */
+} /* Fecha o trilho do interruptor. */
+
+.toggle-track::after { /* Desenha o botão deslizante do interruptor. */
+    content: ""; /* Cria o botão interno. */
+    position: absolute; /* Posiciona o botão dentro do trilho. */
+    top: 2px; /* Afasta o botão da borda superior. */
+    left: 2px; /* Afasta o botão da borda esquerda. */
+
+    width: 20px; /* Define a largura do botão. */
+    height: 20px; /* Define a altura do botão. */
+    border-radius: 50%; /* Torna o botão circular. */
+
+    background: #8fb7cc; /* Usa tom neutro no estado desligado. */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); /* Cria uma sombra curta. */
+
+    transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease; /* Anima o deslocamento. */
+} /* Fecha o botão do interruptor. */
+
+.tutorial-toggle input:checked + .toggle-track { /* Estiliza o trilho quando a opção está ativa. */
+    border-color: #8ce7ff; /* Usa borda azul luminosa. */
+    background: rgba(56, 184, 234, 0.34); /* Acende o fundo do trilho. */
+    box-shadow: /* Combina brilho externo e profundidade interna. */
+        0 0 12px rgba(87, 208, 255, 0.28),
+        inset 0 1px 3px rgba(0, 0, 0, 0.35);
+} /* Fecha o trilho ativo. */
+
+.tutorial-toggle input:checked + .toggle-track::after { /* Move o botão para a posição ativa. */
+    transform: translateX(22px); /* Desloca o botão até o lado direito. */
+    background: #eaffff; /* Clareia o botão ativo. */
+    box-shadow: 0 0 8px rgba(172, 244, 255, 0.7); /* Adiciona brilho ao botão. */
+} /* Fecha o botão ativo do interruptor. */
+
+.tutorial-toggle input:focus-visible + .toggle-track { /* Torna o foco de teclado visível. */
+    outline: 2px solid #e5f8ff; /* Desenha um contorno claro. */
+    outline-offset: 3px; /* Afasta o contorno do trilho. */
+} /* Fecha o foco do interruptor. */
+
+.tutorial-toggle .tutorial-copy b { /* Destaca o nome da opção de acessibilidade. */
+    color: #ffe3a0; /* Usa tom dourado para diferenciar a ação. */
+} /* Fecha o título da opção. */
+
+.tutorial-toggle .tutorial-copy small { /* Ajusta a referência à tela de acessibilidade. */
+    color: #c4b78f; /* Usa um tom quente secundário. */
+} /* Fecha a descrição da opção. */
+
+@media (max-width: 1100px) and (min-width: 821px) { /* Compacta o tutorial em larguras intermediárias. */
+
+    .game-tutorial { /* Reduz o espaçamento horizontal da faixa. */
+        gap: 10px; /* Aproxima introdução e comandos. */
+        padding: 8px 12px; /* Diminui as laterais para ganhar espaço. */
+    } /* Fecha o ajuste da faixa. */
+
+    .tutorial-intro { /* Diminui a coluna de introdução. */
+        flex-basis: 140px; /* Reserva menos largura para o texto. */
+        padding-right: 10px; /* Aproxima o texto da divisória. */
+    } /* Fecha o ajuste da introdução. */
+
+    .tutorial-intro strong { /* Reduz o título da introdução. */
+        font-size: 12px; /* Mantém o título proporcionar ao espaço. */
+        letter-spacing: 1px; /* Diminui o espaçamento das letras. */
+    } /* Fecha o título compacto. */
+
+    .tutorial-goal { /* Reduz a orientação de objetivo. */
+        font-size: 8px; /* Mantém o texto legível em espaço menor. */
+    } /* Fecha o objetivo compacto. */
+
+    .tutorial-controls { /* Aproxima os comandos. */
+        gap: 8px; /* Reduz o espaço entre os itens. */
+    } /* Fecha os comandos compactos. */
+
+    .tutorial-copy b { /* Reduz o nome dos comandos. */
+        font-size: 9px; /* Adapta o texto à largura menor. */
+        letter-spacing: 0.5px; /* Diminui o espaçamento. */
+    } /* Fecha o nome compacto. */
+
+    .tutorial-copy small { /* Reduz a descrição dos comandos. */
+        font-size: 8px; /* Mantém a explicação em uma linha. */
+    } /* Fecha a descrição compacta. */
+
+    .tutorial-key { /* Diminui as teclas. */
+        min-width: 22px; /* Reduz a largura mínima. */
+        height: 23px; /* Reduz a altura. */
+        padding: 0 4px; /* Diminui o espaço interno. */
+        font-size: 7px; /* Ajusta o rótulo. */
+    } /* Fecha as teclas compactas. */
+
+    .tutorial-key.wide { /* Ajusta a tecla larga no modo compacto. */
+        font-size: 6.5px; /* Reduz o texto ao espaço disponível. */
+    } /* Fecha a tecla larga compacta. */
+
+    .tutorial-menu-icon { /* Diminui o ícone de menu. */
+        width: 23px; /* Reduz a largura. */
+        height: 23px; /* Reduz a altura. */
+        font-size: 10px; /* Ajusta o símbolo. */
+    } /* Fecha o ícone compacto. */
+
+    .tutorial-toggle { /* Ajusta a área de acessibilidade em larguras intermediárias. */
+        width: min(440px, 100%); /* Mantém o cartão centralizado e confortável. */
+        gap: 12px; /* Aproxima levemente os elementos. */
+        padding: 8px 14px; /* Preserva uma área interna confortável. */
+    } /* Fecha a opção intermediária. */
+
+    .tutorial-copy b { /* Mantém o título legível no cartão. */
+        font-size: 13px; /* Reduz apenas o necessário. */
+    } /* Fecha o título intermediário. */
+
+    .tutorial-copy small { /* Mantém a descrição legível no cartão. */
+        font-size: 10px; /* Acompanha a largura intermediária. */
+    } /* Fecha a descrição intermediária. */
+} /* Fecha a adaptação intermediária do tutorial. */
+
+/* =========================================================
+   OVERLAYS
+   ========================================================= */
+
+.overlay { /* Define base comum das janelas sobrepostas ao jogo. */
+    position: fixed; /* Posiciona o overlay em relação à janela. */
+
+    inset: /* Define distâncias superior, direita, inferior e esquerda. */
+        67px /* Começa logo abaixo do HUD. */
+        0 /* Encosta à borda direita. */
+        0 /* Encosta à borda inferior. */
+        0; /* Encosta à borda esquerda. */
+
+    display: none; /* Mantém o painel oculto até receber a classe visible. */
+
+    justify-content: center; /* Centraliza a caixa horizontalmente. */
+
+    align-items: center; /* Centraliza a caixa verticalmente. */
+
+    background: /* Cria uma camada escura translúcida atrás da caixa. */
+        rgba( /* Inicia os componentes da camada escurecida. */
+            4, /* Componente vermelho do tom escuro. */
+            8, /* Componente verde do tom escuro. */
+            14, /* Componente azul do tom escuro. */
+            0.72 /* Opacidade que escurece o jogo ao fundo. */
+        ); /* Fecha a camada escura. */
+
+    z-index: 50; /* Coloca a sobreposição acima da interface comum. */
+} /* Fecha a base dos overlays. */
+
+.overlay.visible { /* Seleciona uma sobreposição que deve estar aberta. */
+    display: flex; /* Exibe a caixa usando alinhamento flexível. */
+} /* Fecha o estado visível do overlay. */
+
+.exit-overlay { /* Ajusta o aviso de saída para cobrir a tela inteira. */
+    inset: 0; /* Encosta nas quatro bordas, sem reservar espaço para o HUD. */
+
+    z-index: 200; /* Fica acima do rodapé e dos demais elementos do menu. */
+} /* Fecha o posicionamento do aviso de saída. */
+
+.exit-overlay .pause-box { /* Mantém a caixa do aviso dentro da tela em celulares. */
+    width: min(410px, calc(100vw - 32px)); /* Limita a largura ao espaço disponível. */
+} /* Fecha o tamanho responsivo do aviso. */
+
+.pause-box { /* Estiliza a caixa interna dos overlays. */
+    width: 410px; /* Define largura base do painel de pausa/resultado. */
+
+    padding: 32px; /* Cria espaço entre o conteúdo e as bordas. */
+
+    text-align: center; /* Centraliza textos e botões do painel. */
+
+    background: /* Cria fundo diagonal para destacar a caixa. */
+        linear-gradient( /* Inicia as cores de fundo da caixa de overlay. */
+            145deg, /* Direção diagonal do gradiente. */
+            #2f4054, /* Cor inicial do painel. */
+            #1b2838 /* Cor final do painel. */
+        ); /* Fecha o fundo da caixa. */
+
+    border: /* Contorna a caixa do overlay. */
+        4px solid #07101a; /* Define espessura, estilo e cor. */
+
+    box-shadow: /* Adiciona moldura e sombra externa. */
+        0 0 0 3px #556e89, /* Cria moldura ao redor do painel. */
+        0 25px 60px /* Define deslocamento e desfoque da sombra. */
+        rgba( /* Inicia a cor translúcida da sombra externa. */
+            0, /* Componente vermelho da sombra preta. */
+            0, /* Componente verde da sombra preta. */
+            0, /* Componente azul da sombra preta. */
+            0.5 /* Opacidade da sombra externa. */
+        ); /* Fecha as sombras do painel. */
+} /* Fecha a caixa do overlay. */
+
+.results { /* Organiza os resumos de pontuação, tempo e moedas. */
+    display: grid; /* Empilha as linhas de resultado usando grid. */
+
+    gap: 9px; /* Define o espaçamento entre linhas. */
+
+    margin-bottom: 18px; /* Separa resultados dos botões abaixo. */
+} /* Fecha a área de resultados. */
+
+.results div { /* Formata cada linha de resultado. */
+    display: flex; /* Alinha o rótulo e o valor na mesma linha. */
+
+    justify-content: /* Distribui rótulo e número. */
+        space-between; /* Coloca um em cada extremidade. */
+
+    padding: 13px; /* Adiciona espaço interno à linha. */
+
+    background: #172332; /* Define o fundo de cada dado. */
+
+    border: /* Desenha contorno da linha. */
+        2px solid #081019; /* Define espessura, estilo e cor. */
+
+    color: #afc0d2; /* Aplica cor secundária ao rótulo do resultado. */
+} /* Fecha a linha de resultado. */
+
+.results strong { /* Destaca o valor numérico do resultado. */
+    color: var(--gold); /* Usa a cor global de destaque. */
+} /* Fecha o valor do resultado. */
+
+.danger-title { /* Destaca títulos associados a falha ou perigo. */
+    color: #ff7171; /* Usa vermelho claro para comunicar alerta. */
+} /* Fecha o título de perigo. */
+
+.game-over-text { /* Formata a mensagem de encerramento da partida. */
+    margin-bottom: 20px; /* Afasta a mensagem dos botões. */
+
+    color: #b6c4d2; /* Usa tom claro secundário para leitura. */
+} /* Fecha a mensagem de game over. */
+
+/* =========================================================
+   CONTROLES MOBILE
+   ========================================================= */
+
+.mobile-controls { /* Define os controles de toque fora do modo móvel. */
+    display: none; /* Mantém os botões ocultos em telas grandes. */
+} /* Fecha o estado padrão dos controles móveis. */
+
+@media (max-width: 980px) { /* Compacta o HUD antes do layout móvel completo. */
+
+    .hud { /* Reduz o espaçamento do cabeçalho. */
+        gap: 5px; /* Aproxima os três blocos. */
+        padding: 0 8px; /* Diminui as laterais. */
+    } /* Fecha o HUD compacto. */
+
+    .hud-group { /* Aproxima os indicadores. */
+        gap: 5px; /* Reduz o espaço entre cápsulas. */
+    } /* Fecha os grupos compactos. */
+
+    .hud-item, /* Seleciona as estatísticas. */
+    .hud-map, /* Seleciona o mapa. */
+    .hud-timer { /* Seleciona o cronômetro. */
+        min-height: 34px; /* Reduz a altura das cápsulas. */
+        padding: 0 7px; /* Diminui o espaço interno. */
+        gap: 4px; /* Aproxima os elementos. */
+        border-radius: 7px; /* Suaviza os cantos menores. */
+    } /* Fecha as cápsulas compactas. */
+
+    .hud-icon { /* Reduz os ícones. */
+        font-size: 10px; /* Adapta os símbolos ao espaço. */
+    } /* Fecha os ícones compactos. */
+
+    .hud-coin { /* Reduz a moeda do contador. */
+        width: 10px; /* Diminui a largura. */
+        height: 10px; /* Mantém a forma circular. */
+    } /* Fecha a moeda compacta. */
+
+    .hud-label { /* Reduz os rótulos. */
+        font-size: 7px; /* Economiza largura. */
+        letter-spacing: 0.4px; /* Diminui o espaçamento. */
+    } /* Fecha os rótulos compactos. */
+
+    .hud-item b { /* Reduz os valores numéricos. */
+        font-size: 12px; /* Mantém os números legíveis. */
+    } /* Fecha os valores compactos. */
+
+    .hud-map-name { /* Reduz o nome do cenário. */
+        font-size: 7px; /* Ajusta o mapa ao espaço. */
+        letter-spacing: 0.5px; /* Diminui o espaçamento. */
+    } /* Fecha o mapa compacto. */
+
+    .hud-timer strong { /* Reduz o cronômetro. */
+        font-size: 15px; /* Preserva a leitura do tempo. */
+    } /* Fecha o cronômetro compacto. */
+
+    .pause-btn { /* Compacta o botão de menu. */
+        min-width: 64px; /* Reduz a largura mínima. */
+        height: 34px; /* Alinha às cápsulas menores. */
+        padding: 0 8px; /* Diminui o espaço interno. */
+        gap: 5px; /* Aproxima símbolo e texto. */
+        font-size: 8px; /* Reduz o rótulo. */
+    } /* Fecha o botão compacto. */
+
+    .pause-symbol { /* Reduz o símbolo de pausa. */
+        font-size: 12px; /* Ajusta o ícone ao botão. */
+    } /* Fecha o símbolo compacto. */
+} /* Fecha a compactação intermediária do HUD. */
+
+@media (max-width: 820px) { /* Aplica ajustes quando a janela tem até 820 pixels de largura. */
+
+    .screen { /* Ajusta as telas gerais em dispositivos estreitos. */
+        padding-bottom: 42px; /* Reduz o espaço reservado ao rodapé. */
+    } /* Fecha o ajuste responsivo das telas. */
+
+    .menu-box, /* Seleciona o painel do menu. */
+    .panel, /* Seleciona painéis das demais telas. */
+    .skin-panel, /* Inclui o painel maior de personagens. */
+    .achievement-panel { /* Inclui o painel de conquistas. */
+        width: 92%; /* Deixa uma margem lateral e adapta a largura à tela. */
+    } /* Fecha a largura responsiva dos painéis. */
+
+    .skins-container { /* Ajusta a grade de personagens em telas estreitas. */
+        grid-template-columns: /* Define a distribuição de colunas da grade. */
+            repeat(2, minmax(0, 1fr)); /* Usa duas colunas de largura igual. */
+    } /* Fecha a grade móvel de skins. */
+
+    .skin-heading { /* Centraliza o cabeçalho da loja em telas estreitas. */
+        justify-content: center; /* Agrupa título e saldo no centro. */
+    } /* Fecha o cabeçalho móvel da loja. */
+
+    .skin-heading .panel-title, /* Seleciona o título dentro da loja. */
+    .skin-subtitle { /* Seleciona a frase de apoio da loja. */
+        text-align: center; /* Centraliza os textos no layout móvel. */
+    } /* Fecha o alinhamento móvel dos textos. */
+
+    .achievement-container { /* Adapta a lista de conquistas ao espaço estreito. */
+        grid-template-columns: 1fr; /* Empilha itens em uma única coluna. */
+    } /* Fecha a grade móvel de conquistas. */
+
+    .hud { /* Compacta o cabeçalho em telas menores. */
+        gap: 5px; /* Aproxima os três blocos do HUD. */
+        padding: 0 8px; /* Diminui as laterais para ganhar espaço. */
+    } /* Fecha o ajuste móvel do HUD. */
+
+    .hud-group { /* Compacta os grupos do HUD em telas menores. */
+        gap: 5px; /* Reduz o espaço entre indicadores. */
+    } /* Fecha o espaçamento móvel do HUD. */
+
+    .hud-item, /* Seleciona as cápsulas de estatísticas. */
+    .hud-map, /* Seleciona a cápsula do mapa. */
+    .hud-timer { /* Seleciona a cápsula do cronômetro. */
+        min-height: 34px; /* Reduz a altura das cápsulas. */
+        padding: 0 7px; /* Diminui o espaço interno. */
+        gap: 4px; /* Aproxima ícone, rótulo e valor. */
+        border-radius: 7px; /* Suaviza os cantos no tamanho menor. */
+    } /* Fecha as cápsulas compactas. */
+
+    .hud-icon { /* Reduz os ícones do HUD. */
+        font-size: 10px; /* Adapta os símbolos ao espaço menor. */
+    } /* Fecha os ícones compactos. */
+
+    .hud-coin { /* Reduz a moeda do contador. */
+        width: 10px; /* Diminui a largura. */
+        height: 10px; /* Mantém a forma circular. */
+    } /* Fecha a moeda compacta. */
+
+    .hud-label { /* Reduz os rótulos do HUD. */
+        font-size: 7px; /* Economiza largura na barra superior. */
+        letter-spacing: 0.4px; /* Diminui o espaçamento das letras. */
+    } /* Fecha os rótulos compactos. */
+
+    .hud-item b { /* Ajusta números do HUD para telas menores. */
+        font-size: 12px; /* Reduz os valores sem ocultá-los. */
+    } /* Fecha o ajuste dos valores móveis. */
+
+    .hud-map-name { /* Reduz o nome do cenário no celular. */
+        font-size: 7px; /* Mantém o mapa legível no espaço estreito. */
+        letter-spacing: 0.5px; /* Diminui o espaçamento das letras. */
+    } /* Fecha o nome de cenário móvel. */
+
+    .hud-timer strong { /* Reduz o tamanho do cronômetro no celular. */
+        font-size: 15px; /* Mantém o tempo legível dentro do HUD estreito. */
+    } /* Fecha o cronômetro móvel. */
+
+    .pause-btn { /* Compacta o botão de menu. */
+        min-width: 64px; /* Reduz a largura mínima. */
+        height: 34px; /* Alinha o botão às cápsulas menores. */
+        padding: 0 8px; /* Diminui o espaço interno. */
+        gap: 5px; /* Aproxima símbolo e texto. */
+        font-size: 8px; /* Reduz o rótulo do botão. */
+    } /* Fecha o botão de menu compacto. */
+
+    .pause-symbol { /* Reduz o símbolo de pausa. */
+        font-size: 12px; /* Adapta o ícone ao botão menor. */
+    } /* Fecha o símbolo compacto. */
+
+    .game-tutorial { /* Mantém a faixa compacta com apenas a opção de acessibilidade. */
+        flex: 0 0 70px; /* Preserva a altura já reservada no layout. */
+        height: 70px; /* Mantém a faixa alinhada ao restante da interface. */
+        min-height: 70px; /* Impede a compressão do cartão. */
+        max-height: 70px; /* Evita crescimento inesperado no celular. */
+
+        flex-direction: row; /* Mantém o cartão em uma única linha. */
+        align-items: center; /* Centraliza o cartão verticalmente. */
+        justify-content: center; /* Centraliza o cartão na largura da tela. */
+        gap: 0; /* Remove espaçamentos da antiga grade. */
+
+        padding: 8px 12px; /* Preserva margens laterais confortáveis. */
+        overflow: visible; /* Evita barras de rolagem desnecessárias. */
+    } /* Fecha a faixa móvel do tutorial. */
+
+    .tutorial-intro { /* Adapta a introdução ao formato empilhado. */
+        flex: 0 0 auto; /* Impede que a introdução cresça. */
+        padding: 0 0 10px; /* Separa o texto da grade de comandos. */
+        border-right: 0; /* Remove a divisória lateral. */
+        border-bottom: 1px solid rgba(158, 230, 255, 0.2); /* Cria uma divisória horizontal. */
+        gap: 3px; /* Aproxima as linhas da introdução. */
+    } /* Fecha a introdução móvel. */
+
+    .tutorial-intro strong { /* Mantém o título legível no celular. */
+        font-size: 15px; /* Dá destaque ao COMO JOGAR. */
+    } /* Fecha o título móvel. */
+
+    .tutorial-goal { /* Ajusta a orientação de objetivo no celular. */
+        font-size: 10px; /* Melhora a leitura em telas de toque. */
+    } /* Fecha o objetivo móvel. */
+
+    .tutorial-controls { /* Cria uma grade de comandos no celular. */
+        flex: 0 0 auto; /* Impede o crescimento vertical da grade. */
+        display: grid; /* Organiza os comandos em duas colunas. */
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); /* Divide a largura igualmente. */
+        gap: 10px 12px; /* Separa linhas e colunas. */
+        width: 100%; /* Ocupa toda a largura do painel. */
+    } /* Fecha a grade móvel de comandos. */
+
+    .tutorial-item { /* Mantém cada comando compacto na grade. */
+        min-width: 0; /* Permite encolher dentro da coluna. */
+        gap: 6px; /* Separa teclas e texto. */
+    } /* Fecha os comandos móveis. */
+
+    .tutorial-copy b { /* Mantém o título legível no celular. */
+        font-size: 13px; /* Preserva o destaque da opção. */
+        white-space: normal; /* Permite ajuste em telas muito estreitas. */
+    } /* Fecha o título móvel. */
+
+    .tutorial-copy small { /* Permite que a descrição quebre linha no celular. */
+        font-size: 10px; /* Mantém a explicação legível. */
+        white-space: normal; /* Evita estouro horizontal na grade. */
+    } /* Fecha a descrição móvel. */
+
+    .tutorial-toggle { /* Centraliza o cartão informativo no celular. */
+        grid-column: auto; /* Remove a divisão em colunas da antiga grade. */
+        justify-content: center; /* Agrupa ícone e texto no centro. */
+        width: min(340px, 100%); /* Mantém o cartão com boa presença visual. */
+        min-height: 54px; /* Preserva a área de leitura confortável. */
+        padding: 8px 12px; /* Ajusta o espaço interno à tela estreita. */
+        gap: 10px; /* Separa ícone e texto. */
+        cursor: default; /* Indica que o cartão é apenas informativo no celular. */
+        pointer-events: none; /* Evita interação com uma opção já ativa. */
+    } /* Fecha a opção móvel de controles. */
+
+    .tutorial-icon { /* Ajusta o ícone ao cartão móvel. */
+        width: 34px; /* Diminui levemente o quadro. */
+        height: 34px; /* Mantém a proporção quadrada. */
+    } /* Fecha o ícone móvel. */
+
+    .tutorial-toggle .tutorial-copy { /* Mantém o texto agrupado ao ícone. */
+        flex: 0 1 auto; /* Impede que o texto se afaste do ícone. */
+        text-align: left; /* Preserva a leitura natural do rótulo. */
+    } /* Fecha o texto móvel do cartão. */
+
+    .tutorial-toggle input, /* Seleciona a caixa da opção no celular. */
+    .tutorial-toggle .toggle-track { /* Seleciona o interruptor no celular. */
+        display: none; /* Remove o controle, pois os botões já aparecem no toque. */
+    } /* Fecha a remoção do interruptor móvel. */
+
+    .tutorial-a11y-desktop { /* Oculta a referência de desktop no celular. */
+        display: none; /* Evita instruções que não se aplicam ao toque. */
+    } /* Fecha a referência de desktop oculta. */
+
+    .tutorial-a11y-mobile { /* Exibe a mensagem adequada ao celular. */
+        display: inline; /* Informa que os controles já estão ativos. */
+    } /* Fecha a mensagem móvel visível. */
+
+    .game-area { /* Recalcula a área do jogo para a altura menor do HUD móvel. */
+        height: calc( /* Calcula altura baseada na janela. */
+            100vh - 103px /* Reserva espaço para a interface fixa móvel. */
+        ); /* Fecha o cálculo responsivo. */
+    } /* Fecha o tamanho móvel da área de jogo. */
+
+    #gameCanvas { /* Ajusta limite vertical do canvas em telas menores. */
+        max-height: calc( /* Calcula a altura máxima disponível. */
+            100vh - 139px /* Reserva espaço para HUD, rodapé e controles. */
+        ); /* Fecha o cálculo da altura máxima móvel. */
+    } /* Fecha o limite de altura do canvas móvel. */
+
+    .section-footer, /* Seleciona rodapés das telas de menu. */
+    .game-footer { /* Seleciona também o rodapé da partida. */
+        font-size: 9px; /* Reduz os créditos para caber no espaço horizontal. */
+    } /* Fecha o tamanho móvel dos rodapés. */
+
+    .game-footer { /* Ajusta a altura do rodapé dentro do jogo. */
+        height: 36px; /* Reduz a altura fixa em celular. */
+        min-height: 36px; /* Impede que o rodapé seja comprimido abaixo dela. */
+    } /* Fecha o ajuste do rodapé móvel. */
+
+    .mobile-controls { /* Mostra e posiciona botões de toque em telas móveis. */
+        position: fixed; /* Mantém os comandos presos à janela durante a partida. */
+
+        bottom: 13px; /* Afasta os controles da borda inferior. */
+
+        left: 50%; /* Coloca o ponto central do grupo no meio da tela. */
+
+        transform: /* Inicia o ajuste horizontal do conjunto. */
+            translateX(-50%); /* Centraliza o grupo a partir do próprio centro. */
+
+        display: flex; /* Exibe os botões em uma linha. */
+
+        gap: 10px; /* Espaça botões de movimento e pulo. */
+
+        z-index: 70; /* Coloca controles acima da área de jogo. */
+    } /* Fecha o posicionamento dos controles móveis. */
+
+    .mobile-controls button { /* Define dimensões dos botões de toque. */
+        width: 63px; /* Define uma área horizontal fácil de tocar. */
+        height: 54px; /* Define a altura da área de toque. */
+
+        border: /* Contorna cada botão móvel. */
+            3px solid #07101a; /* Define espessura, estilo e cor. */
+
+        background: /* Define uma superfície semitransparente. */
+            rgba( /* Inicia os componentes de cor do botão de toque. */
+                31, /* Componente vermelho do fundo. */
+                47, /* Componente verde do fundo. */
+                66, /* Componente azul do fundo. */
+                0.92 /* Opacidade do botão sobre o cenário. */
+            ); /* Fecha o fundo do botão. */
+
+        color: white; /* Define a cor do símbolo de controle. */
+
+        font-size: 22px; /* Amplia as setas para facilitar identificação. */
+
+        font-weight: 900; /* Exibe os símbolos com traço forte. */
+    } /* Fecha os estilos dos botões móveis. */
+} /* Fecha a media query para telas menores. */
+
+@media (max-width: 620px) { /* Simplifica o HUD em celulares estreitos. */
+
+    .hud { /* Distribui os indicadores essenciais na largura disponível. */
+        gap: 4px; /* Aproxima os grupos ao máximo. */
+        padding: 0 6px; /* Reduz as margens laterais. */
+    } /* Fecha o ajuste do HUD estreito. */
+
+    .hud-group { /* Compacta os grupos de indicadores. */
+        gap: 4px; /* Diminui a separação entre cápsulas. */
+    } /* Fecha o espaçamento estreito. */
+
+    .hud-item, /* Seleciona as cápsulas de estatísticas. */
+    .hud-timer { /* Seleciona o cronômetro. */
+        padding: 0 6px; /* Diminui o espaço interno. */
+    } /* Fecha as cápsulas estreitas. */
+
+    .hud-label { /* Oculta os rótulos para preservar os valores. */
+        display: none; /* Mantém o HUD legível em telas muito estreitas. */
+    } /* Fecha a simplificação dos rótulos. */
+
+    .hud-map { /* Remove o mapa da barra em telas muito estreitas. */
+        display: none; /* Prioriza fase, pontos, moedas, vidas e tempo. */
+    } /* Fecha a simplificação do mapa. */
+
+    .hud-timer strong { /* Ajusta o cronômetro ao HUD simplificado. */
+        font-size: 14px; /* Mantém o tempo legível. */
+    } /* Fecha o cronômetro estreito. */
+
+    .pause-btn { /* Reduz o botão à ação essencial. */
+        min-width: 38px; /* Mantém uma área de toque mínima. */
+        padding: 0 8px; /* Ajusta o espaço interno. */
+    } /* Fecha o botão estreito. */
+
+    .pause-label { /* Oculta o texto do botão em telas muito estreitas. */
+        display: none; /* Mantém apenas o símbolo de pausa. */
+    } /* Fecha o rótulo estreito. */
+
+    .pause-symbol { /* Amplia o símbolo no botão compacto. */
+        font-size: 14px; /* Facilita a identificação do menu. */
+    } /* Fecha o símbolo estreito. */
+} /* Fecha a simplificação do HUD estreito. */
+
+/* =========================================================
+   ACESSIBILIDADE VISUAL
+   ========================================================= */
+
+body.high-contrast { /* Aplica fundo preto quando o alto contraste está ativado. */
+    background: #000; /* Maximiza contraste com texto claro. */
+} /* Fecha o fundo de alto contraste. */
+
+body.high-contrast /* Restringe as próximas regras ao modo de alto contraste. */
+.menu-box, /* Seleciona o painel do menu. */
+body.high-contrast /* Mantém o seletor condicional para telas secundárias. */
+.panel, /* Seleciona painéis de conteúdo. */
+body.high-contrast /* Mantém a condição no painel de sobreposição. */
+.pause-box { /* Seleciona a caixa de pausa/resultados. */
+    background: #000; /* Substitui fundos gradientes por preto sólido. */
+
+    border-color: white; /* Torna os contornos brancos para aumentar contraste. */
+} /* Fecha as superfícies em alto contraste. */
+
+body.high-contrast button { /* Ajusta botões no modo de alto contraste. */
+    border-color: white; /* Torna as bordas dos controles claramente visíveis. */
+} /* Fecha o ajuste de botões acessíveis. */
+
+/* =========================================================
+   TEMA AZUL PREMIUM
+   ========================================================= */
+
+.menu-box, /* Seleciona o painel do menu. */
+.panel, /* Seleciona painéis das demais telas. */
+.pause-box { /* Seleciona caixas de pausa e resultados. */
+    background: /* Define um fundo comum em gradiente para esses painéis. */
+        linear-gradient( /* Inicia o gradiente do tema azul premium. */
+            145deg, /* Define a inclinação diagonal do gradiente. */
+            rgba(58, 91, 120, 0.98), /* Cor azulada inicial quase opaca. */
+            rgba(30, 55, 80, 0.98) /* Cor escura final quase opaca. */
+        ); /* Fecha o fundo premium. */
+
+    border: 2px solid rgba(179, 232, 255, 0.76); /* Usa contorno claro semitransparente. */
+
+    box-shadow: /* Combina contorno luminoso e sombras de profundidade. */
+        0 0 0 1px rgba(125, 207, 245, 0.28), /* Cria uma linha fina ao redor. */
+        0 0 28px rgba(77, 183, 255, 0.18), /* Acrescenta brilho azulado difuso. */
+        0 25px 55px rgba(5, 18, 32, 0.42); /* Projeta sombra ampla para baixo. */
+} /* Fecha o tema dos painéis. */
+
+.menu-box::before, /* Seleciona a linha decorativa superior do menu. */
+.menu-box::after { /* Seleciona a linha decorativa inferior. */
+    background: #9ce7ff; /* Aplica azul claro às linhas decorativas. */
+    opacity: 0.58; /* Controla a transparência das linhas. */
+    box-shadow: 0 0 12px rgba(125, 225, 255, 0.55); /* Cria brilho ao redor dos detalhes. */
+} /* Fecha os detalhes do menu. */
+
+.logo span { /* Reafirma o tratamento luminoso da primeira linha do logotipo. */
+    color: #dff8ff; /* Define branco azulado para o texto. */
+    text-shadow: /* Cria dois níveis de brilho. */
+        0 0 12px rgba(160, 232, 255, 0.72), /* Brilho curto e intenso. */
+        0 0 30px rgba(77, 183, 255, 0.3); /* Brilho externo mais amplo. */
+} /* Fecha o destaque da marca. */
+
+.logo-sub, /* Seleciona subtítulo da marca. */
+.small-info, /* Seleciona dicas de controle. */
+.points-display, /* Seleciona saldo de moedas. */
+.skin-card p, /* Seleciona status e preço de skins. */
+.achievement p, /* Seleciona descrições de conquistas. */
+.accessibility-help, /* Seleciona texto auxiliar de acessibilidade. */
+.game-over-text { /* Seleciona mensagem de fim de jogo. */
+    color: #c2d9eb; /* Unifica a cor secundária para melhorar a consistência visual. */
+} /* Fecha a cor comum dos textos secundários. */
+
+.menu-btn, /* Seleciona botões do menu. */
+.back-btn, /* Seleciona controles de retorno. */
+.skin-card button, /* Seleciona comandos da loja. */
+.mobile-controls button { /* Seleciona comandos táteis. */
+    color: #f5fbff; /* Uniformiza a cor clara dos rótulos. */
+    background: linear-gradient(145deg, #4b7799, #315572); /* Aplica gradiente azul aos botões. */
+    border: 2px solid rgba(184, 233, 255, 0.68); /* Define contorno claro semitransparente. */
+    box-shadow: /* Combina relevo interno e brilho externo. */
+        inset 0 -3px rgba(12, 37, 58, 0.25), /* Sombra interna na base do botão. */
+        0 0 14px rgba(77, 183, 255, 0.18); /* Brilho externo azul discreto. */
+} /* Fecha o tema comum dos botões. */
+
+.menu-btn.primary { /* Reforça visualmente a ação principal. */
+    background: linear-gradient(145deg, #76d9ff, #3c91bd); /* Usa gradiente mais claro para destaque. */
+    border-color: #c5f1ff; /* Clareia a borda do botão principal. */
+    box-shadow: 0 0 22px rgba(89, 202, 255, 0.4); /* Adiciona brilho mais forte. */
+} /* Fecha o tema da ação principal. */
+
+.difficulty-btn.easy { /* Reaplica as cores do nível fácil no tema premium. */
+    background: linear-gradient(135deg, #315b78, #244663); /* Define gradiente azul escuro. */
+} /* Fecha o fundo fácil do tema. */
+
+.difficulty-btn.medium { /* Reaplica as cores da dificuldade média. */
+    background: linear-gradient(135deg, #3e7398, #2c587b); /* Define gradiente azul intermediário. */
+} /* Fecha o fundo médio do tema. */
+
+.difficulty-btn.hard { /* Reaplica as cores da dificuldade difícil. */
+    background: linear-gradient(135deg, #58a1c5, #34769e); /* Define gradiente azul mais claro. */
+} /* Fecha o fundo difícil do tema. */
+
+.skin-card, /* Seleciona cartões de personagens. */
+.record-row, /* Seleciona linhas de recorde. */
+.achievement, /* Seleciona itens de conquista. */
+.option, /* Seleciona preferências acessíveis. */
+.results div { /* Seleciona linhas do resumo final. */
+    background: rgba(28, 53, 78, 0.9); /* Aplica fundo azul escuro semitransparente a esses componentes. */
+    border-color: rgba(177, 231, 255, 0.5); /* Unifica o contorno claro dos componentes. */
+} /* Fecha as superfícies do tema. */
+
+.skin-card.selected, /* Seleciona personagem atualmente escolhido. */
+.achievement.unlocked { /* Seleciona conquista já concluída. */
+    border-color: #a5edff; /* Aplica borda mais clara a estados ativos. */
+    box-shadow: /* Cria contorno luminoso e brilho. */
+        0 0 0 1px rgba(151, 225, 255, 0.42), /* Adiciona linha externa fina. */
+        0 0 22px rgba(88, 196, 245, 0.24); /* Espalha brilho ao redor do item. */
+} /* Fecha os estados destacados. */
+
+.achievement.unlocked { /* Ajusta o fundo das conquistas concluídas. */
+    background: linear-gradient(145deg, #315b78, #203c57); /* Aplica gradiente azul ao item. */
+} /* Fecha o fundo de conquista concluída. */
+
+.easy-color, /* Seleciona símbolo fácil. */
+.medium-color, /* Seleciona símbolo médio. */
+.hard-color, /* Seleciona símbolo difícil. */
+.record-row strong, /* Seleciona valores nos recordes. */
+.points-display strong { /* Seleciona saldo numérico. */
+    color: #a5edff; /* Unifica a cor clara dos indicadores importantes. */
+} /* Fecha as cores de destaque. */
+
+.option input { /* Ajusta a cor de seleção dos controles acessíveis. */
+    accent-color: #70cfff; /* Pinta o estado marcado em azul claro. */
+} /* Fecha a cor das caixas de seleção. */
+
+.section-footer, /* Seleciona rodapés das telas de menu. */
+.game-footer { /* Seleciona o rodapé da partida. */
+    background: linear-gradient(to bottom, #294966, #19334e); /* Aplica gradiente azul aos rodapés. */
+    border-color: #8bcff0; /* Clareia as bordas de separação. */
+} /* Fecha o tema dos rodapés. */
+
+.game-screen, /* Seleciona a tela inteira de jogo. */
+.game-area { /* Seleciona a área que contém o canvas. */
+    background: #19324b; /* Define o fundo azul comum dessas regiões. */
+} /* Fecha os fundos de jogo. */
+
+.hud { /* Aplica acabamento premium à barra superior. */
+    background: linear-gradient(180deg, #2d5273 0%, #19334d 58%, #112437 100%); /* Mantém o azul profundo do tema. */
+    border-color: #07131f; /* Escurece a borda inferior para destacar a barra. */
+    box-shadow: /* Combina brilho interno e sombra sobre o cenário. */
+        inset 0 1px 0 rgba(216, 246, 255, 0.15),
+        0 6px 22px rgba(3, 10, 18, 0.38);
+} /* Fecha o acabamento do HUD. */
+
+.hud-label { /* Seleciona os rótulos dos indicadores. */
+    color: #b5dcec; /* Aumenta o contraste dos textos no tema. */
+} /* Fecha a cor dos rótulos do HUD. */
+
+.hud-timer strong { /* Adiciona destaque ao cronômetro. */
+    text-shadow: 0 0 14px rgba(153, 226, 255, 0.45); /* Cria brilho claro ao redor do tempo. */
+} /* Fecha o brilho do cronômetro. */
+
+#gameCanvas { /* Ajusta acabamento visual da superfície de jogo. */
+    background: #7bbde5; /* Define cor visível antes do desenho do cenário. */
+    border-color: #8bcff0; /* Clareia o contorno do canvas. */
+    box-shadow: 0 0 24px rgba(83, 190, 245, 0.22); /* Cria brilho externo discreto. */
+} /* Fecha o acabamento do canvas. */
+
+.overlay { /* Ajusta a camada escura das janelas sobrepostas. */
+    background: rgba(12, 29, 48, 0.76); /* Usa tom azul escuro translúcido. */
+    backdrop-filter: blur(5px); /* Desfoca o jogo atrás do overlay. */
+} /* Fecha o acabamento das sobreposições. */
+
+.menu-btn:focus-visible, /* Marca foco de teclado nos botões principais. */
+.back-btn:focus-visible, /* Marca foco nos comandos de retorno. */
+.difficulty-btn:focus-visible, /* Marca foco nas escolhas de dificuldade. */
+.skin-card button:focus-visible, /* Marca foco nos comandos de compra/equipar. */
+.pause-btn:focus-visible, /* Marca foco no botão de pausa. */
+.mobile-controls button:focus-visible { /* Marca foco nos controles táteis navegados por teclado. */
+    outline: 2px solid #e5f8ff; /* Desenha contorno claro de foco. */
+    outline-offset: 3px; /* Afasta o contorno do elemento. */
+} /* Fecha os indicadores de foco visível. */
+
+.sr-only { /* Esconde visualmente um elemento sem removê-lo da árvore acessível. */
+    position: fixed; /* Tira o elemento do fluxo visual normal. */
+
+    width: 1px; /* Reduz a largura ao mínimo visual. */
+    height: 1px; /* Reduz a altura ao mínimo visual. */
+
+    overflow: hidden; /* Recorta o conteúdo que ultrapassa o espaço mínimo. */
+
+    opacity: 0; /* Torna invisível sem desativar sua leitura por tecnologia assistiva. */
+} /* Fecha a classe apenas para leitores de tela. */
+
+body.font-normal { /* Seleciona a configuração padrão de tamanho de texto. */
+    --accessibility-scale: 1; /* Define fator original de escala usado pelos controles tipográficos. */
+} /* Fecha a escala de texto normal. */
+
+body.font-large { /* Seleciona o modo de texto grande. */
+    --accessibility-scale: 1.25; /* Aumenta os textos em 25 por cento. */
+} /* Fecha a escala de texto grande. */
+
+body.font-xlarge { /* Seleciona o modo de texto muito grande. */
+    --accessibility-scale: 1.5; /* Aumenta os textos em 50 por cento. */
+} /* Fecha a escala de texto muito grande. */
+
+body:is(.font-large, .font-xlarge) .logo span { /* Ajusta a primeira linha da marca nos dois modos ampliados. */
+    font-size: calc(38px * var(--accessibility-scale)); /* Multiplica o tamanho base pelo fator configurado. */
+} /* Fecha o ajuste da marca. */
+
+body:is(.font-large, .font-xlarge) .logo strong { /* Ajusta a segunda linha da marca. */
+    font-size: calc(27px * var(--accessibility-scale)); /* Amplia o título proporcionalmente ao modo escolhido. */
+} /* Fecha o ajuste do nome do jogo. */
+
+body:is(.font-large, .font-xlarge) :is( /* Restringe esta regra aos dois modos de fonte ampliada e aos seletores listados. */
+    .menu-btn, /* Amplia rótulos dos botões principais. */
+    .back-btn, /* Amplia rótulos de retorno. */
+    .option, /* Amplia opções acessíveis. */
+    .record-row, /* Amplia linhas de recordes. */
+    .results div /* Amplia linhas de resultado. */
+) { /* Abre a regra comum de tamanho ampliado. */
+    font-size: calc(16px * var(--accessibility-scale)); /* Multiplica o tamanho base pelo fator de acessibilidade. */
+} /* Fecha a escala para controles e dados. */
+
+body:is(.font-large, .font-xlarge) .panel-title { /* Amplia os títulos de painel. */
+    font-size: calc(26px * var(--accessibility-scale)); /* Aplica a escala selecionada ao título. */
+} /* Fecha o tamanho ampliado do título. */
+
+body:is(.font-large, .font-xlarge) .difficulty-btn strong { /* Amplia nomes de dificuldade. */
+    font-size: calc(19px * var(--accessibility-scale)); /* Multiplica tamanho base pelo fator de escala. */
+} /* Fecha o ajuste dos níveis. */
+
+body:is(.font-large, .font-xlarge) :is( /* Seleciona textos compactos nos modos ampliados. */
+    .logo-sub, /* Amplia o subtítulo do menu. */
+    .skin-card p, /* Amplia preço e estado das skins. */
+    .skin-card button, /* Amplia comandos da loja. */
+    .achievement p, /* Amplia descrições de conquistas. */
+    .hud-map-name /* Amplia nome do mapa no HUD. */
+) { /* Abre o conjunto de textos compactos. */
+    font-size: calc(10px * var(--accessibility-scale)); /* Aplica fator de aumento sobre a base de 10 pixels. */
+} /* Fecha o ajuste dos textos compactos. */
+
+body:is(.font-large, .font-xlarge) :is( /* Seleciona outros textos auxiliares. */
+    .small-info, /* Amplia instruções de controle. */
+    .difficulty-btn span, /* Amplia descrições dos níveis. */
+    .accessibility-help, /* Amplia textos de ajuda. */
+    .section-footer, /* Amplia créditos das telas. */
+    .game-footer, /* Amplia créditos durante o jogo. */
+    .hud-item /* Amplia rótulos dos indicadores. */
+) { /* Abre a regra de textos auxiliares. */
+    font-size: calc(11px * var(--accessibility-scale)); /* Ajusta cada texto com o fator escolhido. */
+} /* Fecha o ajuste dos textos auxiliares. */
+
+body:is(.font-large, .font-xlarge) .points-display { /* Amplia o rótulo do saldo na loja. */
+    font-size: calc(13px * var(--accessibility-scale)); /* Aplica a escala ao texto de moedas. */
+} /* Fecha o rótulo ampliado do saldo. */
+
+body:is(.font-large, .font-xlarge) .points-display strong { /* Amplia o valor numérico do saldo. */
+    font-size: calc(18px * var(--accessibility-scale)); /* Mantém o número destacado nos modos ampliados. */
+} /* Fecha o saldo numérico ampliado. */
+
+body:is(.font-large, .font-xlarge) .skin-card h3, /* Amplia nomes de personagens. */
+body:is(.font-large, .font-xlarge) .achievement h3 { /* Amplia títulos de conquistas. */
+    font-size: calc(13px * var(--accessibility-scale)); /* Usa tamanho base compartilhado e o fator acessível. */
+} /* Fecha o tamanho ampliado dos títulos de cartão. */
+
+body:is(.font-large, .font-xlarge) .hud-item b { /* Amplia valores numéricos dos indicadores. */
+    font-size: calc(16px * var(--accessibility-scale)); /* Multiplica o tamanho do valor pelo fator selecionado. */
+} /* Fecha os valores ampliados do HUD. */
+
+body:is(.font-large, .font-xlarge) .hud-timer strong { /* Amplia o cronômetro no HUD. */
+    font-size: calc(22px * var(--accessibility-scale)); /* Aplica o fator de acessibilidade ao tempo. */
+} /* Fecha o ajuste do cronômetro. */
+
+.accessibility-group { /* Formata grupos semânticos de configurações acessíveis. */
+    min-width: 0; /* Permite que o grupo encolha dentro do painel. */
+    margin: 18px 0; /* Separa grupos verticalmente. */
+    padding: 14px 0 0; /* Reserva espaço acima do conteúdo e remove laterais. */
+    border: 0; /* Remove a borda padrão do fieldset. */
+    border-top: 1px solid rgba(179, 232, 255, 0.32); /* Usa linha sutil para separar seções. */
+    text-align: left; /* Alinha controles e rótulos à esquerda. */
+} /* Fecha o grupo de acessibilidade. */
+
+.accessibility-group legend { /* Formata a legenda de cada grupo de preferências. */
+    padding-right: 10px; /* Cria espaço entre o rótulo e a linha superior. */
+    color: #bcecff; /* Destaca a legenda em azul claro. */
+    font-size: 12px; /* Define o tamanho do título do grupo. */
+    font-weight: 900; /* Aplica peso forte. */
+    letter-spacing: 1px; /* Espaça as letras da legenda. */
+} /* Fecha o estilo das legendas. */
+
+.accessibility-group .option { /* Ajusta linhas de opção dentro dos grupos. */
+    margin: 8px 0; /* Reduz a separação vertical dentro da seção. */
+} /* Fecha o espaçamento das opções. */
+
+.text-size-option { /* Organiza o rótulo e o seletor de tamanho do texto. */
+    justify-content: space-between; /* Coloca rótulo e seletor em lados opostos. */
+    flex-wrap: wrap; /* Permite que os itens quebrem linha em telas estreitas. */
+} /* Fecha o layout do seletor de texto. */
+
+.text-size-option select { /* Estiliza a lista nativa de tamanho do texto. */
+    min-width: 145px; /* Garante espaço suficiente para os rótulos das opções. */
+    padding: 9px 30px 9px 11px; /* Define áreas internas em cima, direita, baixo e esquerda. */
+    border: 1px solid #a5edff; /* Contorna o seletor em azul claro. */
+    border-radius: 4px; /* Arredonda discretamente os cantos. */
+    background: #203c57; /* Define fundo escuro para o controle. */
+    color: #f5fbff; /* Define cor clara para as opções selecionadas. */
+    font: inherit; /* Herda a tipografia do restante da interface. */
+} /* Fecha o seletor de tamanho. */
+
+.accessibility-help { /* Ajusta espaçamento do texto de ajuda. */
+    line-height: 1.55; /* Controla distância vertical entre linhas. */
+} /* Fecha o ajuste da ajuda. */
+
+.color-blind-mode .difficulty-btn.medium { /* Adiciona padrão visual à dificuldade média para não depender só da cor. */
+    background-color: #3e7398; /* Define a cor base do nível médio. */
+    background-image: repeating-linear-gradient( /* Sobrepõe listras repetidas ao fundo. */
+        135deg, /* Inclina as listras diagonais. */
+        transparent 0 9px, /* Mantém intervalos transparentes entre as faixas. */
+        rgba(255, 255, 255, 0.18) 9px 12px /* Desenha cada faixa clara semitransparente. */
+    ); /* Fecha o padrão do nível médio. */
+} /* Fecha o estilo inclusivo da dificuldade média. */
+
+.color-blind-mode .difficulty-btn.hard { /* Adiciona padrão diferente à dificuldade difícil. */
+    background-color: #58a1c5; /* Define a cor base do nível difícil. */
+    background-image: repeating-linear-gradient( /* Cria padrão de faixas repetidas. */
+        0deg, /* Mantém as faixas na direção horizontal. */
+        transparent 0 10px, /* Reserva trechos transparentes entre faixas. */
+        rgba(255, 255, 255, 0.2) 10px 12px /* Desenha faixas claras com transparência. */
+    ); /* Fecha o padrão visual do nível difícil. */
+} /* Fecha o estilo inclusivo da dificuldade difícil. */
+
+.show-accessible-controls .mobile-controls { /* Exibe comandos na tela quando a opção correspondente está ativa. */
+    position: fixed; /* Fixa os controles à janela. */
+    bottom: 52px; /* Mantém espaço acima da borda inferior. */
+    left: 50%; /* Coloca o centro do conjunto no centro horizontal da tela. */
+    display: flex; /* Mostra os botões lado a lado. */
+    gap: 10px; /* Espaça os controles. */
+    transform: translateX(-50%); /* Centraliza o conjunto pelo próprio centro. */
+    z-index: 70; /* Posiciona os comandos acima do cenário. */
+} /* Fecha a regra dos controles acessíveis. */
+
+.show-accessible-controls .mobile-controls button { /* Ajusta tamanho dos controles acessíveis visíveis. */
+    width: 63px; /* Define largura ampla para toque. */
+    height: 54px; /* Define altura ampla para toque. */
+    font-size: 22px; /* Amplia os símbolos dos comandos. */
+} /* Fecha as dimensões dos botões acessíveis. */
+
+body.font-large .menu-box, /* Seleciona o menu com texto grande. */
+body.font-xlarge .menu-box { /* Seleciona o menu com texto muito grande. */
+    max-height: calc(100vh - 105px); /* Limita altura para caber na janela. */
+    overflow-y: auto; /* Permite rolagem se o conteúdo ampliado não couber. */
+} /* Fecha os ajustes do menu ampliado. */
+
+body.font-xlarge .section-footer, /* Seleciona rodapés gerais no tamanho muito grande. */
+body.font-xlarge .game-footer { /* Seleciona o rodapé do jogo no mesmo modo. */
+    height: auto; /* Permite que o rodapé cresça conforme o texto. */
+    min-height: 42px; /* Mantém uma altura mínima confortável. */
+    padding: 8px 14px; /* Amplia o espaço interno para o conteúdo aumentado. */
+} /* Fecha os rodapés de fonte muito grande. */
+
+body.high-contrast .accessibility-group { /* Ajusta separadores dos grupos em alto contraste. */
+    border-color: #fff; /* Torna a borda branca para ficar mais evidente. */
+} /* Fecha a borda de alto contraste. */
+
+body.high-contrast .accessibility-group legend { /* Ajusta título de cada grupo no alto contraste. */
+    color: #fff; /* Exibe a legenda em branco. */
+} /* Fecha a cor acessível das legendas. */
+
+.accessibility-group :focus-visible { /* Indica foco de teclado em controles acessíveis. */
+    outline: 2px solid #fff; /* Desenha contorno branco para destacar o foco. */
+    outline-offset: 3px; /* Afasta o contorno da borda do controle. */
+} /* Fecha o indicador de foco dos grupos acessíveis. */
+
+/* =========================================================
+   DECORAÇÃO LATERAL — SÓ NA TELA DIFICULDADE
+   ========================================================= */
+
+#difficultyScreen.active { /* Logo e curso nos cantos, painel no meio, só nesta tela. */
+    display: grid; /* Três colunas para encostar as laterais nos cantos. */
+    grid-template-columns: 1fr auto 1fr; /* Laterais flexíveis e painel central fixo. */
+    align-items: center; /* Alinha verticalmente. */
+    column-gap: 40px; /* Respiro maior entre painel e placas. */
+    padding-left: 36px; /* Mais pro canto esquerdo. */
+    padding-right: 36px; /* Mais pro canto direito. */
+} /* Fecha o layout da dificuldade. */
+
+#difficultyScreen .side-deco { /* Agrupa cada lateral (logo à esquerda, curso à direita). */
+    position: static; /* Fica no fluxo flex, sem sobrepor o painel. */
+    transform: none; /* Sem deslocamento vertical. */
+    top: auto; /* Ignora центраização absoluta anterior. */
+    z-index: 3; /* Mesma camada do painel. */
+    display: flex; /* Organiza moldura e legenda. */
+    flex-direction: column; /* Empilha imagem e texto. */
+    align-items: center; /* Centraliza na horizontal. */
+    gap: 14px; /* Espaça moldura e legenda. */
+    width: 250px; /* Largura fixa das laterais. */
+    flex-shrink: 0; /* Impede deformar quando a janela aperta. */
+    pointer-events: none; /* Não bloqueia cliques no painel central. */
+} /* Fecha a base das laterais. */
+
+#difficultyScreen .side-left { /* Logo com mesma posição e tamanho da placa do curso. */
+    order: 1; /* Primeira coluna. */
+    justify-self: start; /* Encosta no canto esquerdo. */
+    width: 493px; /* Mesma largura da lateral direita. */
+} /* Fecha a lateral esquerda. */
+
+#difficultyScreen .panel { /* Garante o painel no meio. */
+    order: 2; /* Segunda coluna. */
+    flex-shrink: 0; /* Mantém 560px sem esmagar. */
+    position: relative; /* Empilhamento próprio. */
+    z-index: 3; /* Acima do fundo. */
+} /* Fecha o painel central. */
+
+#difficultyScreen .side-right { /* Placa do curso 45% maior. */
+    order: 3; /* Terceira coluna. */
+    justify-self: end; /* Encosta no canto direito. */
+    width: 493px; /* 340px + 45%. */
+} /* Fecha a lateral direita. */
+
+#difficultyScreen .led-frame { /* Placa igual à segunda imagem: fundo escuro e borda azul clara. */
+    position: relative; /* Referência para os LEDs e a barra. */
+    isolation: isolate; /* Mantém brilhos contidos. */
+    padding: 12px; /* Respiro interno da moldura. */
+    border-radius: 12px; /* Cantos iguais aos da placa. */
+    background: linear-gradient(180deg, #27435f 0%, #1a3049 55%, #142639 100%); /* Azul escuro da placa. */
+    border: 3px solid #5cc6ff; /* Borda azul clara da placa. */
+    box-shadow: 0 0 18px rgba(92, 198, 255, 0.45), inset 0 0 0 2px rgba(7, 16, 26, 0.85), inset 0 0 18px rgba(0, 0, 0, 0.45), 0 25px 55px rgba(5, 18, 32, 0.42); /* Brilho externo e contorno interno. */
+} /* Fecha a placa com LEDs. */
+
+#difficultyScreen .led-frame::before { /* Desliga a faixa pontilhada antiga. */
+    display: none; /* Usa agora LEDs discretos iguais aos da placa. */
+} /* Fecha a faixa antiga. */
+
+#difficultyScreen .plaque-led { /* LED redondo igual ao da segunda imagem. */
+    position: absolute; /* Fica sobre a borda da placa. */
+    z-index: 2; /* Acima da borda. */
+    width: 12px; /* Tamanho do LED. */
+    height: 12px; /* Mantém círculo perfeito. */
+    border-radius: 50%; /* Formato redondo. */
+    background: radial-gradient(circle at 35% 30%, #ffffff 0 22%, #a5edff 42%, #3b91b8 74%, #16334d 100%); /* Miolo branco com borda tema. */
+    border: 1px solid rgba(234, 252, 255, 0.9); /* Contorno claro. */
+    box-shadow: 0 0 8px rgba(165, 237, 255, 0.95), 0 0 14px rgba(77, 183, 255, 0.6); /* Brilho do LED. */
+    animation: ledChase 1.2s linear infinite; /* LEDs se movimentando em sequência. */
+    pointer-events: none; /* Não bloqueia cliques. */
+} /* Fecha o LED da placa. */
+
+#difficultyScreen .led-tl { top: -7px; left: -7px; animation-delay: 0s; } /* LED canto superior esquerdo. */
+#difficultyScreen .led-tc { top: -7px; left: 50%; transform: translateX(-50%); animation-delay: 0.15s; } /* LED meio do topo. */
+#difficultyScreen .led-tr { top: -7px; right: -7px; animation-delay: 0.3s; } /* LED canto superior direito. */
+#difficultyScreen .led-ml { top: 50%; left: -7px; transform: translateY(-50%); animation-delay: 0.45s; } /* LED meio esquerdo. */
+#difficultyScreen .led-mr { top: 50%; right: -7px; transform: translateY(-50%); animation-delay: 0.6s; } /* LED meio direito. */
+#difficultyScreen .led-bl { bottom: -7px; left: -7px; animation-delay: 0.75s; } /* LED canto inferior esquerdo. */
+#difficultyScreen .led-bc { bottom: -7px; left: 50%; transform: translateX(-50%); animation-delay: 0.9s; } /* LED meio inferior. */
+#difficultyScreen .led-br { bottom: -7px; right: -7px; animation-delay: 1.05s; } /* LED canto inferior direito. */
+
+#difficultyScreen .led-frame::after { /* Linha luminosa interna para reforçar o destaque. */
+    content: ""; /* Cria o brilho interno sem texto. */
+    position: absolute; /* Contorna por dentro. */
+    inset: 5px; /* Recuo interno. */
+    border-radius: 8px; /* Acompanha a placa. */
+    border: 1px solid rgba(165, 237, 255, 0.28); /* Linha fina tema. */
+    pointer-events: none; /* Não interfere em cliques. */
+} /* Fecha o brilho interno. */
+
+@keyframes ledChase { /* Movimenta os LEDs em sequência ao redor da placa. */
+    0%, 100% { opacity: 1; filter: brightness(1.35); } /* LED aceso. */
+    50% { opacity: 0.35; filter: brightness(0.7); } /* LED apagado no meio do ciclo. */
+} /* Fecha a animação dos LEDs. */
+
+#difficultyScreen .logo-frame, /* Placa da logo com caixa idêntica à placa do curso. */
+#difficultyScreen .course-frame { /* Placa do curso com caixa idêntica à placa da logo. */
+    width: 100%; /* Mesma largura. */
+    height: 360px; /* Mesma altura fixa, sem depender do conteúdo. */
+    min-height: 0; /* Trava a altura igual nas duas. */
+    padding: 30px 38px; /* Mesmo respiro interno. */
+    border-width: 6px; /* Mesma borda grossa. */
+    animation: plaqueGlow 1.8s ease-in-out infinite; /* Mesmo LED em brilho. */
+} /* Fecha a caixa idêntica das placas. */
+
+#difficultyScreen .logo-frame { /* Só o alinhamento interno da logo. */
+    display: grid; /* Centraliza fallback e imagem. */
+    place-items: center; /* Centraliza nos dois eixos. */
+} /* Fecha o alinhamento da logo. */
+
+#difficultyScreen .logo-fallback { /* Reserva visível quando a imagem ainda não foi salva. */
+    position: absolute; /* Fica atrás da foto. */
+    width: 280px; /* Preenche a placa igual ao texto do curso. */
+    height: 280px; /* Círculo perfeito. */
+    display: flex; /* Centraliza o texto. */
+    flex-direction: column; /* Empilha número e rótulo. */
+    justify-content: center; /* Centraliza vertical. */
+    align-items: center; /* Centraliza horizontal. */
+    border-radius: 50%; /* Formato redondo. */
+    background: radial-gradient(circle at 50% 30%, #2f5b80, #13273c 70%); /* Fundo azul tema. */
+    border: 3px solid #07101a; /* Contorno escuro. */
+    color: #dff8ff; /* Texto claro. */
+    font-size: 80px; /* Número maior para a placa maior. */
+    font-weight: 900; /* Negrito. */
+    line-height: 1; /* Sem espaço extra. */
+    text-shadow: 0 0 16px rgba(160, 232, 255, 0.85); /* Brilho tema. */
+} /* Fecha a reserva da logo. */
+
+#difficultyScreen .logo-fallback small { /* Rótulo ANOS dentro da reserva. */
+    font-size: 22px; /* Maior para a placa maior. */
+    letter-spacing: 4px; /* Espaçamento. */
+} /* Fecha o rótulo da reserva. */
+
+#difficultyScreen .logo-frame img { /* Logo certa da escola dentro da placa. */
+    position: relative; /* Fica acima do fallback. */
+    display: block; /* Remove espaço de linha. */
+    width: 280px; /* Preenche a placa igual ao texto do curso. */
+    height: 280px; /* Mantém quadrado perfeito. */
+    aspect-ratio: 1 / 1; /* Trava proporção para não deformar. */
+    border-radius: 50%; /* Deixa a logo redonda como o original. */
+    object-fit: cover; /* Preenche sem distorcer. */
+    border: 3px solid #07101a; /* Contorno escuro igual aos botões. */
+    background: #0b1a2a; /* Fundo enquanto a imagem carrega. */
+} /* Fecha a logo da escola. */
+
+#difficultyScreen .course-frame { /* Só o alinhamento interno do curso, caixa igual à da logo. */
+    display: flex; /* Centraliza o texto. */
+    flex-direction: column; /* Empilha texto e barra. */
+    align-items: center; /* Centraliza horizontal. */
+    justify-content: center; /* Centraliza vertical. */
+    gap: 23px; /* Espaço interno. */
+    text-align: center; /* Centraliza o texto. */
+} /* Fecha o alinhamento do curso. */
+
+#difficultyScreen .course-frame .plaque-led { /* Garante sem bolinhas na placa do curso. */
+    display: none; /* Bolinhas removidas, fica só o LED em brilho. */
+} /* Fecha a remoção das bolinhas. */
+
+#difficultyScreen .course-text { /* Nome do curso 45% maior. */
+    color: #ffffff; /* Branco puro da placa. */
+    font-family: "Trebuchet MS", Arial, sans-serif; /* Fonte da placa. */
+    font-size: 49px; /* 34px + 45%. */
+    font-weight: 900; /* Peso forte. */
+    letter-spacing: 0.5px; /* Espaçamento da placa. */
+    line-height: 1.3; /* Altura das duas linhas. */
+    text-shadow: 3px 3px 0 #0a1a2b, -1px -1px 0 #0a1a2b, 1px -1px 0 #0a1a2b, -1px 1px 0 #0a1a2b, 0 0 22px rgba(160, 232, 255, 0.9); /* Contorno escuro + brilho mais forte. */
+} /* Fecha o texto do curso. */
+
+#difficultyScreen .plaque-underline { /* Barra 45% mais grossa. */
+    width: 94%; /* Largura da barra. */
+    height: 7px; /* 5px + 45%. */
+    border-radius: 4px; /* Cantos arredondados. */
+    background: linear-gradient(90deg, rgba(111, 210, 255, 0) 0%, #6fd2ff 12% 88%, rgba(111, 210, 255, 0) 100%); /* Barra com fade nas pontas. */
+    box-shadow: 0 0 18px rgba(111, 210, 255, 0.95); /* Brilho mais forte. */
+} /* Fecha a barra da placa. */
+
+@keyframes plaqueGlow { /* LED da placa em brilho pulsante, sem bolinhas. */
+    0%, 100% { border-color: #5cc6ff; box-shadow: 0 0 18px rgba(92, 198, 255, 0.45), inset 0 0 0 2px rgba(7, 16, 26, 0.85), inset 0 0 18px rgba(0, 0, 0, 0.45), 0 25px 55px rgba(5, 18, 32, 0.42); } /* Brilho normal. */
+    50% { border-color: #a5edff; box-shadow: 0 0 34px rgba(92, 198, 255, 0.75), inset 0 0 0 2px rgba(7, 16, 26, 0.85), inset 0 0 22px rgba(0, 0, 0, 0.45), 0 25px 55px rgba(5, 18, 32, 0.42); } /* Brilho forte no meio do ciclo. */
+} /* Fecha o brilho da placa. */
+
+#difficultyScreen .side-caption { /* Legenda abaixo de cada moldura. */
+    padding: 8px 14px; /* Respiro interno. */
+    background: rgba(11, 26, 42, 0.85); /* Fundo escuro semitransparente. */
+    border: 1px solid rgba(165, 237, 255, 0.45); /* Borda fina tema. */
+    border-radius: 8px; /* Cantos arredondados. */
+    color: #c1eaff; /* Azul claro do tema. */
+    font-size: 12px; /* Tamanho compacto. */
+    font-weight: 800; /* Negrito. */
+    letter-spacing: 2px; /* Espaçamento institucional. */
+    line-height: 1.5; /* Espaçamento vertical. */
+    text-align: center; /* Centraliza em duas linhas. */
+    text-shadow: 0 0 10px rgba(153, 226, 255, 0.5); /* Brilho sutil. */
+    box-shadow: 0 0 14px rgba(77, 183, 255, 0.22); /* Brilho externo. */
+    white-space: nowrap; /* Evita quebrar e deformar a legenda. */
+} /* Fecha a legenda lateral. */
+
+@media (max-width: 1550px) { /* Reduz as placas gigantes para caber em telas médias. */
+    #difficultyScreen.active { column-gap: 32px; padding-left: 28px; padding-right: 28px; } /* Mantém respiro e cantos. */
+    #difficultyScreen .side-right { width: 340px; } /* Igual à logo no médio. */
+    #difficultyScreen .side-left { width: 340px; } /* Logo igual ao curso no médio. */
+    #difficultyScreen .logo-frame,
+    #difficultyScreen .course-frame { height: 280px; min-height: 0; padding: 24px 26px; gap: 16px; border-width: 4px; } /* Caixa idêntica no médio. */
+    #difficultyScreen .course-text { font-size: 34px; } /* Tamanho anterior. */
+    #difficultyScreen .logo-frame img, #difficultyScreen .logo-fallback { width: 190px; height: 190px; } /* Foto igual no médio. */
+} /* Fecha o ajuste para telas médias. */
+
+@media (max-width: 1280px) { /* Compacta as laterais em telas médias. */
+    #difficultyScreen.active { column-gap: 28px; padding-left: 20px; padding-right: 20px; } /* Respiro menor. */
+    #difficultyScreen .side-deco { width: 240px; } /* Base igual. */
+    #difficultyScreen .side-right { width: 240px; } /* Curso igual à logo. */
+    #difficultyScreen .side-left { width: 240px; } /* Logo igual ao curso. */
+    #difficultyScreen .logo-frame,
+    #difficultyScreen .course-frame { height: 220px; min-height: 0; padding: 18px; gap: 12px; } /* Caixa idêntica compacta. */
+    #difficultyScreen .logo-frame img, #difficultyScreen .logo-fallback { width: 150px; height: 150px; } /* Foto compacta. */
+    #difficultyScreen .logo-fallback { font-size: 44px; } /* Número compacto. */
+    #difficultyScreen .course-text { font-size: 24px; } /* Mantém legível no médio. */
+} /* Fecha o ajuste médio. */
+
+@media (max-width: 1020px) { /* Esconde as laterais quando não há espaço vazio. */
+    #difficultyScreen.active { display: flex; justify-content: center; align-items: center; gap: 0; padding-left: 0; padding-right: 0; } /* Volta ao layout original centralizado. */
+    #difficultyScreen .side-deco { display: none; } /* Evita sobrepor o painel central. */
+} /* Fecha o ajuste móvel. */
+
